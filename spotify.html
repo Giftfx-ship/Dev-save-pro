@@ -478,72 +478,6 @@
             transform: scale(1.05);
         }
 
-        .quality-section {
-            margin: 1.5rem 0;
-        }
-
-        .quality-section .label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 0.8rem;
-            display: block;
-        }
-
-        .quality-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-        }
-
-        .quality-btn {
-            padding: 0.6rem 1.2rem;
-            background: var(--bg-card);
-            border: 2px solid var(--border-glass);
-            border-radius: 10px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 0.85rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .quality-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, #1db954, #6c5ce7);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .quality-btn:hover::before {
-            opacity: 0.06;
-        }
-
-        .quality-btn:hover {
-            transform: translateY(-3px);
-            border-color: #1db954;
-            color: var(--text-primary);
-        }
-
-        .quality-btn.active {
-            border-color: #1db954;
-            background: rgba(29, 185, 84, 0.08);
-            color: #1db954;
-            box-shadow: 0 0 20px rgba(29, 185, 84, 0.06);
-        }
-
-        .quality-btn .badge {
-            font-size: 0.6rem;
-            opacity: 0.6;
-            display: block;
-            font-weight: 400;
-        }
-
         .download-btn {
             width: 100%;
             padding: 1.2rem;
@@ -1041,13 +975,6 @@
             .input-group .paste-btn {
                 justify-content: center;
             }
-            .quality-grid {
-                gap: 0.4rem;
-            }
-            .quality-btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.75rem;
-            }
             .result-card .video-info {
                 flex-direction: column;
                 align-items: center;
@@ -1081,9 +1008,6 @@
         @media (max-width: 480px) {
             .page-header h1 {
                 font-size: 1.5rem;
-            }
-            .quality-grid {
-                justify-content: center;
             }
             .result-card .action-btns {
                 flex-direction: column;
@@ -1143,16 +1067,6 @@
                 </button>
             </div>
 
-            <div class="quality-section">
-                <span class="label">🎵 Select Bitrate</span>
-                <div class="quality-grid">
-                    <button class="quality-btn" data-quality="64kbps">64kbps <span class="badge">Low</span></button>
-                    <button class="quality-btn active" data-quality="128kbps">128kbps <span class="badge">Standard</span></button>
-                    <button class="quality-btn" data-quality="192kbps">192kbps <span class="badge">High</span></button>
-                    <button class="quality-btn" data-quality="320kbps">320kbps <span class="badge">Premium</span></button>
-                </div>
-            </div>
-
             <button class="download-btn" id="downloadBtn">
                 <i class="fas fa-download"></i>
                 <span class="btn-text">Download Now</span>
@@ -1179,8 +1093,9 @@
                     <h3 id="videoTitle">Track Title</h3>
                     <p id="videoInfo">Artist • Album</p>
                     <div class="meta">
-                        <span id="videoQuality">Bitrate</span>
+                        <span id="videoQuality">Quality</span>
                         <span id="videoSize">Size</span>
+                        <span id="videoFormat">Format</span>
                     </div>
                 </div>
             </div>
@@ -1332,16 +1247,6 @@
 
         setTheme(getTheme());
 
-        // ===== QUALITY =====
-        let selectedQuality = '128kbps';
-        document.querySelectorAll('.quality-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.quality-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                selectedQuality = btn.dataset.quality;
-            });
-        });
-
         // ===== PASTE =====
         document.getElementById('pasteBtn').addEventListener('click', async () => {
             try {
@@ -1364,7 +1269,7 @@
         const statusMsg = document.getElementById('statusMsg');
 
         // ===== SPOTIFY API - WORKING =====
-        const SP_API = 'https://apis.davidcyril.name.ng/download/spotify';
+        const SP_API = 'https://apis.davidcyril.name.ng/spotifydl';
 
         let currentDownloadUrl = '';
 
@@ -1406,7 +1311,7 @@
                 statusMsg.className = 'status-msg show info';
                 statusMsg.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Fetching from Spotify...`;
 
-                // ===== GET REQUEST WITH ?url= =====
+                // ===== SPOTIFY API WITH ?url= =====
                 const response = await fetch(`${SP_API}?url=${encodeURIComponent(url)}`);
 
                 clearInterval(progressInterval);
@@ -1414,8 +1319,8 @@
                 if (response.ok) {
                     const data = await response.json();
 
-                    if (data.success && data.downloadUrl) {
-                        currentDownloadUrl = data.downloadUrl;
+                    if (data.success && data.DownloadLink) {
+                        currentDownloadUrl = data.DownloadLink;
                         progressFill.style.width = '100%';
                         progressPercent.textContent = '100%';
                         progressText.textContent = '✅ Done!';
@@ -1426,9 +1331,10 @@
                         setTimeout(() => {
                             document.getElementById('thumbnail').src = data.thumbnail || 'https://via.placeholder.com/200x120/1db954/ffffff?text=Spotify';
                             document.getElementById('videoTitle').textContent = data.title || 'Track Title';
-                            document.getElementById('videoInfo').textContent = data.artist || 'Artist • Album';
-                            document.getElementById('videoQuality').textContent = selectedQuality;
-                            document.getElementById('videoSize').textContent = data.size || 'Unknown size';
+                            document.getElementById('videoInfo').textContent = data.channel || 'Artist • Album';
+                            document.getElementById('videoQuality').textContent = '320kbps';
+                            document.getElementById('videoSize').textContent = 'Processing...';
+                            document.getElementById('videoFormat').textContent = 'MP3';
 
                             resultCard.classList.add('show');
                             showToast('✅ Download ready! Click Download Now', 'success');
