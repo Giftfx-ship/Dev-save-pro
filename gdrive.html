@@ -1268,7 +1268,7 @@
         const statusMsg = document.getElementById('statusMsg');
 
         // ===== GOOGLE DRIVE API - WORKING =====
-        const GD_API = 'https://apis.davidcyril.name.ng/download/gdrive';
+        const GD_API = 'https://apis.davidcyril.name.ng/gdrive';
 
         let currentDownloadUrl = '';
 
@@ -1310,7 +1310,7 @@
                 statusMsg.className = 'status-msg show info';
                 statusMsg.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Fetching from Google Drive...`;
 
-                // ===== GET REQUEST WITH ?url= =====
+                // ===== GOOGLE DRIVE API WITH ?url= =====
                 const response = await fetch(`${GD_API}?url=${encodeURIComponent(url)}`);
 
                 clearInterval(progressInterval);
@@ -1318,8 +1318,8 @@
                 if (response.ok) {
                     const data = await response.json();
 
-                    if (data.success && data.downloadUrl) {
-                        currentDownloadUrl = data.downloadUrl;
+                    if (data.success && data.download_link) {
+                        currentDownloadUrl = data.download_link;
                         progressFill.style.width = '100%';
                         progressPercent.textContent = '100%';
                         progressText.textContent = '✅ Done!';
@@ -1328,11 +1328,11 @@
                         statusMsg.innerHTML = `<i class="fas fa-check-circle"></i> Download ready!`;
 
                         setTimeout(() => {
-                            document.getElementById('thumbnail').src = data.thumbnail || 'https://via.placeholder.com/200x120/4285f4/ffffff?text=Google+Drive';
-                            document.getElementById('videoTitle').textContent = data.title || 'File Name';
-                            document.getElementById('videoInfo').textContent = 'Google Drive File';
+                            document.getElementById('thumbnail').src = 'https://via.placeholder.com/200x120/4285f4/ffffff?text=Google+Drive';
+                            document.getElementById('videoTitle').textContent = data.name || 'File Name';
+                            document.getElementById('videoInfo').textContent = data.type || 'Google Drive File';
                             document.getElementById('videoSize').textContent = data.size || 'Unknown size';
-                            document.getElementById('videoFormat').textContent = data.format || 'File';
+                            document.getElementById('videoFormat').textContent = data.mimeType || 'File';
 
                             resultCard.classList.add('show');
                             showToast('✅ Download ready! Click Download Now', 'success');
