@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
+        /* ===== SAME STYLES AS YOUTUBE WITH FACEBOOK COLORS ===== */
         * {
             margin: 0;
             padding: 0;
@@ -28,7 +29,7 @@
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             --radius: 20px;
             --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            --glow: 0 0 40px rgba(24, 119, 242, 0.12);
+            --glow: 0 0 40px rgba(24, 119, 242, 0.08);
         }
 
         [data-theme="light"] {
@@ -40,7 +41,7 @@
             --text-secondary: #4a4a6a;
             --text-muted: #8080a0;
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-            --glow: 0 0 40px rgba(24, 119, 242, 0.06);
+            --glow: 0 0 40px rgba(24, 119, 242, 0.04);
         }
 
         html {
@@ -203,8 +204,8 @@
 
         .glass:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 48px rgba(24, 119, 242, 0.12), var(--glow);
-            border-color: rgba(24, 119, 242, 0.2);
+            box-shadow: 0 12px 48px rgba(24, 119, 242, 0.08), var(--glow);
+            border-color: rgba(24, 119, 242, 0.12);
         }
 
         .navbar {
@@ -404,9 +405,9 @@
             border-radius: 50px;
             font-size: 0.7rem;
             font-weight: 700;
-            background: rgba(0, 255, 136, 0.12);
+            background: rgba(0, 255, 136, 0.1);
             color: #00ff88;
-            border: 1px solid rgba(0, 255, 136, 0.15);
+            border: 1px solid rgba(0, 255, 136, 0.12);
             animation: pulseActive 2s infinite;
         }
 
@@ -448,7 +449,7 @@
         .input-group input:focus {
             outline: none;
             border-color: #1877f2;
-            box-shadow: 0 0 0 4px rgba(24, 119, 242, 0.1);
+            box-shadow: 0 0 0 4px rgba(24, 119, 242, 0.08);
         }
 
         .input-group input::placeholder {
@@ -474,7 +475,7 @@
 
         .input-group .paste-btn:hover {
             border-color: #1877f2;
-            background: rgba(24, 119, 242, 0.08);
+            background: rgba(24, 119, 242, 0.06);
             transform: scale(1.05);
         }
 
@@ -521,7 +522,7 @@
         }
 
         .quality-btn:hover::before {
-            opacity: 0.08;
+            opacity: 0.06;
         }
 
         .quality-btn:hover {
@@ -532,9 +533,9 @@
 
         .quality-btn.active {
             border-color: #1877f2;
-            background: rgba(24, 119, 242, 0.12);
+            background: rgba(24, 119, 242, 0.08);
             color: #1877f2;
-            box-shadow: 0 0 20px rgba(24, 119, 242, 0.1);
+            box-shadow: 0 0 20px rgba(24, 119, 242, 0.06);
         }
 
         .quality-btn .badge {
@@ -542,106 +543,6 @@
             opacity: 0.6;
             display: block;
             font-weight: 400;
-        }
-
-        .source-section {
-            margin: 1.5rem 0;
-        }
-
-        .source-section .label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 0.8rem;
-            display: block;
-        }
-
-        .source-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 0.8rem;
-        }
-
-        .source-btn {
-            padding: 0.8rem;
-            background: var(--bg-card);
-            border: 2px solid var(--border-glass);
-            border-radius: 10px;
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .source-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, #1877f2, #6c5ce7);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .source-btn:hover::before {
-            opacity: 0.08;
-        }
-
-        .source-btn:hover {
-            transform: translateY(-3px);
-            border-color: #1877f2;
-            box-shadow: 0 4px 20px rgba(24, 119, 242, 0.1);
-        }
-
-        .source-btn i,
-        .source-btn span {
-            position: relative;
-            z-index: 1;
-        }
-
-        .source-btn .status {
-            font-size: 0.6rem;
-            opacity: 0.6;
-            font-weight: 400;
-        }
-
-        .source-btn .check {
-            color: #00ff88;
-            display: none;
-        }
-
-        .source-btn.active-source {
-            border-color: #00ff88;
-            background: rgba(0, 255, 136, 0.06);
-        }
-
-        .source-btn.active-source .check {
-            display: inline;
-        }
-
-        .source-btn .spinner {
-            display: none;
-        }
-        .source-btn.loading-source .spinner {
-            display: inline-block;
-            animation: spin 1s linear infinite;
-        }
-        .source-btn.loading-source {
-            opacity: 0.6;
-            pointer-events: none;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
         }
 
         .download-btn {
@@ -680,7 +581,7 @@
 
         .download-btn:hover {
             transform: translateY(-3px) scale(1.01);
-            box-shadow: 0 8px 32px rgba(24, 119, 242, 0.3);
+            box-shadow: 0 8px 32px rgba(24, 119, 242, 0.2);
         }
 
         .download-btn:active {
@@ -710,6 +611,12 @@
         }
         .download-btn.loading .btn-text {
             display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .progress-container {
@@ -832,7 +739,6 @@
             padding: 0.8rem 1.5rem;
             border-radius: 12px;
             text-align: center;
-            text-decoration: none;
             font-weight: 700;
             transition: var(--transition);
             display: flex;
@@ -849,7 +755,7 @@
 
         .result-card .action-btns .download-now-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 32px rgba(24, 119, 242, 0.3);
+            box-shadow: 0 8px 32px rgba(24, 119, 242, 0.2);
         }
 
         .result-card .action-btns .copy-link-btn {
@@ -894,19 +800,19 @@
 
         .status-msg.info {
             background: rgba(0, 212, 255, 0.06);
-            border: 1px solid rgba(0, 212, 255, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.12);
             color: #00d4ff;
         }
 
         .status-msg.success {
             background: rgba(0, 255, 136, 0.06);
-            border: 1px solid rgba(0, 255, 136, 0.15);
+            border: 1px solid rgba(0, 255, 136, 0.12);
             color: #00ff88;
         }
 
         .status-msg.error {
             background: rgba(255, 68, 68, 0.06);
-            border: 1px solid rgba(255, 68, 68, 0.15);
+            border: 1px solid rgba(255, 68, 68, 0.12);
             color: #ff4444;
         }
 
@@ -924,7 +830,7 @@
             justify-content: center;
             color: white;
             font-size: 2.2rem;
-            box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
+            box-shadow: 0 8px 32px rgba(37, 211, 102, 0.35);
             cursor: pointer;
             transition: var(--transition);
             text-decoration: none;
@@ -933,18 +839,18 @@
 
         .whatsapp-float:hover {
             transform: scale(1.15) rotate(10deg);
-            box-shadow: 0 12px 48px rgba(37, 211, 102, 0.6);
+            box-shadow: 0 12px 48px rgba(37, 211, 102, 0.5);
         }
 
         @keyframes whatsappPulse {
             0%,
             100% {
                 transform: scale(1);
-                box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
+                box-shadow: 0 8px 32px rgba(37, 211, 102, 0.35);
             }
             50% {
                 transform: scale(1.05);
-                box-shadow: 0 8px 48px rgba(37, 211, 102, 0.6);
+                box-shadow: 0 8px 48px rgba(37, 211, 102, 0.5);
             }
         }
 
@@ -1015,7 +921,7 @@
         }
 
         .footer-socials a:hover::before {
-            opacity: 0.1;
+            opacity: 0.08;
         }
 
         .footer-socials a:hover {
@@ -1143,9 +1049,6 @@
                 padding: 0.4rem 0.8rem;
                 font-size: 0.75rem;
             }
-            .source-grid {
-                grid-template-columns: 1fr 1fr;
-            }
             .result-card .video-info {
                 flex-direction: column;
                 align-items: center;
@@ -1180,8 +1083,8 @@
             .page-header h1 {
                 font-size: 1.5rem;
             }
-            .source-grid {
-                grid-template-columns: 1fr;
+            .quality-grid {
+                justify-content: center;
             }
             .result-card .action-btns {
                 flex-direction: column;
@@ -1247,36 +1150,6 @@
                     <button class="quality-btn active" data-quality="sd">SD <span class="badge">Standard</span></button>
                     <button class="quality-btn" data-quality="hd">HD <span class="badge">High Quality</span></button>
                 </div>
-            </div>
-
-            <div class="source-section">
-                <span class="label">📡 Download Source</span>
-                <div class="source-grid">
-                    <button class="source-btn active-source" data-source="0">
-                        <i class="fas fa-server"></i>
-                        <span>Source 1</span>
-                        <span class="status">• Fast</span>
-                        <i class="fas fa-check check"></i>
-                        <i class="fas fa-spinner spinner"></i>
-                    </button>
-                    <button class="source-btn" data-source="1">
-                        <i class="fas fa-server"></i>
-                        <span>Source 2</span>
-                        <span class="status">• Backup</span>
-                        <i class="fas fa-check check"></i>
-                        <i class="fas fa-spinner spinner"></i>
-                    </button>
-                    <button class="source-btn" data-source="2">
-                        <i class="fas fa-server"></i>
-                        <span>Source 3</span>
-                        <span class="status">• HD</span>
-                        <i class="fas fa-check check"></i>
-                        <i class="fas fa-spinner spinner"></i>
-                    </button>
-                </div>
-                <p style="font-size:0.7rem; color:var(--text-muted); margin-top:0.5rem; opacity:0.6;">
-                    <i class="fas fa-info-circle"></i> If one source fails, try another
-                </p>
             </div>
 
             <button class="download-btn" id="downloadBtn">
@@ -1405,7 +1278,7 @@
                         const dy = particles[i].y - particles[j].y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
                         if (dist < 150) {
-                            const opacity = (1 - dist / 150) * 0.1;
+                            const opacity = (1 - dist / 150) * 0.08;
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
@@ -1468,17 +1341,6 @@
             });
         });
 
-        // ===== SOURCE =====
-        const sourceBtns = document.querySelectorAll('.source-btn');
-        let selectedSource = 0;
-        sourceBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                sourceBtns.forEach(b => b.classList.remove('active-source'));
-                btn.classList.add('active-source');
-                selectedSource = parseInt(btn.dataset.source);
-            });
-        });
-
         // ===== PASTE =====
         document.getElementById('pasteBtn').addEventListener('click', async () => {
             try {
@@ -1500,12 +1362,8 @@
         const resultCard = document.getElementById('resultCard');
         const statusMsg = document.getElementById('statusMsg');
 
-        // ===== FACEBOOK API LIST - DAVID CYRIL APIs =====
-        const FB_APIS = [
-            'https://apis.davidcyril.name.ng/facebook',
-            'https://apis.davidcyril.name.ng/facebook2',
-            'https://apis.davidcyril.name.ng/facebook3'
-        ];
+        // ===== FACEBOOK API - WORKING =====
+        const FB_API = 'https://apis.davidcyril.name.ng/download/facebook';
 
         let currentDownloadUrl = '';
 
@@ -1537,75 +1395,56 @@
                 if (progress > 95) progress = 95;
                 progressFill.style.width = progress + '%';
                 progressPercent.textContent = Math.round(progress) + '%';
-                if (progress < 30) progressText.textContent = 'Connecting to source...';
+                if (progress < 30) progressText.textContent = 'Connecting to server...';
                 else if (progress < 60) progressText.textContent = 'Processing video...';
-                else if (progress < 85) progressText.textContent = 'Generating download...';
+                else if (progress < 85) progressText.textContent = 'Generating download link...';
                 else progressText.textContent = 'Almost there...';
             }, 300);
 
             try {
-                const startIdx = selectedSource % FB_APIS.length;
-                const orderedApis = [...FB_APIS.slice(startIdx), ...FB_APIS.slice(0, startIdx)];
+                statusMsg.className = 'status-msg show info';
+                statusMsg.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Fetching from Facebook...`;
 
-                let result = null;
-                let usedApi = '';
-
-                for (let i = 0; i < orderedApis.length; i++) {
-                    const api = orderedApis[i];
-                    try {
-                        statusMsg.className = 'status-msg show info';
-                        statusMsg.innerHTML =
-                            `<i class="fas fa-spinner fa-spin"></i> Trying Source ${(i + 1)}...`;
-
-                        // ===== FIXED: Using ?url= parameter =====
-                        const response = await fetch(`${api}?url=${encodeURIComponent(url)}`);
-
-                        if (response.ok) {
-                            const data = await response.json();
-                            if (data.success && data.downloadUrl) {
-                                result = data;
-                                usedApi = api;
-                                break;
-                            }
-                        }
-                    } catch (e) {
-                        console.log(`Source ${i + 1} failed:`, e);
-                        continue;
-                    }
-                }
+                // ===== GET REQUEST WITH ?url= =====
+                const response = await fetch(`${FB_API}?url=${encodeURIComponent(url)}`);
 
                 clearInterval(progressInterval);
-                progressFill.style.width = '100%';
-                progressPercent.textContent = '100%';
-                progressText.textContent = '✅ Done!';
 
-                if (result && result.downloadUrl) {
-                    currentDownloadUrl = result.downloadUrl;
+                if (response.ok) {
+                    const data = await response.json();
 
-                    statusMsg.className = 'status-msg show success';
-                    statusMsg.innerHTML =
-                        `<i class="fas fa-check-circle"></i> Download ready! Source ${selectedSource + 1} successful`;
+                    if (data.success && data.downloadUrl) {
+                        currentDownloadUrl = data.downloadUrl;
+                        progressFill.style.width = '100%';
+                        progressPercent.textContent = '100%';
+                        progressText.textContent = '✅ Done!';
 
-                    setTimeout(() => {
-                        document.getElementById('thumbnail').src = result.thumbnail || 'https://via.placeholder.com/200x120/1877f2/ffffff?text=Facebook';
-                        document.getElementById('videoTitle').textContent = result.title || 'Facebook Video';
-                        document.getElementById('videoInfo').textContent = 'Facebook Video';
-                        document.getElementById('videoQuality').textContent = selectedQuality.toUpperCase();
-                        document.getElementById('videoSize').textContent = result.size || 'Unknown size';
-
-                        resultCard.classList.add('show');
-                        showToast('✅ Download ready! Click Download Now', 'success');
+                        statusMsg.className = 'status-msg show success';
+                        statusMsg.innerHTML = `<i class="fas fa-check-circle"></i> Download ready!`;
 
                         setTimeout(() => {
-                            window.open(currentDownloadUrl, '_blank');
-                        }, 500);
-                    }, 500);
+                            document.getElementById('thumbnail').src = data.thumbnail || 'https://via.placeholder.com/200x120/1877f2/ffffff?text=Facebook';
+                            document.getElementById('videoTitle').textContent = data.title || 'Facebook Video';
+                            document.getElementById('videoInfo').textContent = 'Facebook Video';
+                            document.getElementById('videoQuality').textContent = selectedQuality.toUpperCase();
+                            document.getElementById('videoSize').textContent = data.size || 'Unknown size';
 
+                            resultCard.classList.add('show');
+                            showToast('✅ Download ready! Click Download Now', 'success');
+
+                            setTimeout(() => {
+                                window.open(currentDownloadUrl, '_blank');
+                            }, 500);
+                        }, 500);
+                    } else {
+                        statusMsg.className = 'status-msg show error';
+                        statusMsg.innerHTML = `<i class="fas fa-exclamation-circle"></i> Failed to get download link.`;
+                        showToast('❌ Failed to generate download link', 'error');
+                    }
                 } else {
                     statusMsg.className = 'status-msg show error';
-                    statusMsg.innerHTML =
-                        `<i class="fas fa-exclamation-circle"></i> All sources failed. Please try another source.`;
-                    showToast('❌ Failed to generate download. Try another source.', 'error');
+                    statusMsg.innerHTML = `<i class="fas fa-exclamation-circle"></i> Server error. Please try again.`;
+                    showToast('❌ Server error. Please try again.', 'error');
                 }
 
             } catch (error) {
@@ -1672,7 +1511,6 @@
 
         console.log('%c📘 DevSave Pro - Facebook Downloader', 'font-size:20px; font-weight:bold; color:#1877f2;');
         console.log('%c💻 Built with ❤️ by Dev Gift', 'font-size:14px; color:#a0a0c0;');
-        console.log('%c📡 Multiple sources available - try different ones if one fails', 'font-size:12px; color:#00d4ff;');
     </script>
 
 </body>
