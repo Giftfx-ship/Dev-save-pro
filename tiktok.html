@@ -478,70 +478,43 @@
             transform: scale(1.05);
         }
 
-        .quality-section {
-            margin: 1.5rem 0;
-        }
-
-        .quality-section .label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 0.8rem;
-            display: block;
-        }
-
-        .quality-grid {
+        .format-toggle {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 0.5rem;
+            border: 1px solid var(--border-glass);
         }
 
-        .quality-btn {
-            padding: 0.6rem 1.2rem;
-            background: var(--bg-card);
-            border: 2px solid var(--border-glass);
-            border-radius: 10px;
+        .format-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
             color: var(--text-secondary);
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Inter', sans-serif;
             font-weight: 600;
-            font-size: 0.85rem;
-            position: relative;
-            overflow: hidden;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
-        .quality-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, #000000, #6c5ce7);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .quality-btn:hover::before {
-            opacity: 0.06;
-        }
-
-        .quality-btn:hover {
-            transform: translateY(-3px);
-            border-color: #000000;
+        .format-btn:hover {
             color: var(--text-primary);
+            background: var(--bg-card);
         }
 
-        .quality-btn.active {
-            border-color: #000000;
-            background: rgba(0, 0, 0, 0.06);
-            color: #000000;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.04);
-        }
-
-        .quality-btn .badge {
-            font-size: 0.6rem;
-            opacity: 0.6;
-            display: block;
-            font-weight: 400;
+        .format-btn.active {
+            background: linear-gradient(135deg, #000000, #6c5ce7);
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
 
         .download-btn {
@@ -1041,12 +1014,8 @@
             .input-group .paste-btn {
                 justify-content: center;
             }
-            .quality-grid {
-                gap: 0.4rem;
-            }
-            .quality-btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.75rem;
+            .format-toggle {
+                flex-direction: column;
             }
             .result-card .video-info {
                 flex-direction: column;
@@ -1081,9 +1050,6 @@
         @media (max-width: 480px) {
             .page-header h1 {
                 font-size: 1.5rem;
-            }
-            .quality-grid {
-                justify-content: center;
             }
             .result-card .action-btns {
                 flex-direction: column;
@@ -1143,21 +1109,24 @@
                 </button>
             </div>
 
-            <div class="quality-section">
-                <span class="label">📊 Select Quality</span>
-                <div class="quality-grid">
-                    <button class="quality-btn active" data-quality="sd">SD <span class="badge">Standard</span></button>
-                    <button class="quality-btn" data-quality="hd">HD <span class="badge">High Quality</span></button>
-                    <button class="quality-btn" data-quality="no-watermark">No Watermark <span class="badge">Best</span></button>
-                </div>
+            <!-- ===== FORMAT TOGGLE ===== -->
+            <div class="format-toggle">
+                <button class="format-btn active" data-format="video">
+                    <i class="fas fa-video"></i> Video (MP4)
+                </button>
+                <button class="format-btn" data-format="audio">
+                    <i class="fas fa-music"></i> Audio (MP3)
+                </button>
             </div>
 
+            <!-- ===== DOWNLOAD BUTTON ===== -->
             <button class="download-btn" id="downloadBtn">
                 <i class="fas fa-download"></i>
                 <span class="btn-text">Download Now</span>
                 <i class="fas fa-spinner spinner"></i>
             </button>
 
+            <!-- ===== PROGRESS ===== -->
             <div class="progress-container" id="progressContainer">
                 <div class="progress-info">
                     <span id="progressText">Preparing...</span>
@@ -1168,18 +1137,21 @@
                 </div>
             </div>
 
+            <!-- ===== STATUS ===== -->
             <div class="status-msg" id="statusMsg"></div>
         </div>
 
+        <!-- ===== RESULT ===== -->
         <div class="result-card glass" id="resultCard">
             <div class="video-info">
                 <img class="thumbnail" id="thumbnail" src="" alt="Thumbnail" />
                 <div class="details">
                     <h3 id="videoTitle">Video Title</h3>
-                    <p id="videoInfo">TikTok Video</p>
+                    <p id="videoInfo">Author • Description</p>
                     <div class="meta">
                         <span id="videoQuality">Quality</span>
                         <span id="videoSize">Size</span>
+                        <span id="videoFormat">Format</span>
                     </div>
                 </div>
             </div>
@@ -1331,13 +1303,15 @@
 
         setTheme(getTheme());
 
-        // ===== QUALITY =====
-        let selectedQuality = 'no-watermark';
-        document.querySelectorAll('.quality-btn').forEach(btn => {
+        // ===== FORMAT TOGGLE =====
+        const formatBtns = document.querySelectorAll('.format-btn');
+        let selectedFormat = 'video';
+
+        formatBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.quality-btn').forEach(b => b.classList.remove('active'));
+                formatBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                selectedQuality = btn.dataset.quality;
+                selectedFormat = btn.dataset.format;
             });
         });
 
@@ -1405,7 +1379,7 @@
                 statusMsg.className = 'status-msg show info';
                 statusMsg.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Fetching from TikTok...`;
 
-                // ===== GET REQUEST WITH ?url= =====
+                // ===== TIKTOK API WITH ?url= =====
                 const response = await fetch(`${TK_API}?url=${encodeURIComponent(url)}`);
 
                 clearInterval(progressInterval);
@@ -1413,29 +1387,45 @@
                 if (response.ok) {
                     const data = await response.json();
 
-                    if (data.success && data.video) {
-                        currentDownloadUrl = data.video;
-                        progressFill.style.width = '100%';
-                        progressPercent.textContent = '100%';
-                        progressText.textContent = '✅ Done!';
+                    if (data.success) {
+                        // Choose video or audio based on format selection
+                        if (selectedFormat === 'video' && data.video) {
+                            currentDownloadUrl = data.video;
+                        } else if (selectedFormat === 'audio' && data.audio) {
+                            currentDownloadUrl = data.audio;
+                        } else {
+                            // Fallback: use video if available
+                            currentDownloadUrl = data.video || data.audio;
+                        }
 
-                        statusMsg.className = 'status-msg show success';
-                        statusMsg.innerHTML = `<i class="fas fa-check-circle"></i> Download ready!`;
+                        if (currentDownloadUrl) {
+                            progressFill.style.width = '100%';
+                            progressPercent.textContent = '100%';
+                            progressText.textContent = '✅ Done!';
 
-                        setTimeout(() => {
-                            document.getElementById('thumbnail').src = 'https://via.placeholder.com/200x120/000000/ffffff?text=TikTok';
-                            document.getElementById('videoTitle').textContent = data.author || 'TikTok Video';
-                            document.getElementById('videoInfo').textContent = data.description || 'TikTok Video';
-                            document.getElementById('videoQuality').textContent = selectedQuality;
-                            document.getElementById('videoSize').textContent = 'Unknown size';
-
-                            resultCard.classList.add('show');
-                            showToast('✅ Download ready! Click Download Now', 'success');
+                            statusMsg.className = 'status-msg show success';
+                            statusMsg.innerHTML = `<i class="fas fa-check-circle"></i> Download ready!`;
 
                             setTimeout(() => {
-                                window.open(currentDownloadUrl, '_blank');
+                                document.getElementById('thumbnail').src = 'https://via.placeholder.com/200x120/000000/ffffff?text=TikTok';
+                                document.getElementById('videoTitle').textContent = data.author || 'TikTok Video';
+                                document.getElementById('videoInfo').textContent = data.description || 'TikTok Video';
+                                document.getElementById('videoQuality').textContent = 'HD';
+                                document.getElementById('videoSize').textContent = 'Processing...';
+                                document.getElementById('videoFormat').textContent = selectedFormat.toUpperCase();
+
+                                resultCard.classList.add('show');
+                                showToast('✅ Download ready! Click Download Now', 'success');
+
+                                setTimeout(() => {
+                                    window.open(currentDownloadUrl, '_blank');
+                                }, 500);
                             }, 500);
-                        }, 500);
+                        } else {
+                            statusMsg.className = 'status-msg show error';
+                            statusMsg.innerHTML = `<i class="fas fa-exclamation-circle"></i> No ${selectedFormat} available.`;
+                            showToast('❌ No download link available', 'error');
+                        }
                     } else {
                         statusMsg.className = 'status-msg show error';
                         statusMsg.innerHTML = `<i class="fas fa-exclamation-circle"></i> Failed to get download link.`;
@@ -1511,6 +1501,7 @@
 
         console.log('%c🎵 DevSave Pro - TikTok Downloader', 'font-size:20px; font-weight:bold; color:#000000;');
         console.log('%c💻 Built with ❤️ by Dev Gift', 'font-size:14px; color:#a0a0c0;');
+        console.log('%c📡 Video & Audio available', 'font-size:12px; color:#00d4ff;');
     </script>
 
 </body>
