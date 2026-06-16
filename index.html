@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
+        /* ===== RESET & VARIABLES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -63,6 +64,7 @@
             }
         }
 
+        /* ===== PAGE LOADING ===== */
         #loadingOverlay {
             position: fixed;
             inset: 0;
@@ -152,6 +154,7 @@
             }
         }
 
+        /* ===== ANIMATED BACKGROUND ===== */
         .gradient-bg {
             position: fixed;
             top: 0;
@@ -180,6 +183,7 @@
             }
         }
 
+        /* ===== PARTICLES ===== */
         #particles-canvas {
             position: fixed;
             top: 0;
@@ -190,6 +194,7 @@
             pointer-events: none;
         }
 
+        /* ===== GLASS CARD ===== */
         .glass {
             background: var(--bg-card);
             backdrop-filter: blur(20px);
@@ -206,6 +211,7 @@
             border-color: rgba(108, 92, 231, 0.3);
         }
 
+        /* ===== NAVBAR ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -338,6 +344,7 @@
             }
         }
 
+        /* ===== HERO ===== */
         .hero {
             position: relative;
             z-index: 1;
@@ -416,6 +423,7 @@
             }
         }
 
+        /* ===== STATS ===== */
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -488,6 +496,7 @@
             color: var(--text-secondary);
         }
 
+        /* ===== PLATFORM GRID ===== */
         .platforms-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -684,6 +693,7 @@
             background: rgba(0, 0, 0, 0.05);
         }
 
+        /* ===== CONTACT ===== */
         .contact-section {
             position: relative;
             z-index: 1;
@@ -863,6 +873,7 @@
             }
         }
 
+        /* ===== WHATSAPP FLOATING ===== */
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
@@ -922,6 +933,7 @@
             transform: translateX(0);
         }
 
+        /* ===== FOOTER ===== */
         .footer {
             position: relative;
             z-index: 1;
@@ -1027,6 +1039,7 @@
             color: var(--accent);
         }
 
+        /* ===== TOAST ===== */
         .toast {
             position: fixed;
             bottom: 100px;
@@ -1073,6 +1086,7 @@
             color: var(--accent2);
         }
 
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.8rem;
@@ -1156,6 +1170,7 @@
     </style>
 </head>
 <body>
+
     <!-- ===== LOADING ===== -->
     <div id="loadingOverlay">
         <div class="loader-ring"></div>
@@ -1217,7 +1232,7 @@
 
         <div class="platforms-grid">
             <a href="youtube.html" class="platform-card youtube glass">
-                <span class="badge">Popular</span>
+                <span class="badge">11 APIs</span>
                 <div class="icon-wrapper"><i class="fab fa-youtube"></i></div>
                 <div class="name">YouTube</div>
                 <div class="desc">MP4 & MP3 Downloader</div>
@@ -1226,7 +1241,7 @@
             </a>
 
             <a href="facebook.html" class="platform-card facebook glass">
-                <span class="badge">Popular</span>
+                <span class="badge">3 APIs</span>
                 <div class="icon-wrapper"><i class="fab fa-facebook"></i></div>
                 <div class="name">Facebook</div>
                 <div class="desc">Video & Reel Download</div>
@@ -1235,7 +1250,7 @@
             </a>
 
             <a href="instagram.html" class="platform-card instagram glass">
-                <span class="badge">New</span>
+                <span class="badge">1 API</span>
                 <div class="icon-wrapper"><i class="fab fa-instagram"></i></div>
                 <div class="name">Instagram</div>
                 <div class="desc">Reel & Story Download</div>
@@ -1244,7 +1259,7 @@
             </a>
 
             <a href="tiktok.html" class="platform-card tiktok glass">
-                <span class="badge">Popular</span>
+                <span class="badge">4 APIs</span>
                 <div class="icon-wrapper"><i class="fab fa-tiktok"></i></div>
                 <div class="name">TikTok</div>
                 <div class="desc">No Watermark Download</div>
@@ -1253,7 +1268,7 @@
             </a>
 
             <a href="spotify.html" class="platform-card spotify glass">
-                <span class="badge">New</span>
+                <span class="badge">2 APIs</span>
                 <div class="icon-wrapper"><i class="fab fa-spotify"></i></div>
                 <div class="name">Spotify</div>
                 <div class="desc">Track & Playlist Download</div>
@@ -1262,7 +1277,7 @@
             </a>
 
             <a href="gdrive.html" class="platform-card gdrive glass">
-                <span class="badge">Beta</span>
+                <span class="badge">1 API</span>
                 <div class="icon-wrapper"><i class="fab fa-google-drive"></i></div>
                 <div class="name">Google Drive</div>
                 <div class="desc">File & Folder Download</div>
@@ -1575,6 +1590,7 @@
         console.log('%c⚡ DevSave Pro Ultimate v3.0', 'font-size:24px; font-weight:bold; color:#6c5ce7;');
         console.log('%c💻 Built with ❤️ by Dev Gift', 'font-size:14px; color:#a0a0c0;');
         console.log('%c🚀 Download anything from anywhere!', 'font-size:14px; color:#00b4d8;');
+        console.log('%c📧 Email: devvgift@gmail.com', 'font-size:12px; color:#ea4335;');
     </script>
 
 </body>
