@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        /* ===== SAME STYLES AS YOUTUBE WITH FACEBOOK COLORS ===== */
         * {
             margin: 0;
             padding: 0;
@@ -1362,8 +1361,8 @@
         const resultCard = document.getElementById('resultCard');
         const statusMsg = document.getElementById('statusMsg');
 
-        // ===== FACEBOOK API - WORKING =====
-        const FB_API = 'https://apis.davidcyril.name.ng/download/facebook';
+        // ===== FACEBOOK API V3 - WORKING =====
+        const FB_API = 'https://apis.davidcyril.name.ng/facebook3';
 
         let currentDownloadUrl = '';
 
@@ -1405,7 +1404,7 @@
                 statusMsg.className = 'status-msg show info';
                 statusMsg.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Fetching from Facebook...`;
 
-                // ===== GET REQUEST WITH ?url= =====
+                // ===== FACEBOOK API V3 WITH ?url= =====
                 const response = await fetch(`${FB_API}?url=${encodeURIComponent(url)}`);
 
                 clearInterval(progressInterval);
@@ -1413,8 +1412,8 @@
                 if (response.ok) {
                     const data = await response.json();
 
-                    if (data.success && data.downloadUrl) {
-                        currentDownloadUrl = data.downloadUrl;
+                    if (data.url) {
+                        currentDownloadUrl = data.url;
                         progressFill.style.width = '100%';
                         progressPercent.textContent = '100%';
                         progressText.textContent = '✅ Done!';
@@ -1423,11 +1422,11 @@
                         statusMsg.innerHTML = `<i class="fas fa-check-circle"></i> Download ready!`;
 
                         setTimeout(() => {
-                            document.getElementById('thumbnail').src = data.thumbnail || 'https://via.placeholder.com/200x120/1877f2/ffffff?text=Facebook';
-                            document.getElementById('videoTitle').textContent = data.title || 'Facebook Video';
+                            document.getElementById('thumbnail').src = data.cover || 'https://via.placeholder.com/200x120/1877f2/ffffff?text=Facebook';
+                            document.getElementById('videoTitle').textContent = 'Facebook Video';
                             document.getElementById('videoInfo').textContent = 'Facebook Video';
                             document.getElementById('videoQuality').textContent = selectedQuality.toUpperCase();
-                            document.getElementById('videoSize').textContent = data.size || 'Unknown size';
+                            document.getElementById('videoSize').textContent = 'Processing...';
 
                             resultCard.classList.add('show');
                             showToast('✅ Download ready! Click Download Now', 'success');
@@ -1511,6 +1510,7 @@
 
         console.log('%c📘 DevSave Pro - Facebook Downloader', 'font-size:20px; font-weight:bold; color:#1877f2;');
         console.log('%c💻 Built with ❤️ by Dev Gift', 'font-size:14px; color:#a0a0c0;');
+        console.log('%c📡 Using Facebook API V3', 'font-size:12px; color:#00d4ff;');
     </script>
 
 </body>
