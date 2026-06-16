@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        /* ============================================================
-           RESET & VARIABLES
-           ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -66,9 +63,6 @@
             }
         }
 
-        /* ============================================================
-           PAGE LOADING OVERLAY
-           ============================================================ */
         #loadingOverlay {
             position: fixed;
             inset: 0;
@@ -158,9 +152,6 @@
             }
         }
 
-        /* ============================================================
-           ANIMATED BACKGROUND
-           ============================================================ */
         .gradient-bg {
             position: fixed;
             top: 0;
@@ -189,9 +180,6 @@
             }
         }
 
-        /* ============================================================
-           PARTICLES CANVAS
-           ============================================================ */
         #particles-canvas {
             position: fixed;
             top: 0;
@@ -202,9 +190,6 @@
             pointer-events: none;
         }
 
-        /* ============================================================
-           GLASS CARD
-           ============================================================ */
         .glass {
             background: var(--bg-card);
             backdrop-filter: blur(20px);
@@ -221,9 +206,6 @@
             border-color: rgba(108, 92, 231, 0.3);
         }
 
-        /* ============================================================
-           NAVBAR
-           ============================================================ */
         .navbar {
             position: fixed;
             top: 0;
@@ -356,9 +338,6 @@
             }
         }
 
-        /* ============================================================
-           HERO SECTION
-           ============================================================ */
         .hero {
             position: relative;
             z-index: 1;
@@ -437,9 +416,6 @@
             }
         }
 
-        /* ============================================================
-           STATS
-           ============================================================ */
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -512,9 +488,6 @@
             color: var(--text-secondary);
         }
 
-        /* ============================================================
-           PLATFORM GRID
-           ============================================================ */
         .platforms-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -533,6 +506,7 @@
             position: relative;
             overflow: hidden;
             animation: cardFadeUp 0.8s ease both;
+            display: block;
         }
 
         .platform-card:nth-child(1) {
@@ -658,7 +632,29 @@
             opacity: 0.7;
         }
 
-        /* Platform Colors */
+        .platform-card .active-status {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            background: rgba(0, 255, 0, 0.15);
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            animation: pulseActive 2s infinite;
+        }
+
+        @keyframes pulseActive {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
         .platform-card.youtube .icon-wrapper {
             background: rgba(255, 0, 0, 0.15);
             color: #ff0000;
@@ -688,9 +684,6 @@
             background: rgba(0, 0, 0, 0.05);
         }
 
-                /* ============================================================
-           CONTACT / ABOUT SECTION
-           ============================================================ */
         .contact-section {
             position: relative;
             z-index: 1;
@@ -816,8 +809,9 @@
             gap: 0.8rem;
             position: relative;
             overflow: hidden;
-          }
-             .contact-card .contact-form .send-btn::before {
+        }
+
+        .contact-card .contact-form .send-btn::before {
             content: '';
             position: absolute;
             inset: 0;
@@ -869,9 +863,6 @@
             }
         }
 
-        /* ============================================================
-           WHATSAPP FLOATING
-           ============================================================ */
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
@@ -929,11 +920,8 @@
         .whatsapp-float:hover .tooltip {
             opacity: 1;
             transform: translateX(0);
-          }
-      
-        /* ============================================================
-           FOOTER
-           ============================================================ */
+        }
+
         .footer {
             position: relative;
             z-index: 1;
@@ -1039,9 +1027,6 @@
             color: var(--accent);
         }
 
-        /* ============================================================
-           TOAST NOTIFICATION
-           ============================================================ */
         .toast {
             position: fixed;
             bottom: 100px;
@@ -1088,51 +1073,39 @@
             color: var(--accent2);
         }
 
-        /* ============================================================
-           RESPONSIVE
-           ============================================================ */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.8rem;
             }
-
             .hero p {
                 font-size: 1rem;
             }
-
             .platforms-grid {
                 grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
                 gap: 1rem;
             }
-
             .platform-card {
                 padding: 1.5rem 1rem;
             }
-
             .platform-card .icon-wrapper {
                 width: 60px;
                 height: 60px;
                 font-size: 2rem;
             }
-
             .stats {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
             }
-
             .navbar {
                 padding: 0.8rem 1rem;
             }
-
             .logo {
                 font-size: 1.4rem;
             }
-
             .version-badge {
                 font-size: 0.6rem;
                 padding: 0.2rem 0.6rem;
             }
-
             .whatsapp-float {
                 width: 55px;
                 height: 55px;
@@ -1140,20 +1113,16 @@
                 bottom: 20px;
                 right: 20px;
             }
-
             .whatsapp-float .tooltip {
                 display: none;
             }
-
             .contact-card .contact-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
-
             .contact-section .section-title {
                 font-size: 2rem;
             }
-
             .contact-card {
                 padding: 1.5rem;
             }
@@ -1163,29 +1132,23 @@
             .hero h1 {
                 font-size: 2rem;
             }
-
             .platforms-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 0.8rem;
             }
-
             .platform-card .name {
                 font-size: 0.9rem;
             }
-
             .platform-card .desc {
                 font-size: 0.7rem;
             }
-
             .stats {
                 grid-template-columns: 1fr 1fr;
                 gap: 0.8rem;
             }
-
             .stat-item {
                 padding: 1rem;
             }
-
             .stat-number {
                 font-size: 1.4rem;
             }
@@ -1193,9 +1156,7 @@
     </style>
 </head>
 <body>
-      <!-- ============================================================
-    PAGE LOADING OVERLAY
-    ============================================================ -->
+    <!-- ===== LOADING ===== -->
     <div id="loadingOverlay">
         <div class="loader-ring"></div>
         <div class="loader-text">Loading <span>DevSave Pro</span></div>
@@ -1204,35 +1165,25 @@
         </div>
     </div>
 
-    <!-- ============================================================
-    ANIMATED BACKGROUND
-    ============================================================ -->
+    <!-- ===== BACKGROUND ===== -->
     <div class="gradient-bg"></div>
-
-    <!-- ============================================================
-    PARTICLES CANVAS
-    ============================================================ -->
     <canvas id="particles-canvas"></canvas>
 
-    <!-- ============================================================
-    NAVBAR
-    ============================================================ -->
+    <!-- ===== NAVBAR ===== -->
     <nav class="navbar">
-        <a href="/" class="logo">
+        <a href="index.html" class="logo">
             <i class="fas fa-bolt"></i>
             DevSave Pro
         </a>
         <div class="nav-actions">
             <span class="version-badge">v3.0</span>
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <button class="theme-toggle" id="themeToggle">
                 <i class="fas fa-moon"></i>
             </button>
         </div>
     </nav>
 
-    <!-- ============================================================
-    HERO SECTION
-    ============================================================ -->
+    <!-- ===== HERO ===== -->
     <section class="hero">
         <div class="subtitle">
             <i class="fas fa-rocket"></i>
@@ -1265,59 +1216,63 @@
         </div>
 
         <div class="platforms-grid">
-            <a href="/youtube" class="platform-card youtube glass">
-                <span class="badge">Active</span>
+            <a href="youtube.html" class="platform-card youtube glass">
+                <span class="badge">Popular</span>
                 <div class="icon-wrapper"><i class="fab fa-youtube"></i></div>
                 <div class="name">YouTube</div>
                 <div class="desc">MP4 & MP3 Downloader</div>
                 <div class="api-count">1080p • 320kbps</div>
+                <span class="active-status"><i class="fas fa-circle" style="font-size:0.4rem; margin-right:4px;"></i> Active</span>
             </a>
 
-            <a href="/facebook" class="platform-card facebook glass">
-                <span class="badge">Active</span>
+            <a href="facebook.html" class="platform-card facebook glass">
+                <span class="badge">Popular</span>
                 <div class="icon-wrapper"><i class="fab fa-facebook"></i></div>
                 <div class="name">Facebook</div>
                 <div class="desc">Video & Reel Download</div>
                 <div class="api-count">HD Quality</div>
+                <span class="active-status"><i class="fas fa-circle" style="font-size:0.4rem; margin-right:4px;"></i> Active</span>
             </a>
 
-            <a href="/instagram" class="platform-card instagram glass">
-                <span class="badge">Active</span>
+            <a href="instagram.html" class="platform-card instagram glass">
+                <span class="badge">New</span>
                 <div class="icon-wrapper"><i class="fab fa-instagram"></i></div>
                 <div class="name">Instagram</div>
                 <div class="desc">Reel & Story Download</div>
                 <div class="api-count">HD Quality</div>
+                <span class="active-status"><i class="fas fa-circle" style="font-size:0.4rem; margin-right:4px;"></i> Active</span>
             </a>
 
-            <a href="/tiktok" class="platform-card tiktok glass">
-                <span class="badge">Active</span>
+            <a href="tiktok.html" class="platform-card tiktok glass">
+                <span class="badge">Popular</span>
                 <div class="icon-wrapper"><i class="fab fa-tiktok"></i></div>
                 <div class="name">TikTok</div>
                 <div class="desc">No Watermark Download</div>
                 <div class="api-count">HD Quality</div>
+                <span class="active-status"><i class="fas fa-circle" style="font-size:0.4rem; margin-right:4px;"></i> Active</span>
             </a>
 
-            <a href="/spotify" class="platform-card spotify glass">
-                <span class="badge">Active</span>
+            <a href="spotify.html" class="platform-card spotify glass">
+                <span class="badge">New</span>
                 <div class="icon-wrapper"><i class="fab fa-spotify"></i></div>
                 <div class="name">Spotify</div>
                 <div class="desc">Track & Playlist Download</div>
                 <div class="api-count">320kbps</div>
+                <span class="active-status"><i class="fas fa-circle" style="font-size:0.4rem; margin-right:4px;"></i> Active</span>
             </a>
 
-            <a href="/gdrive" class="platform-card gdrive glass">
-                <span class="badge">Actiy</span>
+            <a href="gdrive.html" class="platform-card gdrive glass">
+                <span class="badge">Beta</span>
                 <div class="icon-wrapper"><i class="fab fa-google-drive"></i></div>
                 <div class="name">Google Drive</div>
                 <div class="desc">File & Folder Download</div>
                 <div class="api-count">Direct Download</div>
+                <span class="active-status"><i class="fas fa-circle" style="font-size:0.4rem; margin-right:4px;"></i> Active</span>
             </a>
         </div>
-  </section>
-  
-    <!-- ============================================================
-    CONTACT SECTION
-    ============================================================ -->
+    </section>
+
+    <!-- ===== CONTACT ===== -->
     <section class="contact-section" id="contact">
         <div class="section-title">
             <i class="fas fa-envelope"></i> Get in Touch
@@ -1327,7 +1282,7 @@
                 <div class="contact-info">
                     <h3>📬 Contact Us</h3>
                     <p>Have questions or need help? Reach out to us anytime!</p>
-                    <div class="info-item" onclick="window.location.href='mailto:devgift@example.com'">
+                    <div class="info-item" onclick="window.location.href='mailto:devvgift@gmail.com'">
                         <i class="fas fa-envelope"></i>
                         <span>devvgift@gmail.com</span>
                     </div>
@@ -1338,10 +1293,6 @@
                     <div class="info-item" onclick="window.location.href='https://www.facebook.com/profile.php?id=100083300451857'">
                         <i class="fab fa-facebook"></i>
                         <span>Dev Gift</span>
-                    </div>
-                    <div class="info-item" onclick="window.location.href='#'">
-                        <i class="fab fa-twitter"></i>
-                        <span>@DevGift</span>
                     </div>
                 </div>
                 <form class="contact-form" id="contactForm">
@@ -1367,65 +1318,40 @@
         </div>
     </section>
 
-    <!-- ============================================================
-    FOOTER
-    ============================================================ -->
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="footer-socials">
-            <a href="https://www.facebook.com/profile.php?id=100083300451857" target="_blank" class="facebook" aria-label="Facebook">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="https://wa.me/2349164624021" target="_blank" class="whatsapp" aria-label="WhatsApp">
-                <i class="fab fa-whatsapp"></i>
-            </a>
-            <a href="#" target="_blank" class="instagram" aria-label="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="#" target="_blank" class="twitter" aria-label="Twitter">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" target="_blank" class="telegram" aria-label="Telegram">
-                <i class="fab fa-telegram-plane"></i>
-            </a>
-            <a href="mailto:devvgift@gmail.com" class="email" aria-label="Email">
-                <i class="fas fa-envelope"></i>
-            </a>
-            <a href="#" target="_blank" class="github" aria-label="GitHub">
-                <i class="fab fa-github"></i>
-            </a>
+            <a href="https://www.facebook.com/profile.php?id=100083300451857" target="_blank" class="facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/2349164624021" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" target="_blank" class="twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" target="_blank" class="telegram"><i class="fab fa-telegram-plane"></i></a>
+            <a href="mailto:devvgift@gmail.com" class="email"><i class="fas fa-envelope"></i></a>
+            <a href="#" target="_blank" class="github"><i class="fab fa-github"></i></a>
         </div>
         <p>
-            © 2025 <a href="/">DevSave Pro</a> — Developed with ❤️ by 
+            © 2025 <a href="index.html">DevSave Pro</a> — Developed with ❤️ by
             <a href="https://www.facebook.com/profile.php?id=100083300451857" target="_blank">Dev Gift</a>
             <br />
             <span style="font-size: 0.7rem; opacity: 0.5;">All Rights Reserved</span>
         </p>
     </footer>
-    
-    <!-- ============================================================
-    WHATSAPP FLOATING BUTTON
-    ============================================================ -->
-    <a href="https://wa.me/2349164624021" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+
+    <!-- ===== WHATSAPP ===== -->
+    <a href="https://wa.me/2349164624021" target="_blank" class="whatsapp-float">
         <i class="fab fa-whatsapp"></i>
         <span class="tooltip">Chat with us 💬</span>
     </a>
 
-    <!-- ============================================================
-    JAVASCRIPT
-    ============================================================ -->
+    <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // ============================================================
-        // PAGE LOADING
-        // ============================================================
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('loadingOverlay').classList.add('hidden');
             }, 1500);
         });
 
-        // ============================================================
-        // PARTICLES
-        // ============================================================
+        // ===== PARTICLES =====
         (function particles() {
             const canvas = document.getElementById('particles-canvas');
             const ctx = canvas.getContext('2d');
@@ -1510,9 +1436,7 @@
             });
         })();
 
-        // ============================================================
-        // THEME TOGGLE
-        // ============================================================
+        // ===== THEME =====
         const themeToggle = document.getElementById('themeToggle');
         const icon = themeToggle.querySelector('i');
 
@@ -1533,9 +1457,7 @@
 
         setTheme(getTheme());
 
-        // ============================================================
-        // STATS COUNTER
-        // ============================================================
+        // ===== STATS =====
         function animateCounter(element, target, duration = 2000) {
             const start = 0;
             const startTime = performance.now();
@@ -1578,9 +1500,8 @@
                 localStorage.setItem('todayDownloads', currentToday + 1);
             });
         });
-             // ============================================================
-        // CONTACT FORM - Send Email
-        // ============================================================
+
+        // ===== CONTACT FORM =====
         const contactForm = document.getElementById('contactForm');
         const sendBtn = document.getElementById('sendBtn');
 
@@ -1598,35 +1519,19 @@
 
             sendBtn.classList.add('loading');
 
-            // Using mailto as fallback
             const subject = `Message from ${name} - DevSave Pro`;
             const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
 
-            // Try to send via mailto
             setTimeout(() => {
-                window.location.href = `mailto:devgift@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                window.location.href =
+                    `mailto:devvgift@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
                 sendBtn.classList.remove('loading');
                 showToast('✅ Message sent successfully!', 'success');
                 contactForm.reset();
             }, 1500);
-
-            // You can replace the above with your API endpoint:
-            // const response = await fetch('YOUR_API_ENDPOINT', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ name, email, message })
-            // });
-            // if (response.ok) {
-            //     showToast('✅ Message sent successfully!', 'success');
-            //     contactForm.reset();
-            // } else {
-            //     showToast('❌ Failed to send message', 'error');
-            // }
         });
 
-        // ============================================================
-        // TOAST NOTIFICATION
-        // ============================================================
+        // ===== TOAST =====
         function showToast(message, type = 'info') {
             const existing = document.querySelector('.toast');
             if (existing) existing.remove();
@@ -1651,13 +1556,11 @@
             }, 4000);
         }
 
-        // ============================================================
-        // KEYBOARD SHORTCUTS
-        // ============================================================
+        // ===== KEYBOARD =====
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.key === 'd') {
                 e.preventDefault();
-                window.location.href = '/youtube';
+                window.location.href = 'youtube.html';
             }
             if (e.ctrlKey && e.key === 'h') {
                 e.preventDefault();
@@ -1669,13 +1572,9 @@
             }
         });
 
-        // ============================================================
-        // CONSOLE WELCOME
-        // ============================================================
         console.log('%c⚡ DevSave Pro Ultimate v3.0', 'font-size:24px; font-weight:bold; color:#6c5ce7;');
         console.log('%c💻 Built with ❤️ by Dev Gift', 'font-size:14px; color:#a0a0c0;');
         console.log('%c🚀 Download anything from anywhere!', 'font-size:14px; color:#00b4d8;');
-        console.log('%c📋 Shortcuts: Ctrl+D (YouTube) | Ctrl+H (History) | Ctrl+C (Contact)', 'font-size:12px; color:#f72585;');
     </script>
 
 </body>
