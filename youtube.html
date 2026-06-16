@@ -595,7 +595,7 @@
 
         .source-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
             gap: 0.8rem;
         }
 
@@ -663,18 +663,22 @@
             display: inline;
         }
 
+        .source-btn .spinner {
+            display: none;
+        }
+        .source-btn.loading-source .spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
         .source-btn.loading-source {
             opacity: 0.6;
             pointer-events: none;
         }
 
-        .source-btn.loading-source .spinner {
-            display: inline-block;
-            animation: spin 1s linear infinite;
-        }
-
-        .source-btn .spinner {
-            display: none;
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .download-btn {
@@ -743,12 +747,6 @@
         }
         .download-btn.loading .btn-text {
             display: none;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
         }
 
         .progress-container {
@@ -1184,7 +1182,7 @@
                 flex-direction: column;
             }
             .source-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
             }
             .result-card .video-info {
                 flex-direction: column;
@@ -1219,6 +1217,9 @@
         @media (max-width: 480px) {
             .page-header h1 {
                 font-size: 1.5rem;
+            }
+            .source-grid {
+                grid-template-columns: 1fr;
             }
             .quality-grid {
                 justify-content: center;
@@ -1316,7 +1317,7 @@
             <div class="source-section">
                 <span class="label">📡 Download Source</span>
                 <div class="source-grid" id="sourceGrid">
-                    <button class="source-btn" data-source="0">
+                    <button class="source-btn active-source" data-source="0">
                         <i class="fas fa-server"></i>
                         <span>Source 1</span>
                         <span class="status">• Fast</span>
@@ -1583,8 +1584,6 @@
                 selectedSource = parseInt(btn.dataset.source);
             });
         });
-        // Set first as active
-        sourceBtns[0].classList.add('active-source');
 
         // ===== PASTE =====
         document.getElementById('pasteBtn').addEventListener('click', async () => {
@@ -1607,6 +1606,7 @@
         const resultCard = document.getElementById('resultCard');
         const statusMsg = document.getElementById('statusMsg');
 
+        // ===== YOUTUBE API LIST - FIXED FORMAT =====
         const YT_APIS = [
             'https://apis.davidcyril.name.ng/download/yt',
             'https://apis.davidcyril.name.ng/download/ytv3',
@@ -1681,15 +1681,8 @@
                         statusMsg.innerHTML =
                             `<i class="fas fa-spinner fa-spin"></i> Trying Source ${(i + 1)}...`;
 
-                        const response = await fetch(api, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                url: url,
-                                quality: selectedQuality,
-                                format: selectedFormat
-                            })
-                        });
+                        // ===== FIXED: Using ?url= parameter =====
+                        const response = await fetch(`${api}?url=${encodeURIComponent(url)}`);
 
                         if (response.ok) {
                             const data = await response.json();
