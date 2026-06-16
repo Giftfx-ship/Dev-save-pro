@@ -63,7 +63,6 @@
             }
         }
 
-        /* ===== PAGE LOADING ===== */
         #loadingOverlay {
             position: fixed;
             inset: 0;
@@ -153,7 +152,6 @@
             }
         }
 
-        /* ===== BACKGROUND ===== */
         .gradient-bg {
             position: fixed;
             top: 0;
@@ -182,7 +180,6 @@
             }
         }
 
-        /* ===== PARTICLES ===== */
         #particles-canvas {
             position: fixed;
             top: 0;
@@ -193,7 +190,6 @@
             pointer-events: none;
         }
 
-        /* ===== GLASS ===== */
         .glass {
             background: var(--bg-card);
             backdrop-filter: blur(20px);
@@ -210,7 +206,6 @@
             border-color: rgba(255, 0, 0, 0.3);
         }
 
-        /* ===== NAVBAR ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -346,7 +341,6 @@
             }
         }
 
-        /* ===== CONTAINER ===== */
         .container {
             position: relative;
             z-index: 1;
@@ -401,23 +395,29 @@
             font-size: 1.1rem;
         }
 
-        .page-header .api-count {
+        .page-header .active-status {
             display: inline-block;
-            background: var(--bg-card);
+            margin-top: 0.5rem;
             padding: 0.3rem 1.2rem;
             border-radius: 50px;
-            border: 1px solid var(--border-glass);
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 1rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: rgba(0, 255, 0, 0.15);
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            animation: pulseActive 2s infinite;
         }
 
-        .page-header .api-count i {
-            color: #ff0000;
-            margin-right: 0.5rem;
+        @keyframes pulseActive {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
         }
 
-        /* ===== DOWNLOAD CARD ===== */
         .download-card {
             padding: 2.5rem;
             animation: fadeUp 0.8s ease 0.2s both;
@@ -476,7 +476,6 @@
             transform: scale(1.05);
         }
 
-        /* ===== FORMAT TOGGLE ===== */
         .format-toggle {
             display: flex;
             gap: 1rem;
@@ -516,7 +515,6 @@
             box-shadow: 0 4px 20px rgba(255, 0, 0, 0.3);
         }
 
-        /* ===== QUALITY SELECTOR ===== */
         .quality-section {
             margin: 1.5rem 0;
         }
@@ -583,7 +581,102 @@
             font-weight: 400;
         }
 
-        /* ===== DOWNLOAD BUTTON ===== */
+        .source-section {
+            margin: 1.5rem 0;
+        }
+
+        .source-section .label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .source-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .source-btn {
+            padding: 0.8rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border-glass);
+            border-radius: 10px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .source-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #ff0000, #6c5ce7);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .source-btn:hover::before {
+            opacity: 0.15;
+        }
+
+        .source-btn:hover {
+            transform: translateY(-3px);
+            border-color: #ff0000;
+            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.15);
+        }
+
+        .source-btn i,
+        .source-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .source-btn .status {
+            font-size: 0.6rem;
+            opacity: 0.6;
+            font-weight: 400;
+        }
+
+        .source-btn .check {
+            color: #00ff88;
+            display: none;
+        }
+
+        .source-btn.active-source {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .source-btn.active-source .check {
+            display: inline;
+        }
+
+        .source-btn.loading-source {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .source-btn.loading-source .spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+
+        .source-btn .spinner {
+            display: none;
+        }
+
         .download-btn {
             width: 100%;
             padding: 1.2rem;
@@ -658,7 +751,6 @@
             }
         }
 
-        /* ===== PROGRESS ===== */
         .progress-container {
             display: none;
             margin-top: 1.5rem;
@@ -707,7 +799,6 @@
             margin-bottom: 0.3rem;
         }
 
-        /* ===== RESULT ===== */
         .result-card {
             display: none;
             margin-top: 2rem;
@@ -772,44 +863,58 @@
             flex-wrap: wrap;
         }
 
-        .result-card .action-btns a {
+        .result-card .action-btns .download-now-btn {
             flex: 1;
             min-width: 150px;
             padding: 0.8rem 1.5rem;
             border-radius: 12px;
             text-align: center;
             text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #ff0000, #6c5ce7);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+        }
+
+        .result-card .action-btns .download-now-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(255, 0, 0, 0.3);
+        }
+
+        .result-card .action-btns .copy-link-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            text-align: center;
             font-weight: 600;
             transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-        }
-
-        .result-card .action-btns .download-link {
-            background: linear-gradient(135deg, #ff0000, #6c5ce7);
-            color: white;
-        }
-
-        .result-card .action-btns .download-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 32px rgba(255, 0, 0, 0.3);
-        }
-
-        .result-card .action-btns .copy-link {
             background: var(--bg-card);
             color: var(--text-primary);
             border: 1px solid var(--border-glass);
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
         }
 
-        .result-card .action-btns .copy-link:hover {
+        .result-card .action-btns .copy-link-btn:hover {
             border-color: #ff0000;
             transform: translateY(-3px);
         }
 
-        /* ===== API STATUS ===== */
-        .api-status {
+        .status-msg {
             margin-top: 1rem;
             padding: 0.8rem 1.2rem;
             border-radius: 10px;
@@ -820,29 +925,28 @@
             animation: fadeUp 0.4s ease;
         }
 
-        .api-status.show {
+        .status-msg.show {
             display: flex;
         }
 
-        .api-status.info {
+        .status-msg.info {
             background: rgba(0, 180, 216, 0.1);
             border: 1px solid rgba(0, 180, 216, 0.3);
             color: #00b4d8;
         }
 
-        .api-status.success {
+        .status-msg.success {
             background: rgba(0, 255, 0, 0.05);
             border: 1px solid rgba(0, 255, 0, 0.2);
             color: #00ff88;
         }
 
-        .api-status.error {
+        .status-msg.error {
             background: rgba(255, 0, 0, 0.05);
             border: 1px solid rgba(255, 0, 0, 0.2);
             color: #ff4444;
         }
 
-        /* ===== WHATSAPP FLOATING ===== */
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
@@ -902,7 +1006,6 @@
             transform: translateX(0);
         }
 
-        /* ===== FOOTER ===== */
         .footer {
             position: relative;
             z-index: 1;
@@ -1006,8 +1109,8 @@
 
         .footer p a:hover {
             color: #6c5ce7;
-  }
-      /* ===== TOAST ===== */
+        }
+
         .toast {
             position: fixed;
             bottom: 100px;
@@ -1054,64 +1157,53 @@
             color: var(--accent2);
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .container {
                 padding: 100px 1rem 2rem;
             }
-
             .page-header h1 {
                 font-size: 2rem;
             }
-
             .download-card {
                 padding: 1.5rem;
             }
-
             .input-group {
                 flex-direction: column;
             }
-
             .input-group .paste-btn {
                 justify-content: center;
             }
-
             .quality-grid {
                 gap: 0.4rem;
             }
-
             .quality-btn {
                 padding: 0.4rem 0.8rem;
                 font-size: 0.75rem;
             }
-
             .format-toggle {
                 flex-direction: column;
             }
-
+            .source-grid {
+                grid-template-columns: 1fr;
+            }
             .result-card .video-info {
                 flex-direction: column;
                 align-items: center;
             }
-
             .result-card .thumbnail {
                 width: 100%;
                 height: auto;
                 aspect-ratio: 16/9;
             }
-
             .navbar {
                 padding: 0.8rem 1rem;
             }
-
             .logo {
                 font-size: 1.4rem;
             }
-
             .back-btn span {
                 display: none;
             }
-
             .whatsapp-float {
                 width: 55px;
                 height: 55px;
@@ -1119,7 +1211,6 @@
                 bottom: 20px;
                 right: 20px;
             }
-
             .whatsapp-float .tooltip {
                 display: none;
             }
@@ -1129,11 +1220,9 @@
             .page-header h1 {
                 font-size: 1.5rem;
             }
-
             .quality-grid {
                 justify-content: center;
             }
-
             .result-card .action-btns {
                 flex-direction: column;
             }
@@ -1141,7 +1230,8 @@
     </style>
 </head>
 <body>
-  <!-- ===== LOADING ===== -->
+
+    <!-- ===== LOADING ===== -->
     <div id="loadingOverlay">
         <div class="loader-ring"></div>
         <div class="loader-text">Loading <span>YouTube Downloader</span></div>
@@ -1156,14 +1246,14 @@
 
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar">
-        <a href="/" class="logo">
+        <a href="index.html" class="logo">
             <i class="fas fa-bolt"></i>
             DevSave Pro
         </a>
         <div class="nav-actions">
-            <a href="/" class="back-btn">
+            <a href="index.html" class="back-btn">
                 <i class="fas fa-arrow-left"></i>
-                <span>Back</span>
+                <span>Back to Home</span>
             </a>
             <span class="version-badge">v3.0</span>
             <button class="theme-toggle" id="themeToggle">
@@ -1178,8 +1268,8 @@
             <i class="fab fa-youtube icon"></i>
             <h1>YouTube Downloader</h1>
             <p>Download videos & audio in high quality</p>
-            <div class="api-count">
-                <i class="fas fa-server"></i> 11 APIs Available • Auto Fallback
+            <div class="active-status">
+                <i class="fas fa-circle" style="font-size:0.5rem; margin-right:6px;"></i> Active
             </div>
         </div>
 
@@ -1191,7 +1281,6 @@
                 </button>
             </div>
 
-            <!-- Format Toggle -->
             <div class="format-toggle">
                 <button class="format-btn active" data-format="mp4">
                     <i class="fas fa-video"></i> Video (MP4)
@@ -1201,7 +1290,6 @@
                 </button>
             </div>
 
-            <!-- Quality Selector -->
             <div class="quality-section" id="videoQualities">
                 <span class="label">📊 Select Quality</span>
                 <div class="quality-grid">
@@ -1224,14 +1312,50 @@
                 </div>
             </div>
 
-            <!-- Download Button -->
+            <!-- ===== SOURCE SELECTOR ===== -->
+            <div class="source-section">
+                <span class="label">📡 Download Source</span>
+                <div class="source-grid" id="sourceGrid">
+                    <button class="source-btn" data-source="0">
+                        <i class="fas fa-server"></i>
+                        <span>Source 1</span>
+                        <span class="status">• Fast</span>
+                        <i class="fas fa-check check"></i>
+                        <i class="fas fa-spinner spinner"></i>
+                    </button>
+                    <button class="source-btn" data-source="1">
+                        <i class="fas fa-server"></i>
+                        <span>Source 2</span>
+                        <span class="status">• Backup</span>
+                        <i class="fas fa-check check"></i>
+                        <i class="fas fa-spinner spinner"></i>
+                    </button>
+                    <button class="source-btn" data-source="2">
+                        <i class="fas fa-server"></i>
+                        <span>Source 3</span>
+                        <span class="status">• HD</span>
+                        <i class="fas fa-check check"></i>
+                        <i class="fas fa-spinner spinner"></i>
+                    </button>
+                    <button class="source-btn" data-source="3">
+                        <i class="fas fa-server"></i>
+                        <span>Source 4</span>
+                        <span class="status">• Premium</span>
+                        <i class="fas fa-check check"></i>
+                        <i class="fas fa-spinner spinner"></i>
+                    </button>
+                </div>
+                <p style="font-size:0.7rem; color:var(--text-secondary); margin-top:0.5rem; opacity:0.6;">
+                    <i class="fas fa-info-circle"></i> If one source fails, try another
+                </p>
+            </div>
+
             <button class="download-btn" id="downloadBtn">
                 <i class="fas fa-download"></i>
-                <span class="btn-text">Get Download Link</span>
+                <span class="btn-text">Download Now</span>
                 <i class="fas fa-spinner spinner"></i>
             </button>
 
-            <!-- Progress -->
             <div class="progress-container" id="progressContainer">
                 <div class="progress-info">
                     <span id="progressText">Preparing...</span>
@@ -1242,11 +1366,9 @@
                 </div>
             </div>
 
-            <!-- API Status -->
-            <div class="api-status" id="apiStatus"></div>
+            <div class="status-msg" id="statusMsg"></div>
         </div>
 
-        <!-- Result -->
         <div class="result-card glass" id="resultCard">
             <div class="video-info">
                 <img class="thumbnail" id="thumbnail" src="" alt="Thumbnail" />
@@ -1261,16 +1383,17 @@
                 </div>
             </div>
             <div class="action-btns">
-                <a href="#" class="download-link" id="downloadLink" target="_blank">
+                <button class="download-now-btn" id="downloadNowBtn">
                     <i class="fas fa-download"></i> Download Now
-                </a>
-                <button class="copy-link" id="copyLinkBtn">
+                </button>
+                <button class="copy-link-btn" id="copyLinkBtn">
                     <i class="fas fa-copy"></i> Copy Link
                 </button>
             </div>
         </div>
-  </div>
- <!-- ===== FOOTER ===== -->
+    </div>
+
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="footer-socials">
             <a href="https://www.facebook.com/profile.php?id=100083300451857" target="_blank" class="facebook"><i class="fab fa-facebook-f"></i></a>
@@ -1282,7 +1405,7 @@
             <a href="#" target="_blank" class="github"><i class="fab fa-github"></i></a>
         </div>
         <p>
-            © 2025 <a href="/">DevSave Pro</a> — Developed with ❤️ by
+            © 2025 <a href="index.html">DevSave Pro</a> — Developed with ❤️ by
             <a href="https://www.facebook.com/profile.php?id=100083300451857" target="_blank">Dev Gift</a>
         </p>
     </footer>
@@ -1295,7 +1418,6 @@
 
     <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // ===== LOADING =====
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('loadingOverlay').classList.add('hidden');
@@ -1414,6 +1536,7 @@
         const audioQualities = document.getElementById('audioQualities');
         let selectedFormat = 'mp4';
         let selectedQuality = '360p';
+        let selectedSource = 0;
 
         formatBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -1424,7 +1547,6 @@
                 if (selectedFormat === 'mp4') {
                     videoQualities.style.display = 'block';
                     audioQualities.style.display = 'none';
-                    // Reset quality to video default
                     document.querySelectorAll('#videoQualities .quality-btn').forEach(b => {
                         b.classList.remove('active');
                         if (b.dataset.quality === '360p') b.classList.add('active');
@@ -1441,7 +1563,8 @@
                 }
             });
         });
-             // ===== QUALITY SELECTION =====
+
+        // ===== QUALITY =====
         document.querySelectorAll('.quality-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const parent = btn.closest('.quality-section');
@@ -1450,6 +1573,18 @@
                 selectedQuality = btn.dataset.quality;
             });
         });
+
+        // ===== SOURCE SELECTION =====
+        const sourceBtns = document.querySelectorAll('.source-btn');
+        sourceBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                sourceBtns.forEach(b => b.classList.remove('active-source'));
+                btn.classList.add('active-source');
+                selectedSource = parseInt(btn.dataset.source);
+            });
+        });
+        // Set first as active
+        sourceBtns[0].classList.add('active-source');
 
         // ===== PASTE =====
         document.getElementById('pasteBtn').addEventListener('click', async () => {
@@ -1470,9 +1605,8 @@
         const progressText = document.getElementById('progressText');
         const progressPercent = document.getElementById('progressPercent');
         const resultCard = document.getElementById('resultCard');
-        const apiStatus = document.getElementById('apiStatus');
+        const statusMsg = document.getElementById('statusMsg');
 
-        // YouTube API endpoints (11 APIs)
         const YT_APIS = [
             'https://apis.davidcyril.name.ng/download/yt',
             'https://apis.davidcyril.name.ng/download/ytv3',
@@ -1488,6 +1622,8 @@
             'https://apis.davidcyril.name.ng/download/ytmp333'
         ];
 
+        let currentDownloadUrl = '';
+
         downloadBtn.addEventListener('click', async () => {
             const url = urlInput.value.trim();
 
@@ -1497,17 +1633,15 @@
                 return;
             }
 
-            // Validate YouTube URL
             if (!url.includes('youtube.com/watch') && !url.includes('youtu.be/')) {
                 showToast('❌ Please enter a valid YouTube URL', 'error');
                 return;
             }
 
-            // Show progress
             downloadBtn.classList.add('loading');
             progressContainer.classList.add('show');
             resultCard.classList.remove('show');
-            apiStatus.classList.remove('show');
+            statusMsg.classList.remove('show');
             progressFill.style.width = '0%';
             progressText.textContent = 'Initializing...';
             progressPercent.textContent = '0%';
@@ -1518,36 +1652,38 @@
                 if (progress > 95) progress = 95;
                 progressFill.style.width = progress + '%';
                 progressPercent.textContent = Math.round(progress) + '%';
-                if (progress < 30) progressText.textContent = 'Connecting to API...';
+                if (progress < 30) progressText.textContent = 'Connecting to source...';
                 else if (progress < 60) progressText.textContent = 'Processing video...';
-                else if (progress < 85) progressText.textContent = 'Generating download link...';
+                else if (progress < 85) progressText.textContent = 'Generating download...';
                 else progressText.textContent = 'Almost there...';
             }, 300);
 
             try {
-                // Try each API until one works
-                let result = null;
-                let usedApi = '';
-
                 // Determine which APIs to use based on format
                 const isMP3 = selectedFormat === 'mp3';
-                const apisToTry = isMP3 ?
+                let apisToTry = isMP3 ?
                     YT_APIS.filter(api => api.includes('mp3')) :
                     YT_APIS.filter(api => api.includes('mp4') || api.includes('/yt') || api.includes('/ytv'));
 
-                // If no specific APIs found, use all
-                const finalApis = apisToTry.length > 0 ? apisToTry : YT_APIS;
+                if (apisToTry.length === 0) apisToTry = YT_APIS;
 
-                for (const api of finalApis) {
+                // Use selected source as starting point
+                const startIdx = selectedSource % apisToTry.length;
+                const orderedApis = [...apisToTry.slice(startIdx), ...apisToTry.slice(0, startIdx)];
+
+                let result = null;
+                let usedApi = '';
+
+                for (let i = 0; i < orderedApis.length; i++) {
+                    const api = orderedApis[i];
                     try {
-                        apiStatus.className = 'api-status show info';
-                        apiStatus.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Trying API: ${api.split('/').pop()}`;
+                        statusMsg.className = 'status-msg show info';
+                        statusMsg.innerHTML =
+                            `<i class="fas fa-spinner fa-spin"></i> Trying Source ${(i + 1)}...`;
 
                         const response = await fetch(api, {
                             method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
+                            headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
                                 url: url,
                                 quality: selectedQuality,
@@ -1564,7 +1700,7 @@
                             }
                         }
                     } catch (e) {
-                        console.log(`API ${api} failed:`, e);
+                        console.log(`Source ${i + 1} failed:`, e);
                         continue;
                     }
                 }
@@ -1575,11 +1711,12 @@
                 progressText.textContent = '✅ Done!';
 
                 if (result && result.downloadUrl) {
-                    apiStatus.className = 'api-status show success';
-                    apiStatus.innerHTML =
-                    `<i class="fas fa-check-circle"></i> Downloaded via: ${usedApi.split('/').pop()}`;
+                    currentDownloadUrl = result.downloadUrl;
 
-                    // Show result
+                    statusMsg.className = 'status-msg show success';
+                    statusMsg.innerHTML =
+                        `<i class="fas fa-check-circle"></i> Download ready! Source ${selectedSource + 1} successful`;
+
                     setTimeout(() => {
                         document.getElementById('thumbnail').src = result.thumbnail || 'https://via.placeholder.com/200x120/ff0000/ffffff?text=YouTube';
                         document.getElementById('videoTitle').textContent = result.title || 'YouTube Video';
@@ -1587,22 +1724,27 @@
                         document.getElementById('videoQuality').textContent = selectedQuality;
                         document.getElementById('videoSize').textContent = result.size || 'Unknown size';
                         document.getElementById('videoFormat').textContent = selectedFormat.toUpperCase();
-                        document.getElementById('downloadLink').href = result.downloadUrl;
 
                         resultCard.classList.add('show');
-                        showToast('✅ Download link generated!', 'success');
+                        showToast('✅ Download ready! Click Download Now', 'success');
+
+                        // Auto download
+                        setTimeout(() => {
+                            window.open(currentDownloadUrl, '_blank');
+                        }, 500);
                     }, 500);
 
                 } else {
-                    apiStatus.className = 'api-status show error';
-                    apiStatus.innerHTML = `<i class="fas fa-exclamation-circle"></i> All APIs failed. Please try again.`;
-                    showToast('❌ Failed to generate download link', 'error');
+                    statusMsg.className = 'status-msg show error';
+                    statusMsg.innerHTML =
+                    `<i class="fas fa-exclamation-circle"></i> All sources failed. Please try another source.`;
+                    showToast('❌ Failed to generate download. Try another source.', 'error');
                 }
 
             } catch (error) {
                 clearInterval(progressInterval);
-                apiStatus.className = 'api-status show error';
-                apiStatus.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error: ${error.message}`;
+                statusMsg.className = 'status-msg show error';
+                statusMsg.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error: ${error.message}`;
                 showToast('❌ Something went wrong', 'error');
             } finally {
                 downloadBtn.classList.remove('loading');
@@ -1612,12 +1754,21 @@
             }
         });
 
+        // ===== DOWNLOAD NOW =====
+        document.getElementById('downloadNowBtn').addEventListener('click', () => {
+            if (currentDownloadUrl) {
+                window.open(currentDownloadUrl, '_blank');
+                showToast('⬇️ Download started!', 'success');
+            } else {
+                showToast('❌ No download link available. Generate one first.', 'error');
+            }
+        });
+
         // ===== COPY LINK =====
         document.getElementById('copyLinkBtn').addEventListener('click', async () => {
-            const link = document.getElementById('downloadLink').href;
-            if (link && link !== '#') {
+            if (currentDownloadUrl) {
                 try {
-                    await navigator.clipboard.writeText(link);
+                    await navigator.clipboard.writeText(currentDownloadUrl);
                     showToast('✅ Link copied to clipboard!', 'success');
                 } catch {
                     showToast('❌ Failed to copy link', 'error');
@@ -1652,21 +1803,9 @@
             }, 4000);
         }
 
-        // ===== KEYBOARD SHORTCUTS =====
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.key === 'Enter') {
-                e.preventDefault();
-                downloadBtn.click();
-            }
-            if (e.ctrlKey && e.key === 'v' && document.activeElement === urlInput) {
-                // Let default paste work
-            }
-        });
-
-        // ===== CONSOLE =====
         console.log('%c▶️ DevSave Pro - YouTube Downloader', 'font-size:20px; font-weight:bold; color:#ff0000;');
         console.log('%c💻 Built with ❤️ by Dev Gift', 'font-size:14px; color:#a0a0c0;');
-        console.log('%c📋 Ctrl+Enter to download', 'font-size:12px; color:#00b4d8;');
+        console.log('%c📡 Multiple sources available - try different ones if one fails', 'font-size:12px; color:#00b4d8;');
     </script>
 
 </body>
