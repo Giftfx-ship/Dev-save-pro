@@ -1185,6 +1185,7 @@
                 </button>
             </div>
 
+            <!-- Format Toggle -->
             <div class="format-toggle">
                 <button class="format-btn active" data-format="mp4">
                     <i class="fas fa-video"></i> Video (MP4)
@@ -1194,34 +1195,27 @@
                 </button>
             </div>
 
-            <div class="quality-section" id="videoQualities">
+            <!-- Quality Selection -->
+            <div class="quality-section">
                 <span class="label">📊 Select Quality</span>
-                <div class="quality-grid">
-                    <button class="quality-btn" data-quality="144p">144p <span class="badge">Low</span></button>
-                    <button class="quality-btn" data-quality="240p">240p <span class="badge">SD</span></button>
-                    <button class="quality-btn active" data-quality="360p">360p <span class="badge">SD</span></button>
-                    <button class="quality-btn" data-quality="480p">480p <span class="badge">HD</span></button>
-                    <button class="quality-btn" data-quality="720p">720p <span class="badge">HD</span></button>
-                    <button class="quality-btn" data-quality="1080p">1080p <span class="badge">Full HD</span></button>
+                <div class="quality-grid" id="qualityGrid">
+                    <button class="quality-btn" data-quality="144">144p</button>
+                    <button class="quality-btn" data-quality="240">240p</button>
+                    <button class="quality-btn active" data-quality="360">360p</button>
+                    <button class="quality-btn" data-quality="480">480p</button>
+                    <button class="quality-btn" data-quality="720">720p</button>
+                    <button class="quality-btn" data-quality="1080">1080p</button>
                 </div>
             </div>
 
-            <div class="quality-section" id="audioQualities" style="display:none;">
-                <span class="label">🎵 Select Bitrate</span>
-                <div class="quality-grid">
-                    <button class="quality-btn" data-quality="64kbps">64kbps <span class="badge">Low</span></button>
-                    <button class="quality-btn active" data-quality="128kbps">128kbps <span class="badge">Standard</span></button>
-                    <button class="quality-btn" data-quality="192kbps">192kbps <span class="badge">High</span></button>
-                    <button class="quality-btn" data-quality="320kbps">320kbps <span class="badge">Premium</span></button>
-                </div>
-            </div>
-
+            <!-- Download Button -->
             <button class="download-btn" id="downloadBtn">
                 <i class="fas fa-download"></i>
                 <span class="btn-text">Download Now</span>
                 <i class="fas fa-spinner spinner"></i>
             </button>
 
+            <!-- Progress -->
             <div class="progress-container" id="progressContainer">
                 <div class="progress-info">
                     <span id="progressText">Preparing...</span>
@@ -1232,9 +1226,11 @@
                 </div>
             </div>
 
+            <!-- Status -->
             <div class="status-msg" id="statusMsg"></div>
         </div>
 
+        <!-- Result -->
         <div class="result-card glass" id="resultCard">
             <div class="video-info">
                 <img class="thumbnail" id="thumbnail" src="" alt="Thumbnail" />
@@ -1398,42 +1394,21 @@
 
         // ===== FORMAT TOGGLE =====
         const formatBtns = document.querySelectorAll('.format-btn');
-        const videoQualities = document.getElementById('videoQualities');
-        const audioQualities = document.getElementById('audioQualities');
         let selectedFormat = 'mp4';
-        let selectedQuality = '360p';
+        let selectedQuality = '360';
 
         formatBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 formatBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 selectedFormat = btn.dataset.format;
-
-                if (selectedFormat === 'mp4') {
-                    videoQualities.style.display = 'block';
-                    audioQualities.style.display = 'none';
-                    document.querySelectorAll('#videoQualities .quality-btn').forEach(b => {
-                        b.classList.remove('active');
-                        if (b.dataset.quality === '360p') b.classList.add('active');
-                    });
-                    selectedQuality = '360p';
-                } else {
-                    videoQualities.style.display = 'none';
-                    audioQualities.style.display = 'block';
-                    document.querySelectorAll('#audioQualities .quality-btn').forEach(b => {
-                        b.classList.remove('active');
-                        if (b.dataset.quality === '128kbps') b.classList.add('active');
-                    });
-                    selectedQuality = '128kbps';
-                }
             });
         });
 
         // ===== QUALITY =====
         document.querySelectorAll('.quality-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                const parent = btn.closest('.quality-section');
-                parent.querySelectorAll('.quality-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.quality-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 selectedQuality = btn.dataset.quality;
             });
@@ -1460,9 +1435,8 @@
         const resultCard = document.getElementById('resultCard');
         const statusMsg = document.getElementById('statusMsg');
 
-        // ===== YOUTUBE API - WORKING =====
-        const YT_MP4_API = 'https://apis.davidcyril.name.ng/download/ytmp4';
-        const YT_MP3_API = 'https://apis.davidcyril.name.ng/youtube/mp3';
+        // ===== NEW YOUTUBE API =====
+        const YT_API = 'https://apis.davidcyril.name.ng/download/savetube';
 
         let currentDownloadUrl = '';
 
@@ -1501,21 +1475,20 @@
             }, 300);
 
             try {
-                const api = selectedFormat === 'mp4' ? YT_MP4_API : YT_MP3_API;
-
                 statusMsg.className = 'status-msg show info';
                 statusMsg.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Fetching from YouTube...`;
 
-                // ===== GET REQUEST WITH ?url= =====
-                const response = await fetch(`${api}?url=${encodeURIComponent(url)}`);
+                // ===== NEW API: format parameter for quality =====
+                const apiUrl = `${YT_API}?url=${encodeURIComponent(url)}&format=${selectedQuality}`;
+                const response = await fetch(apiUrl);
 
                 clearInterval(progressInterval);
 
                 if (response.ok) {
                     const data = await response.json();
 
-                    if (data.success && data.result && data.result.download_url) {
-                        currentDownloadUrl = data.result.download_url;
+                    if (data.success && data.data && data.data.download_url) {
+                        currentDownloadUrl = data.data.download_url;
                         progressFill.style.width = '100%';
                         progressPercent.textContent = '100%';
                         progressText.textContent = '✅ Done!';
@@ -1524,17 +1497,16 @@
                         statusMsg.innerHTML = `<i class="fas fa-check-circle"></i> Download ready!`;
 
                         setTimeout(() => {
-                            document.getElementById('thumbnail').src = data.result.thumbnail || 'https://via.placeholder.com/200x120/ff0000/ffffff?text=YouTube';
-                            document.getElementById('videoTitle').textContent = data.result.title || 'YouTube Video';
-                            document.getElementById('videoInfo').textContent = 'YouTube Video';
-                            document.getElementById('videoQuality').textContent = data.result.quality || selectedQuality;
+                            document.getElementById('thumbnail').src = data.data.cover || 'https://via.placeholder.com/200x120/ff0000/ffffff?text=YouTube';
+                            document.getElementById('videoTitle').textContent = data.data.title || 'YouTube Video';
+                            document.getElementById('videoInfo').textContent = `Duration: ${data.data.duration || 'Unknown'}`;
+                            document.getElementById('videoQuality').textContent = `${data.data.quality || selectedQuality}p`;
                             document.getElementById('videoSize').textContent = 'Processing...';
-                            document.getElementById('videoFormat').textContent = selectedFormat.toUpperCase();
+                            document.getElementById('videoFormat').textContent = data.data.type || selectedFormat.toUpperCase();
 
                             resultCard.classList.add('show');
                             showToast('✅ Download ready! Click Download Now', 'success');
 
-                            // Auto download
                             setTimeout(() => {
                                 window.open(currentDownloadUrl, '_blank');
                             }, 500);
@@ -1614,6 +1586,7 @@
 
         console.log('%c▶️ DevSave Pro - YouTube Downloader', 'font-size:20px; font-weight:bold; color:#ff0000;');
         console.log('%c💻 Built with ❤️ by Dev Gift', 'font-size:14px; color:#a0a0c0;');
+        console.log('%c📡 Using Savetube API with quality selection', 'font-size:12px; color:#00d4ff;');
     </script>
 
 </body>
