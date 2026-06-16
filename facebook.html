@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
+        /* ===== SAME STYLES AS YOUTUBE BUT WITH FACEBOOK COLORS ===== */
         * {
             margin: 0;
             padding: 0;
@@ -1496,6 +1497,7 @@
         const resultCard = document.getElementById('resultCard');
         const statusMsg = document.getElementById('statusMsg');
 
+        // ===== FACEBOOK API LIST - FIXED FORMAT =====
         const FB_APIS = [
             'https://apis.davidcyril.name.ng/facebook',
             'https://apis.davidcyril.name.ng/facebook2',
@@ -1552,14 +1554,8 @@
                         statusMsg.innerHTML =
                         `<i class="fas fa-spinner fa-spin"></i> Trying Source ${(i + 1)}...`;
 
-                        const response = await fetch(api, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                url: url,
-                                quality: selectedQuality
-                            })
-                        });
+                        // ===== FIXED: Using ?url= parameter =====
+                        const response = await fetch(`${api}?url=${encodeURIComponent(url)}`);
 
                         if (response.ok) {
                             const data = await response.json();
