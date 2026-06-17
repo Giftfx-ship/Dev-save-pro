@@ -549,6 +549,9 @@
         .platform-card:nth-child(12) {
             animation-delay: 0.6s;
         }
+        .platform-card:nth-child(13) {
+            animation-delay: 0.65s;
+        }
 
         @keyframes cardFadeUp {
             from {
@@ -707,6 +710,14 @@
             background: rgba(0, 255, 100, 0.08);
             color: #00ff64;
         }
+        .platform-card.news .icon-wrapper {
+            background: rgba(255, 69, 0, 0.1);
+            color: #ff4500;
+        }
+        .platform-card.streaming .icon-wrapper {
+            background: rgba(255, 0, 255, 0.1);
+            color: #ff00ff;
+        }
         .platform-card.uploader .icon-wrapper {
             background: rgba(255, 107, 53, 0.1);
             color: #ff6b35;
@@ -748,7 +759,7 @@
         /* ===== SPORTS GRID ===== */
         .sports-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
             padding: 0 1rem;
             max-width: 1200px;
@@ -779,6 +790,9 @@
         }
         .sport-card:nth-child(4) {
             animation-delay: 0.2s;
+        }
+        .sport-card:nth-child(5) {
+            animation-delay: 0.25s;
         }
 
         .sport-card::before {
@@ -862,11 +876,15 @@
             background: rgba(255, 69, 0, 0.1);
             color: #ff4500;
         }
+        .sport-card.streaming .icon-wrapper {
+            background: rgba(255, 0, 255, 0.1);
+            color: #ff00ff;
+        }
 
         /* ===== AI GRID ===== */
         .ai-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
             padding: 0 1rem;
             max-width: 1200px;
@@ -972,109 +990,6 @@
         .ai-card.uploader .icon-wrapper {
             background: rgba(255, 107, 53, 0.1);
             color: #ff6b35;
-        }
-
-        /* ===== SPORTS NEWS SECTION ===== */
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            padding: 0 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .news-card {
-            padding: 1.5rem;
-            text-align: left;
-            transition: var(--transition);
-            animation: cardFadeUp 0.8s ease both;
-            display: block;
-        }
-
-        .news-card:nth-child(1) {
-            animation-delay: 0.05s;
-        }
-        .news-card:nth-child(2) {
-            animation-delay: 0.1s;
-        }
-        .news-card:nth-child(3) {
-            animation-delay: 0.15s;
-        }
-        .news-card:nth-child(4) {
-            animation-delay: 0.2s;
-        }
-        .news-card:nth-child(5) {
-            animation-delay: 0.25s;
-        }
-        .news-card:nth-child(6) {
-            animation-delay: 0.3s;
-        }
-
-        .news-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(124, 92, 252, 0.1);
-            border-color: var(--accent);
-        }
-
-        .news-card .news-image {
-            width: 100%;
-            height: 180px;
-            border-radius: 12px;
-            object-fit: cover;
-            background: var(--bg-card);
-            margin-bottom: 1rem;
-        }
-
-        .news-card .news-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-        }
-
-        .news-card .news-summary {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 0.8rem;
-        }
-
-        .news-card .news-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-
-        .news-card .news-meta .views {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .news-card .news-meta .views i {
-            font-size: 0.6rem;
-        }
-
-        .news-loading {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-secondary);
-        }
-
-        .news-loading .spinner {
-            animation: spin 1s linear infinite;
-            font-size: 2rem;
-            color: var(--accent2);
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
         }
 
         /* ===== CONTACT ===== */
@@ -1238,6 +1153,12 @@
         .contact-card .contact-form .send-btn.loading {
             pointer-events: none;
             opacity: 0.8;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .whatsapp-float {
@@ -1470,11 +1391,11 @@
                 font-size: 2rem;
             }
             .sports-grid {
-                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
                 gap: 1rem;
             }
             .ai-grid {
-                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
                 gap: 1rem;
             }
             .sport-card {
@@ -1527,9 +1448,6 @@
             .contact-card {
                 padding: 1.5rem;
             }
-            .news-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
         @media (max-width: 480px) {
@@ -1563,12 +1481,6 @@
             }
             .stat-number {
                 font-size: 1.4rem;
-            }
-            .news-card .news-title {
-                font-size: 0.9rem;
-            }
-            .news-card .news-summary {
-                font-size: 0.8rem;
             }
         }
     </style>
@@ -1696,7 +1608,7 @@
             <a href="livescore.html" class="sport-card livescore glass">
                 <div class="icon-wrapper"><i class="fas fa-trophy"></i></div>
                 <div class="name">Live Scores</div>
-                <div class="desc">NFL, NBA, Soccer</div>
+                <div class="desc">Real-time scores</div>
                 <span class="sport-badge"><i class="fas fa-circle" style="font-size:0.3rem; margin-right:3px;"></i> Live</span>
             </a>
 
@@ -1719,6 +1631,13 @@
                 <div class="name">Sports News</div>
                 <div class="desc">Latest updates</div>
                 <span class="sport-badge"><i class="fas fa-circle" style="font-size:0.3rem; margin-right:3px;"></i> Active</span>
+            </a>
+
+            <a href="streaming.html" class="sport-card streaming glass">
+                <div class="icon-wrapper"><i class="fas fa-tv"></i></div>
+                <div class="name">Live Streaming</div>
+                <div class="desc">Watch live sports</div>
+                <span class="sport-badge"><i class="fas fa-circle" style="font-size:0.3rem; margin-right:3px;"></i> Live</span>
             </a>
         </div>
 
