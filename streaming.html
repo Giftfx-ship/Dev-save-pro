@@ -615,6 +615,13 @@
             box-shadow: 0 4px 20px rgba(255, 0, 255, 0.3);
         }
 
+        .stream-card .meta-details {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
         .stream-card .league {
             font-size: 0.6rem;
             color: var(--text-muted);
@@ -624,11 +631,17 @@
             border: 1px solid var(--border-glass);
         }
 
-        .stream-card .meta-right {
+        .stream-card .time-info {
+            font-size: 0.6rem;
+            color: var(--text-muted);
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+
+        .stream-card .time-info i {
+            font-size: 0.5rem;
+            color: var(--accent2);
         }
 
         .streams-loading {
@@ -886,7 +899,7 @@
             .stream-card .match-info {
                 justify-content: center;
             }
-            .stream-card .meta-right {
+            .stream-card .meta-details {
                 justify-content: center;
             }
             .sports-tab {
@@ -1137,7 +1150,6 @@
         const STREAM_API = 'https://api.princetechn.com/api/football/streaming/all?apikey=prince';
 
         let allMatches = [];
-        let filteredMatches = [];
 
         async function fetchStreams() {
             const container = document.getElementById('streamsContainer');
@@ -1195,6 +1207,21 @@
             loading.style.display = 'none';
         }
 
+        function formatTime(dateString) {
+            if (!dateString) return 'Unknown';
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } catch {
+                return dateString;
+            }
+        }
+
         function renderStreams(sport, matches) {
             const container = document.getElementById('streamsContainer');
 
@@ -1246,6 +1273,9 @@
                 else if (sportName === 'cricket') sportClass = 'cricket';
                 else if (sportName === 'soccer') sportClass = 'soccer';
 
+                // Format start time
+                const startTime = match.startTime ? formatTime(match.startTime) : 'Unknown';
+
                 const card = document.createElement('div');
                 card.className = 'stream-card glass';
 
@@ -1263,10 +1293,13 @@
                             <span class="score">${awayScore}</span>
                         </div>
                     </div>
-                    <div class="meta-right">
+                    <div class="meta-details">
                         <span class="sport-badge ${sportClass}">${sportName}</span>
                         <span class="status ${statusClass}">${statusText}</span>
                         <span class="league">${match.league || 'Unknown'}</span>
+                        <span class="time-info">
+                            <i class="far fa-clock"></i> ${startTime}
+                        </span>
                         ${streamUrl ? `
                             <a href="${streamUrl}" target="_blank" class="watch-btn">
                                 <i class="fas fa-play"></i> ${streamTitle}
