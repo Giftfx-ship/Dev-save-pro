@@ -471,14 +471,14 @@
         }
 
         .score-card {
-            padding: 1.5rem;
-            margin-bottom: 1rem;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             transition: var(--transition);
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .score-card:hover {
@@ -488,7 +488,7 @@
         .score-card .teams {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1rem;
             flex-wrap: wrap;
             flex: 1;
         }
@@ -496,28 +496,19 @@
         .score-card .team {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-        }
-
-        .score-card .team img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: contain;
-            background: var(--bg-card);
-            padding: 3px;
+            gap: 0.5rem;
         }
 
         .score-card .team .name {
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .score-card .team .score {
             font-weight: 800;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--accent2);
-            min-width: 30px;
+            min-width: 25px;
             text-align: center;
         }
 
@@ -528,13 +519,13 @@
         .score-card .vs {
             color: var(--text-muted);
             font-weight: 700;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
 
         .score-card .status {
-            padding: 0.3rem 1rem;
+            padding: 0.2rem 0.8rem;
             border-radius: 50px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 600;
             white-space: nowrap;
         }
@@ -569,21 +560,16 @@
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            gap: 0.3rem;
-            font-size: 0.75rem;
+            gap: 0.2rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
         }
 
-        .score-card .meta .venue {
-            font-size: 0.7rem;
-        }
-
-        .score-card .meta .broadcast {
+        .score-card .meta .league {
             background: var(--bg-card);
             padding: 0.1rem 0.6rem;
             border-radius: 50px;
             border: 1px solid var(--border-glass);
-            font-size: 0.6rem;
         }
 
         .scores-loading {
@@ -602,6 +588,18 @@
             to {
                 transform: rotate(360deg);
             }
+        }
+
+        .no-matches {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .no-matches i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
         }
 
         .whatsapp-float {
@@ -865,11 +863,7 @@
                 font-size: 0.8rem;
             }
             .score-card .team .score {
-                font-size: 1.2rem;
-            }
-            .score-card .team img {
-                width: 30px;
-                height: 30px;
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -912,7 +906,7 @@
         <div class="page-header">
             <i class="fas fa-trophy icon"></i>
             <h1>Live Sports Scores</h1>
-            <p>Real-time scores from NFL, NBA & Soccer</p>
+            <p>Real-time scores from football and basketball</p>
             <div class="active-status">
                 <i class="fas fa-circle" style="font-size:0.5rem; margin-right:6px;"></i> Live
             </div>
@@ -920,25 +914,25 @@
 
         <!-- ===== TABS ===== -->
         <div class="scores-tabs" id="tabs">
-            <button class="scores-tab active" data-sport="nfl">🏈 NFL <span class="count" id="nflCount">0</span></button>
-            <button class="scores-tab" data-sport="nba">🏀 NBA <span class="count" id="nbaCount">0</span></button>
-            <button class="scores-tab" data-sport="soccer">⚽ Soccer <span class="count" id="soccerCount">0</span></button>
+            <button class="scores-tab active" data-sport="football">⚽ Football <span class="count" id="footballCount">0</span></button>
+            <button class="scores-tab" data-sport="basketball">🏀 Basketball <span class="count" id="basketballCount">0</span></button>
         </div>
 
-        <!-- ===== LOADING ===== -->
-        <div class="scores-loading" id="loadingScores">
-            <div class="spinner"><i class="fas fa-spinner"></i></div>
-            <p style="margin-top:1rem;">Loading scores...</p>
+        <!-- ===== FOOTBALL ===== -->
+        <div class="scores-container active" id="footballContainer">
+            <div class="scores-loading" id="footballLoading">
+                <div class="spinner"><i class="fas fa-spinner"></i></div>
+                <p style="margin-top:1rem;">Loading football scores...</p>
+            </div>
         </div>
 
-        <!-- ===== NFL ===== -->
-        <div class="scores-container active" id="nflContainer"></div>
-
-        <!-- ===== NBA ===== -->
-        <div class="scores-container" id="nbaContainer"></div>
-
-        <!-- ===== SOCCER ===== -->
-        <div class="scores-container" id="soccerContainer"></div>
+        <!-- ===== BASKETBALL ===== -->
+        <div class="scores-container" id="basketballContainer">
+            <div class="scores-loading" id="basketballLoading">
+                <div class="spinner"><i class="fas fa-spinner"></i></div>
+                <p style="margin-top:1rem;">Loading basketball scores...</p>
+            </div>
+        </div>
     </div>
 
     <!-- ===== FOOTER ===== -->
@@ -1079,75 +1073,122 @@
         setTheme(getTheme());
 
         // ===== SPORTS API =====
-        const SPORTS_API = 'https://apis.davidcyril.name.ng/sports/live';
+        const FOOTBALL_API = 'https://api.princetechn.com/api/football/livescore?apikey=prince';
+        const BASKETBALL_API = 'https://api.princetechn.com/api/football/streaming/basketball?apikey=prince';
 
-        let scoresData = null;
+        let footballData = null;
+        let basketballData = null;
 
-        async function fetchScores() {
-            const loading = document.getElementById('loadingScores');
-            loading.style.display = 'block';
+        async function fetchFootballScores() {
+            const container = document.getElementById('footballContainer');
+            const loading = document.getElementById('footballLoading');
 
             try {
-                const response = await fetch(SPORTS_API);
+                const response = await fetch(FOOTBALL_API);
+
                 if (response.ok) {
                     const data = await response.json();
-                    if (data.success) {
-                        scoresData = data;
-                        renderScores(data);
+
+                    if (data.success && data.result) {
+                        footballData = data.result;
+                        renderFootballMatches(data.result);
                     } else {
-                        showToast('❌ Failed to load scores', 'error');
+                        container.innerHTML = `
+                            <div class="no-matches">
+                                <i class="fas fa-futbol"></i>
+                                <p>No football matches available</p>
+                            </div>
+                        `;
                     }
                 } else {
-                    showToast('❌ Server error. Please try again.', 'error');
+                    container.innerHTML = `
+                        <div class="no-matches">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Failed to load football scores</p>
+                        </div>
+                    `;
                 }
+
             } catch (error) {
-                showToast('❌ Error: ' + error.message, 'error');
+                console.error('Football fetch error:', error);
+                container.innerHTML = `
+                    <div class="no-matches">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Error loading scores. Please try again.</p>
+                    </div>
+                `;
             }
 
             loading.style.display = 'none';
         }
 
-        function renderScores(data) {
-            // NFL
-            if (data.nfl && data.nfl.games) {
-                document.getElementById('nflCount').textContent = data.nfl.count || data.nfl.games.length;
-                renderGames('nflContainer', data.nfl.games, 'NFL');
+        async function fetchBasketballScores() {
+            const container = document.getElementById('basketballContainer');
+            const loading = document.getElementById('basketballLoading');
+
+            try {
+                const response = await fetch(BASKETBALL_API);
+
+                if (response.ok) {
+                    const data = await response.json();
+
+                    if (data.success && data.result) {
+                        basketballData = data.result;
+                        renderBasketballMatches(data.result);
+                    } else {
+                        container.innerHTML = `
+                            <div class="no-matches">
+                                <i class="fas fa-basketball-ball"></i>
+                                <p>No basketball matches available</p>
+                            </div>
+                        `;
+                    }
+                } else {
+                    container.innerHTML = `
+                        <div class="no-matches">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Failed to load basketball scores</p>
+                        </div>
+                    `;
+                }
+
+            } catch (error) {
+                console.error('Basketball fetch error:', error);
+                container.innerHTML = `
+                    <div class="no-matches">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Error loading scores. Please try again.</p>
+                    </div>
+                `;
             }
 
-            // NBA
-            if (data.nba && data.nba.games) {
-                document.getElementById('nbaCount').textContent = data.nba.count || data.nba.games.length;
-                renderGames('nbaContainer', data.nba.games, 'NBA');
-            }
-
-            // Soccer
-            if (data.soccer && data.soccer.games) {
-                document.getElementById('soccerCount').textContent = data.soccer.count || data.soccer.games.length;
-                renderGames('soccerContainer', data.soccer.games, data.soccer.league || 'Soccer');
-            }
+            loading.style.display = 'none';
         }
 
-        function renderGames(containerId, games, league) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
+        function renderFootballMatches(data) {
+            const container = document.getElementById('footballContainer');
+            const matches = data.matches || [];
 
-            if (!games || games.length === 0) {
+            document.getElementById('footballCount').textContent = data.totalMatches || matches.length;
+
+            if (matches.length === 0) {
                 container.innerHTML = `
-                    <div class="glass" style="padding:3rem; text-align:center; color:var(--text-muted);">
-                        <i class="fas fa-futbol" style="font-size:2rem; margin-bottom:1rem; display:block;"></i>
-                        No games found for ${league}
+                    <div class="no-matches">
+                        <i class="fas fa-futbol"></i>
+                        <p>No football matches available</p>
                     </div>
                 `;
                 return;
             }
 
-            games.forEach(game => {
-                const isLive = game.status === 'Live' || game.status === 'In Progress' || game.status === 'In Progress';
-                const isFinal = game.status === 'Final' || game.status === 'Full Time';
-                const isScheduled = game.status === 'Scheduled' || game.status === 'Upcoming';
+            container.innerHTML = '';
+            matches.forEach(match => {
+                const isLive = match.status === 'Live' || match.status === 'In Progress' || match.status === '1st Half' || match.status === '2nd Half';
+                const isFinal = match.status === 'Full Time' || match.status === 'FT';
+                const isScheduled = match.status === 'Not Started' || match.status === 'Scheduled';
 
                 let statusClass = 'scheduled';
-                let statusText = game.status || 'Scheduled';
+                let statusText = match.status || 'Scheduled';
 
                 if (isLive) {
                     statusClass = 'live';
@@ -1157,48 +1198,100 @@
                     statusText = '✅ Final';
                 }
 
-                const homeScore = game.homeTeam ? game.homeTeam.score || '0' : '0';
-                const awayScore = game.awayTeam ? game.awayTeam.score || '0' : '0';
-                const homeWinner = game.homeTeam ? game.homeTeam.winner : false;
-                const awayWinner = game.awayTeam ? game.awayTeam.winner : false;
+                const homeScore = match.homeScore || '0';
+                const awayScore = match.awayScore || '0';
 
-                const homeLogo = game.homeTeam ? game.homeTeam.logo || '' : '';
-                const awayLogo = game.awayTeam ? game.awayTeam.logo || '' : '';
+                const card = document.createElement('div');
+                card.className = 'score-card glass';
 
-                const homeName = game.homeTeam ? game.homeTeam.name || game.homeTeam.shortName || 'Home' : 'Home';
-                const awayName = game.awayTeam ? game.awayTeam.name || game.awayTeam.shortName || 'Away' : 'Away';
-
-                const venue = game.venue || '';
-                const broadcast = game.broadcast || '';
-                const clock = game.clock || '';
-                const period = game.period || '';
-
-                container.innerHTML += `
-                    <div class="score-card glass">
-                        <div class="teams">
-                            <div class="team">
-                                ${awayLogo ? `<img src="${awayLogo}" alt="${awayName}" />` : ''}
-                                <span class="name">${awayName}</span>
-                                <span class="score ${awayWinner ? 'winner' : ''}">${awayScore}</span>
-                            </div>
-                            <span class="vs">VS</span>
-                            <div class="team">
-                                ${homeLogo ? `<img src="${homeLogo}" alt="${homeName}" />` : ''}
-                                <span class="name">${homeName}</span>
-                                <span class="score ${homeWinner ? 'winner' : ''}">${homeScore}</span>
-                            </div>
+                card.innerHTML = `
+                    <div class="teams">
+                        <div class="team">
+                            <span class="name">${match.homeTeam || 'Home'}</span>
+                            <span class="score">${homeScore}</span>
                         </div>
-                        <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
-                            <span class="status ${statusClass}">${statusText}</span>
-                            ${clock && !isScheduled ? `<span style="font-size:0.8rem; color:var(--text-muted);">${clock}</span>` : ''}
-                            ${period && !isScheduled ? `<span style="font-size:0.8rem; color:var(--text-muted);">Q${period}</span>` : ''}
-                            <div class="meta">
-                                ${venue ? `<span class="venue"><i class="fas fa-map-marker-alt"></i> ${venue}</span>` : ''}
-                                ${broadcast ? `<span class="broadcast"><i class="fas fa-tv"></i> ${broadcast}</span>` : ''}
-                            </div>
+                        <span class="vs">VS</span>
+                        <div class="team">
+                            <span class="name">${match.awayTeam || 'Away'}</span>
+                            <span class="score">${awayScore}</span>
+                        </div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap;">
+                        <span class="status ${statusClass}">${statusText}</span>
+                        <div class="meta">
+                            <span class="league">${match.league || 'Unknown League'}</span>
+                            ${match.time ? `<span>⏱️ ${match.time}</span>` : ''}
+                            ${match.date ? `<span>📅 ${match.date}</span>` : ''}
                         </div>
                     </div>
                 `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function renderBasketballMatches(data) {
+            const container = document.getElementById('basketballContainer');
+            const matches = data.matches || [];
+
+            document.getElementById('basketballCount').textContent = data.totalMatches || matches.length;
+
+            if (matches.length === 0) {
+                container.innerHTML = `
+                    <div class="no-matches">
+                        <i class="fas fa-basketball-ball"></i>
+                        <p>No basketball matches available</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            matches.forEach(match => {
+                const isLive = match.status === 'Live' || match.status === 'In Progress';
+                const isFinal = match.status === 'Full Time' || match.status === 'FT' || match.status === 'Final';
+                const isScheduled = match.status === 'Not Started' || match.status === 'Scheduled';
+
+                let statusClass = 'scheduled';
+                let statusText = match.status || 'Scheduled';
+
+                if (isLive) {
+                    statusClass = 'live';
+                    statusText = '🔴 LIVE';
+                } else if (isFinal) {
+                    statusClass = 'final';
+                    statusText = '✅ Final';
+                }
+
+                const homeScore = match.homeScore || '0';
+                const awayScore = match.awayScore || '0';
+
+                const card = document.createElement('div');
+                card.className = 'score-card glass';
+
+                card.innerHTML = `
+                    <div class="teams">
+                        <div class="team">
+                            <span class="name">${match.homeTeam || 'Home'}</span>
+                            <span class="score">${homeScore}</span>
+                        </div>
+                        <span class="vs">VS</span>
+                        <div class="team">
+                            <span class="name">${match.awayTeam || 'Away'}</span>
+                            <span class="score">${awayScore}</span>
+                        </div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap;">
+                        <span class="status ${statusClass}">${statusText}</span>
+                        <div class="meta">
+                            <span class="league">${match.league || 'Unknown League'}</span>
+                            ${match.time ? `<span>⏱️ ${match.time}</span>` : ''}
+                            ${match.date ? `<span>📅 ${match.date}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
             });
         }
 
@@ -1240,9 +1333,12 @@
         }
 
         // ===== FETCH ON LOAD =====
-        fetchScores();
-        // Refresh every 30 seconds
-        setInterval(fetchScores, 30000);
+        fetchFootballScores();
+        fetchBasketballScores();
+
+        // Refresh every 60 seconds
+        setInterval(fetchFootballScores, 60000);
+        setInterval(fetchBasketballScores, 60000);
 
         console.log('%c🏆 DevSave Pro - Live Scores', 'font-size:20px; font-weight:bold; color:#ffd700;');
         console.log('%c💻 Built with ❤️ by Dev Gift', 'font-size:14px; color:#a0a0c0;');
