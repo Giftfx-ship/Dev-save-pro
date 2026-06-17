@@ -423,13 +423,13 @@
         .sports-tabs {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.8rem;
             margin-bottom: 2rem;
             flex-wrap: wrap;
         }
 
         .sports-tab {
-            padding: 0.7rem 2rem;
+            padding: 0.6rem 1.5rem;
             border-radius: 50px;
             border: 1px solid var(--border-glass);
             background: var(--bg-card);
@@ -438,7 +438,7 @@
             transition: var(--transition);
             font-family: 'Inter', sans-serif;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .sports-tab:hover {
@@ -455,10 +455,10 @@
 
         .sports-tab .count {
             background: rgba(255, 255, 255, 0.15);
-            padding: 0.1rem 0.6rem;
+            padding: 0.1rem 0.5rem;
             border-radius: 50px;
-            font-size: 0.7rem;
-            margin-left: 0.4rem;
+            font-size: 0.6rem;
+            margin-left: 0.3rem;
         }
 
         .streams-container {
@@ -471,14 +471,14 @@
         }
 
         .stream-card {
-            padding: 1.5rem;
-            margin-bottom: 1rem;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             transition: var(--transition);
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .stream-card:hover {
@@ -488,7 +488,7 @@
         .stream-card .match-info {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1rem;
             flex-wrap: wrap;
             flex: 1;
         }
@@ -496,41 +496,73 @@
         .stream-card .team {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.5rem;
         }
 
         .stream-card .team img {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             object-fit: contain;
             background: var(--bg-card);
-            padding: 3px;
+            padding: 2px;
         }
 
         .stream-card .team .name {
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
 
         .stream-card .team .score {
             font-weight: 800;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: var(--accent2);
-            min-width: 25px;
+            min-width: 20px;
             text-align: center;
         }
 
         .stream-card .vs {
             color: var(--text-muted);
             font-weight: 700;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
+        }
+
+        .stream-card .sport-badge {
+            padding: 0.15rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.55rem;
+            font-weight: 700;
+            background: rgba(0, 255, 136, 0.1);
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 136, 0.12);
+            text-transform: uppercase;
+        }
+
+        .stream-card .sport-badge.football {
+            background: rgba(0, 200, 255, 0.1);
+            color: #00c8ff;
+            border-color: rgba(0, 200, 255, 0.12);
+        }
+        .stream-card .sport-badge.basketball {
+            background: rgba(255, 165, 0, 0.1);
+            color: #ffa500;
+            border-color: rgba(255, 165, 0, 0.12);
+        }
+        .stream-card .sport-badge.cricket {
+            background: rgba(0, 255, 0, 0.08);
+            color: #00ff00;
+            border-color: rgba(0, 255, 0, 0.1);
+        }
+        .stream-card .sport-badge.soccer {
+            background: rgba(255, 255, 0, 0.08);
+            color: #ffff00;
+            border-color: rgba(255, 255, 0, 0.1);
         }
 
         .stream-card .status {
-            padding: 0.3rem 1rem;
+            padding: 0.2rem 0.8rem;
             border-radius: 50px;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-weight: 600;
             white-space: nowrap;
         }
@@ -562,12 +594,12 @@
         }
 
         .stream-card .watch-btn {
-            padding: 0.5rem 1.5rem;
+            padding: 0.4rem 1.2rem;
             border-radius: 50px;
             border: none;
             background: linear-gradient(135deg, #ff00ff, #6c5ce7);
             color: white;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
@@ -575,7 +607,7 @@
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .stream-card .watch-btn:hover {
@@ -584,12 +616,19 @@
         }
 
         .stream-card .league {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: var(--text-muted);
             background: var(--bg-card);
-            padding: 0.1rem 0.6rem;
+            padding: 0.1rem 0.5rem;
             border-radius: 50px;
             border: 1px solid var(--border-glass);
+        }
+
+        .stream-card .meta-right {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
         }
 
         .streams-loading {
@@ -847,9 +886,12 @@
             .stream-card .match-info {
                 justify-content: center;
             }
+            .stream-card .meta-right {
+                justify-content: center;
+            }
             .sports-tab {
-                padding: 0.5rem 1.2rem;
-                font-size: 0.8rem;
+                padding: 0.4rem 1rem;
+                font-size: 0.75rem;
             }
             .navbar {
                 padding: 0.8rem 1rem;
@@ -877,14 +919,18 @@
                 font-size: 1.5rem;
             }
             .stream-card .team .name {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
             }
             .stream-card .team .score {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
             .stream-card .team img {
-                width: 30px;
-                height: 30px;
+                width: 28px;
+                height: 28px;
+            }
+            .sports-tab {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.65rem;
             }
         }
     </style>
@@ -926,30 +972,24 @@
     <div class="container">
         <div class="page-header">
             <i class="fas fa-tv icon"></i>
-            <h1>Sports Streaming</h1>
-            <p>Watch live sports streams</p>
+            <h1>Live Sports Streaming</h1>
+            <p>Watch football, basketball, cricket & more</p>
             <div class="active-status">
                 <i class="fas fa-circle" style="font-size:0.5rem; margin-right:6px;"></i> Live
             </div>
         </div>
 
-        <!-- ===== TABS ===== -->
+        <!-- ===== TABS - All Sports ===== -->
         <div class="sports-tabs" id="tabs">
-            <button class="sports-tab active" data-sport="football">⚽ Football <span class="count" id="footballCount">0</span></button>
+            <button class="sports-tab active" data-sport="all">⚡ All <span class="count" id="allCount">0</span></button>
+            <button class="sports-tab" data-sport="football">⚽ Football <span class="count" id="footballCount">0</span></button>
             <button class="sports-tab" data-sport="basketball">🏀 Basketball <span class="count" id="basketballCount">0</span></button>
+            <button class="sports-tab" data-sport="cricket">🏏 Cricket <span class="count" id="cricketCount">0</span></button>
         </div>
 
-        <!-- ===== FOOTBALL ===== -->
-        <div class="streams-container active" id="footballContainer">
-            <div class="streams-loading" id="footballLoading">
-                <div class="spinner"><i class="fas fa-spinner"></i></div>
-                <p style="margin-top:1rem;">Loading streams...</p>
-            </div>
-        </div>
-
-        <!-- ===== BASKETBALL ===== -->
-        <div class="streams-container" id="basketballContainer">
-            <div class="streams-loading" id="basketballLoading">
+        <!-- ===== STREAMS CONTAINER ===== -->
+        <div class="streams-container active" id="streamsContainer">
+            <div class="streams-loading" id="streamsLoading">
                 <div class="spinner"><i class="fas fa-spinner"></i></div>
                 <p style="margin-top:1rem;">Loading streams...</p>
             </div>
@@ -1094,26 +1134,42 @@
         setTheme(getTheme());
 
         // ===== STREAMING API =====
-        const FOOTBALL_STREAM_API = 'https://api.princetechn.com/api/football/streaming?apikey=prince';
-        const BASKETBALL_STREAM_API = 'https://api.princetechn.com/api/football/streaming/basketball?apikey=prince';
+        const STREAM_API = 'https://api.princetechn.com/api/football/streaming/all?apikey=prince';
 
-        async function fetchFootballStreams() {
-            const container = document.getElementById('footballContainer');
-            const loading = document.getElementById('footballLoading');
+        let allMatches = [];
+        let filteredMatches = [];
+
+        async function fetchStreams() {
+            const container = document.getElementById('streamsContainer');
+            const loading = document.getElementById('streamsLoading');
 
             try {
-                const response = await fetch(FOOTBALL_STREAM_API);
+                const response = await fetch(STREAM_API);
 
                 if (response.ok) {
                     const data = await response.json();
 
                     if (data.success && data.result) {
-                        renderFootballStreams(data.result);
+                        allMatches = data.result.matches || [];
+                        const total = data.result.totalMatches || allMatches.length;
+
+                        document.getElementById('allCount').textContent = total;
+
+                        // Count by sport
+                        const football = allMatches.filter(m => m.sport === 'football' || m.sport === 'soccer');
+                        const basketball = allMatches.filter(m => m.sport === 'basketball');
+                        const cricket = allMatches.filter(m => m.sport === 'cricket');
+
+                        document.getElementById('footballCount').textContent = football.length;
+                        document.getElementById('basketballCount').textContent = basketball.length;
+                        document.getElementById('cricketCount').textContent = cricket.length;
+
+                        renderStreams('all', allMatches);
                     } else {
                         container.innerHTML = `
                             <div class="no-streams">
-                                <i class="fas fa-futbol"></i>
-                                <p>No football streams available</p>
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <p>No streams available</p>
                             </div>
                         `;
                     }
@@ -1121,13 +1177,13 @@
                     container.innerHTML = `
                         <div class="no-streams">
                             <i class="fas fa-exclamation-triangle"></i>
-                            <p>Failed to load football streams</p>
+                            <p>Failed to load streams. Please try again.</p>
                         </div>
                     `;
                 }
 
             } catch (error) {
-                console.error('Football streams error:', error);
+                console.error('Streams error:', error);
                 container.innerHTML = `
                     <div class="no-streams">
                         <i class="fas fa-exclamation-triangle"></i>
@@ -1139,66 +1195,26 @@
             loading.style.display = 'none';
         }
 
-        async function fetchBasketballStreams() {
-            const container = document.getElementById('basketballContainer');
-            const loading = document.getElementById('basketballLoading');
+        function renderStreams(sport, matches) {
+            const container = document.getElementById('streamsContainer');
 
-            try {
-                const response = await fetch(BASKETBALL_STREAM_API);
-
-                if (response.ok) {
-                    const data = await response.json();
-
-                    if (data.success && data.result) {
-                        renderBasketballStreams(data.result);
-                    } else {
-                        container.innerHTML = `
-                            <div class="no-streams">
-                                <i class="fas fa-basketball-ball"></i>
-                                <p>No basketball streams available</p>
-                            </div>
-                        `;
-                    }
-                } else {
-                    container.innerHTML = `
-                        <div class="no-streams">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <p>Failed to load basketball streams</p>
-                        </div>
-                    `;
-                }
-
-            } catch (error) {
-                console.error('Basketball streams error:', error);
-                container.innerHTML = `
-                    <div class="no-streams">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <p>Error loading streams. Please try again.</p>
-                    </div>
-                `;
+            let filtered = matches;
+            if (sport !== 'all') {
+                filtered = matches.filter(m => m.sport === sport || (sport === 'football' && m.sport === 'soccer'));
             }
 
-            loading.style.display = 'none';
-        }
-
-        function renderFootballStreams(data) {
-            const container = document.getElementById('footballContainer');
-            const matches = data.matches || [];
-
-            document.getElementById('footballCount').textContent = data.totalMatches || matches.length;
-
-            if (matches.length === 0) {
+            if (filtered.length === 0) {
                 container.innerHTML = `
                     <div class="no-streams">
                         <i class="fas fa-futbol"></i>
-                        <p>No football streams available</p>
+                        <p>No ${sport} streams available</p>
                     </div>
                 `;
                 return;
             }
 
             container.innerHTML = '';
-            matches.forEach(match => {
+            filtered.forEach(match => {
                 const isLive = match.status === 'Live' || match.status === 'In Progress' || match.status === '1st Half' || match.status === '2nd Half';
                 const isFinal = match.status === 'Full Time' || match.status === 'FT';
                 const isScheduled = match.status === 'Not Started' || match.status === 'Scheduled';
@@ -1218,8 +1234,17 @@
                 const awayScore = match.awayScore || '0';
                 const homeLogo = match.homeLogo || '';
                 const awayLogo = match.awayLogo || '';
+
+                // Get first stream URL
                 const streamUrl = match.streams && match.streams.length > 0 ? match.streams[0].url : null;
                 const streamTitle = match.streams && match.streams.length > 0 ? match.streams[0].title : 'Watch';
+
+                // Sport badge class
+                let sportClass = 'football';
+                const sportName = match.sport || 'football';
+                if (sportName === 'basketball') sportClass = 'basketball';
+                else if (sportName === 'cricket') sportClass = 'cricket';
+                else if (sportName === 'soccer') sportClass = 'soccer';
 
                 const card = document.createElement('div');
                 card.className = 'stream-card glass';
@@ -1238,89 +1263,16 @@
                             <span class="score">${awayScore}</span>
                         </div>
                     </div>
-                    <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap;">
+                    <div class="meta-right">
+                        <span class="sport-badge ${sportClass}">${sportName}</span>
                         <span class="status ${statusClass}">${statusText}</span>
-                        <span class="league">${match.league || 'Unknown League'}</span>
+                        <span class="league">${match.league || 'Unknown'}</span>
                         ${streamUrl ? `
                             <a href="${streamUrl}" target="_blank" class="watch-btn">
                                 <i class="fas fa-play"></i> ${streamTitle}
                             </a>
                         ` : `
-                            <span style="font-size:0.7rem; color:var(--text-muted);">No stream available</span>
-                        `}
-                    </div>
-                `;
-
-                container.appendChild(card);
-            });
-        }
-
-        function renderBasketballStreams(data) {
-            const container = document.getElementById('basketballContainer');
-            const matches = data.matches || [];
-
-            document.getElementById('basketballCount').textContent = data.totalMatches || matches.length;
-
-            if (matches.length === 0) {
-                container.innerHTML = `
-                    <div class="no-streams">
-                        <i class="fas fa-basketball-ball"></i>
-                        <p>No basketball streams available</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = '';
-            matches.forEach(match => {
-                const isLive = match.status === 'Live' || match.status === 'In Progress';
-                const isFinal = match.status === 'Full Time' || match.status === 'FT' || match.status === 'Final';
-                const isScheduled = match.status === 'Not Started' || match.status === 'Scheduled';
-
-                let statusClass = 'scheduled';
-                let statusText = match.status || 'Scheduled';
-
-                if (isLive) {
-                    statusClass = 'live';
-                    statusText = '🔴 LIVE';
-                } else if (isFinal) {
-                    statusClass = 'final';
-                    statusText = '✅ Final';
-                }
-
-                const homeScore = match.homeScore || '0';
-                const awayScore = match.awayScore || '0';
-                const homeLogo = match.homeLogo || '';
-                const awayLogo = match.awayLogo || '';
-                const streamUrl = match.streams && match.streams.length > 0 ? match.streams[0].url : null;
-                const streamTitle = match.streams && match.streams.length > 0 ? match.streams[0].title : 'Watch';
-
-                const card = document.createElement('div');
-                card.className = 'stream-card glass';
-
-                card.innerHTML = `
-                    <div class="match-info">
-                        <div class="team">
-                            ${homeLogo ? `<img src="${homeLogo}" alt="${match.homeTeam}" />` : ''}
-                            <span class="name">${match.homeTeam || 'Home'}</span>
-                            <span class="score">${homeScore}</span>
-                        </div>
-                        <span class="vs">VS</span>
-                        <div class="team">
-                            ${awayLogo ? `<img src="${awayLogo}" alt="${match.awayTeam}" />` : ''}
-                            <span class="name">${match.awayTeam || 'Away'}</span>
-                            <span class="score">${awayScore}</span>
-                        </div>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap;">
-                        <span class="status ${statusClass}">${statusText}</span>
-                        <span class="league">${match.league || 'Unknown League'}</span>
-                        ${streamUrl ? `
-                            <a href="${streamUrl}" target="_blank" class="watch-btn">
-                                <i class="fas fa-play"></i> ${streamTitle}
-                            </a>
-                        ` : `
-                            <span style="font-size:0.7rem; color:var(--text-muted);">No stream available</span>
+                            <span style="font-size:0.6rem; color:var(--text-muted);">No stream</span>
                         `}
                     </div>
                 `;
@@ -1336,8 +1288,7 @@
                 tab.classList.add('active');
 
                 const sport = tab.dataset.sport;
-                document.querySelectorAll('.streams-container').forEach(c => c.classList.remove('active'));
-                document.getElementById(sport + 'Container').classList.add('active');
+                renderStreams(sport, allMatches);
             });
         });
 
@@ -1367,15 +1318,14 @@
         }
 
         // ===== FETCH ON LOAD =====
-        fetchFootballStreams();
-        fetchBasketballStreams();
+        fetchStreams();
 
         // Refresh every 60 seconds
-        setInterval(fetchFootballStreams, 60000);
-        setInterval(fetchBasketballStreams, 60000);
+        setInterval(fetchStreams, 60000);
 
         console.log('%c📺 DevSave Pro - Sports Streaming', 'font-size:20px; font-weight:bold; color:#ff00ff;');
         console.log('%c💻 Built with ❤️ by Dev Gift', 'font-size:14px; color:#a0a0c0;');
+        console.log('%c🏆 All Sports - Football, Basketball, Cricket & more!', 'font-size:12px; color:#00d4ff;');
     </script>
 
 </body>
