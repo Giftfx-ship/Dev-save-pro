@@ -483,6 +483,8 @@
 
         .stream-card:hover {
             border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(255, 0, 255, 0.08);
         }
 
         .stream-card .match-info {
@@ -500,31 +502,58 @@
         }
 
         .stream-card .team img {
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             object-fit: contain;
             background: var(--bg-card);
-            padding: 2px;
+            padding: 3px;
+            border: 2px solid var(--border-glass);
+            transition: var(--transition);
+        }
+
+        .stream-card .team img:hover {
+            border-color: var(--accent2);
+            transform: scale(1.1);
+        }
+
+        .stream-card .team .team-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .stream-card .team .name {
             font-weight: 600;
             font-size: 0.85rem;
+            line-height: 1.2;
         }
 
         .stream-card .team .score {
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--accent2);
-            min-width: 20px;
+            min-width: 25px;
             text-align: center;
+            background: var(--bg-card);
+            padding: 0 0.4rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .stream-card .team .score.winner {
+            color: #00ff88;
+            border-color: #00ff88;
         }
 
         .stream-card .vs {
             color: var(--text-muted);
             font-weight: 700;
             font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: var(--bg-card);
+            border-radius: 50px;
+            border: 1px solid var(--border-glass);
         }
 
         .stream-card .sport-badge {
@@ -560,46 +589,53 @@
         }
 
         .stream-card .status {
-            padding: 0.2rem 0.8rem;
+            padding: 0.25rem 0.9rem;
             border-radius: 50px;
-            font-size: 0.6rem;
-            font-weight: 600;
+            font-size: 0.65rem;
+            font-weight: 700;
             white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .stream-card .status.live {
             background: rgba(255, 0, 0, 0.15);
             color: #ff4444;
+            border: 1px solid rgba(255, 0, 0, 0.2);
             animation: livePulse 1.5s infinite;
+        }
+
+        .stream-card .status.final {
+            background: rgba(0, 255, 136, 0.1);
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 136, 0.12);
+        }
+
+        .stream-card .status.scheduled {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            border: 1px solid rgba(0, 212, 255, 0.12);
         }
 
         @keyframes livePulse {
             0%,
             100% {
                 opacity: 1;
+                transform: scale(1);
             }
             50% {
-                opacity: 0.4;
+                opacity: 0.6;
+                transform: scale(0.98);
             }
-        }
-
-        .stream-card .status.final {
-            background: rgba(0, 255, 136, 0.1);
-            color: #00ff88;
-        }
-
-        .stream-card .status.scheduled {
-            background: rgba(0, 212, 255, 0.1);
-            color: #00d4ff;
         }
 
         .stream-card .watch-btn {
-            padding: 0.4rem 1.2rem;
+            padding: 0.5rem 1.5rem;
             border-radius: 50px;
             border: none;
             background: linear-gradient(135deg, #ff00ff, #6c5ce7);
             color: white;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
@@ -607,12 +643,41 @@
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.6rem;
+            box-shadow: 0 4px 20px rgba(255, 0, 255, 0.2);
+        }
+
+        .stream-card .watch-btn i {
+            font-size: 0.7rem;
         }
 
         .stream-card .watch-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 20px rgba(255, 0, 255, 0.3);
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 8px 32px rgba(255, 0, 255, 0.4);
+        }
+
+        .stream-card .watch-btn.live-btn {
+            background: linear-gradient(135deg, #ff4444, #ff00ff);
+            animation: btnPulse 2s infinite;
+        }
+
+        @keyframes btnPulse {
+            0%,
+            100% {
+                box-shadow: 0 4px 20px rgba(255, 0, 255, 0.2);
+            }
+            50% {
+                box-shadow: 0 4px 40px rgba(255, 0, 255, 0.5);
+            }
+        }
+
+        .stream-card .watch-btn.scheduled-btn {
+            background: linear-gradient(135deg, #00d4ff, #6c5ce7);
+        }
+
+        .stream-card .watch-btn.final-btn {
+            background: linear-gradient(135deg, #00ff88, #6c5ce7);
+            opacity: 0.7;
         }
 
         .stream-card .meta-details {
@@ -626,7 +691,7 @@
             font-size: 0.6rem;
             color: var(--text-muted);
             background: var(--bg-card);
-            padding: 0.1rem 0.5rem;
+            padding: 0.15rem 0.6rem;
             border-radius: 50px;
             border: 1px solid var(--border-glass);
         }
@@ -637,11 +702,24 @@
             display: flex;
             align-items: center;
             gap: 0.3rem;
+            background: var(--bg-card);
+            padding: 0.15rem 0.6rem;
+            border-radius: 50px;
+            border: 1px solid var(--border-glass);
         }
 
         .stream-card .time-info i {
             font-size: 0.5rem;
             color: var(--accent2);
+        }
+
+        .stream-card .no-stream {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            padding: 0.3rem 0.8rem;
+            background: var(--bg-card);
+            border-radius: 50px;
+            border: 1px solid var(--border-glass);
         }
 
         .streams-loading {
@@ -902,6 +980,13 @@
             .stream-card .meta-details {
                 justify-content: center;
             }
+            .stream-card .team {
+                flex-direction: column;
+                align-items: center;
+            }
+            .stream-card .team .team-info {
+                align-items: center;
+            }
             .sports-tab {
                 padding: 0.4rem 1rem;
                 font-size: 0.75rem;
@@ -938,12 +1023,16 @@
                 font-size: 1rem;
             }
             .stream-card .team img {
-                width: 28px;
-                height: 28px;
+                width: 32px;
+                height: 32px;
             }
             .sports-tab {
                 padding: 0.3rem 0.8rem;
                 font-size: 0.65rem;
+            }
+            .stream-card .watch-btn {
+                padding: 0.4rem 1rem;
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -1222,6 +1311,31 @@
             }
         }
 
+        function getStatusInfo(status) {
+            const isLive = status === 'Live' || status === 'In Progress' || status === '1st Half' || status === '2nd Half';
+            const isFinal = status === 'Full Time' || status === 'FT';
+            const isScheduled = status === 'Not Started' || status === 'Scheduled';
+
+            let statusClass = 'scheduled';
+            let statusText = status || 'Scheduled';
+            let btnClass = 'scheduled-btn';
+            let btnText = 'Watch Now';
+
+            if (isLive) {
+                statusClass = 'live';
+                statusText = '🔴 LIVE';
+                btnClass = 'live-btn';
+                btnText = '▶ Watch Now';
+            } else if (isFinal) {
+                statusClass = 'final';
+                statusText = '✅ Full Time';
+                btnClass = 'final-btn';
+                btnText = '📹 Replay';
+            }
+
+            return { statusClass, statusText, btnClass, btnText };
+        }
+
         function renderStreams(sport, matches) {
             const container = document.getElementById('streamsContainer');
 
@@ -1242,21 +1356,6 @@
 
             container.innerHTML = '';
             filtered.forEach(match => {
-                const isLive = match.status === 'Live' || match.status === 'In Progress' || match.status === '1st Half' || match.status === '2nd Half';
-                const isFinal = match.status === 'Full Time' || match.status === 'FT';
-                const isScheduled = match.status === 'Not Started' || match.status === 'Scheduled';
-
-                let statusClass = 'scheduled';
-                let statusText = match.status || 'Scheduled';
-
-                if (isLive) {
-                    statusClass = 'live';
-                    statusText = '🔴 LIVE';
-                } else if (isFinal) {
-                    statusClass = 'final';
-                    statusText = '✅ Final';
-                }
-
                 const homeScore = match.homeScore || '0';
                 const awayScore = match.awayScore || '0';
                 const homeLogo = match.homeLogo || '';
@@ -1276,36 +1375,45 @@
                 // Format start time
                 const startTime = match.startTime ? formatTime(match.startTime) : 'Unknown';
 
+                // Status info
+                const statusInfo = getStatusInfo(match.status);
+                const isHomeWinner = match.status === 'Full Time' || match.status === 'FT' ? parseInt(homeScore) > parseInt(awayScore) : false;
+                const isAwayWinner = match.status === 'Full Time' || match.status === 'FT' ? parseInt(awayScore) > parseInt(homeScore) : false;
+
                 const card = document.createElement('div');
                 card.className = 'stream-card glass';
 
                 card.innerHTML = `
                     <div class="match-info">
                         <div class="team">
-                            ${homeLogo ? `<img src="${homeLogo}" alt="${match.homeTeam}" />` : ''}
-                            <span class="name">${match.homeTeam || 'Home'}</span>
-                            <span class="score">${homeScore}</span>
+                            ${homeLogo ? `<img src="${homeLogo}" alt="${match.homeTeam}" onerror="this.src='https://via.placeholder.com/40/ff00ff/ffffff?text=?'" />` : `<img src="https://via.placeholder.com/40/ff00ff/ffffff?text=?" alt="Team" />`}
+                            <div class="team-info">
+                                <span class="name">${match.homeTeam || 'Home'}</span>
+                                <span class="score ${isHomeWinner ? 'winner' : ''}">${homeScore}</span>
+                            </div>
                         </div>
                         <span class="vs">VS</span>
                         <div class="team">
-                            ${awayLogo ? `<img src="${awayLogo}" alt="${match.awayTeam}" />` : ''}
-                            <span class="name">${match.awayTeam || 'Away'}</span>
-                            <span class="score">${awayScore}</span>
+                            ${awayLogo ? `<img src="${awayLogo}" alt="${match.awayTeam}" onerror="this.src='https://via.placeholder.com/40/ff00ff/ffffff?text=?'" />` : `<img src="https://via.placeholder.com/40/ff00ff/ffffff?text=?" alt="Team" />`}
+                            <div class="team-info">
+                                <span class="name">${match.awayTeam || 'Away'}</span>
+                                <span class="score ${isAwayWinner ? 'winner' : ''}">${awayScore}</span>
+                            </div>
                         </div>
                     </div>
                     <div class="meta-details">
                         <span class="sport-badge ${sportClass}">${sportName}</span>
-                        <span class="status ${statusClass}">${statusText}</span>
+                        <span class="status ${statusInfo.statusClass}">${statusInfo.statusText}</span>
                         <span class="league">${match.league || 'Unknown'}</span>
                         <span class="time-info">
                             <i class="far fa-clock"></i> ${startTime}
                         </span>
                         ${streamUrl ? `
-                            <a href="${streamUrl}" target="_blank" class="watch-btn">
-                                <i class="fas fa-play"></i> ${streamTitle}
+                            <a href="${streamUrl}" target="_blank" class="watch-btn ${statusInfo.btnClass}">
+                                <i class="fas fa-play"></i> ${statusInfo.btnText}
                             </a>
                         ` : `
-                            <span style="font-size:0.6rem; color:var(--text-muted);">No stream</span>
+                            <span class="no-stream">🚫 No Stream</span>
                         `}
                     </div>
                 `;
