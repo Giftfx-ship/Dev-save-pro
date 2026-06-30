@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://devsavepro.name.ng/sitemap.xml
