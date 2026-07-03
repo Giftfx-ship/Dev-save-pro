@@ -15,14 +15,31 @@
     <!-- ===== OPEN GRAPH ===== -->
     <meta property="og:title" content="DevSave Pro - Ultimate Media Downloader" />
     <meta property="og:description" content="Download videos, reels, shorts, and music from all platforms. Free AI image generator & live sports scores." />
-    <meta property="og:image" content="https://devsavepro.name.ng/og-image.jpg" />
+    <meta property="og:image" content="https://i.ibb.co/Xx7RJcwr/IMG-5179.png" />
     <meta property="og:url" content="https://devsavepro.name.ng/" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="DevSave Pro - Ultimate Media Downloader" />
     <meta name="twitter:description" content="Download anything from anywhere. YouTube, Facebook, Instagram, TikTok, Spotify & more." />
+    <meta name="twitter:image" content="https://i.ibb.co/Xx7RJcwr/IMG-5179.png" />
     
-    <!-- ===== SCHEMA MARKUP ===== -->
+    <!-- ===== SCHEMA MARKUP (For Google Search) ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "DevSave Pro",
+      "url": "https://devsavepro.name.ng",
+      "logo": "https://i.ibb.co/Xx7RJcwr/IMG-5179.png",
+      "image": "https://i.ibb.co/Xx7RJcwr/IMG-5179.png",
+      "description": "Download videos, reels, shorts, and music from all social media platforms.",
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=100083300451857",
+        "https://wa.me/2349164624021"
+      ]
+    }
+    </script>
+    
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -34,13 +51,16 @@
       "operatingSystem": "All",
       "author": {
         "@type": "Person",
-        "name": "Dev Gift",
-        "url": "https://devgiftportfolio.name.ng"
+        "name": "Dev Gift"
       }
     }
     </script>
     
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+    <!-- ===== FAVICON ===== -->
+    <link rel="icon" type="image/png" href="https://i.ibb.co/Xx7RJcwr/IMG-5179.png">
+    <link rel="shortcut icon" href="https://i.ibb.co/Xx7RJcwr/IMG-5179.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/Xx7RJcwr/IMG-5179.png">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
     
@@ -381,7 +401,7 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* ===== SEARCH BAR ===== */
+        /* ===== SEARCH BAR - IMPROVED ===== */
         .search-container {
             max-width: 700px;
             margin: 2rem auto;
@@ -451,6 +471,7 @@
             box-shadow: 0 8px 32px rgba(124, 92, 252, 0.2);
         }
 
+        /* ===== SMART SUGGESTIONS ===== */
         .search-suggestions {
             position: absolute;
             top: calc(100% + 8px);
@@ -464,7 +485,7 @@
             box-shadow: 0 16px 48px rgba(0,0,0,0.3);
             display: none;
             z-index: 100;
-            max-height: 300px;
+            max-height: 350px;
             overflow-y: auto;
         }
 
@@ -479,16 +500,46 @@
             gap: 0.8rem;
             color: var(--text-secondary);
             font-size: 0.9rem;
+            border-left: 3px solid transparent;
         }
 
         .search-suggestions .suggestion-item:hover {
             background: var(--bg-card);
             color: var(--text-primary);
+            border-left-color: var(--accent);
+        }
+
+        .search-suggestions .suggestion-item .match-highlight {
+            color: var(--accent2);
+            font-weight: 700;
         }
 
         .search-suggestions .suggestion-item i {
             color: var(--accent2);
-            width: 20px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .search-suggestions .suggestion-item .suggestion-tag {
+            margin-left: auto;
+            font-size: 0.6rem;
+            background: var(--bg-card);
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+            color: var(--text-muted);
+            border: 1px solid var(--border-glass);
+        }
+
+        .search-suggestions .no-results {
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .search-suggestions .no-results i {
+            color: var(--accent3);
+            margin-right: 0.5rem;
         }
 
         /* ===== SEARCH TAGS ===== */
@@ -1229,7 +1280,24 @@
             -webkit-text-fill-color: transparent;
         }
 
+        /* ===== SEARCH HINT BADGE ===== */
+        .search-hint {
+            position: absolute;
+            right: 120px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-glass);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
         @media (max-width: 768px) {
+            .search-hint { display: none; }
             .hero h1 { font-size: 2.8rem; }
             .hero p { font-size: 1rem; }
             .platforms-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
@@ -1313,11 +1381,12 @@
         <h1>Download Anything <br />From Any Platform</h1>
         <p>YouTube, Facebook, Instagram, TikTok, Spotify, Google Drive & more — all in one place</p>
 
-        <!-- ===== SEARCH BAR ===== -->
+        <!-- ===== SEARCH BAR - IMPROVED ===== -->
         <div class="search-container">
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search for a platform... (e.g., YouTube, Instagram)" />
+                <input type="text" id="searchInput" placeholder="Search any platform... (e.g., yt, reels, sports, ai)" />
+                <span class="search-hint">Press /</span>
                 <button class="search-btn" id="searchBtn">
                     <i class="fas fa-arrow-right"></i>
                     <span>Search</span>
@@ -1328,14 +1397,14 @@
 
         <!-- ===== QUICK TAGS ===== -->
         <div class="search-tags">
-            <a href="youtube.html"><i class="fab fa-youtube"></i> YouTube</a>
-            <a href="facebook.html"><i class="fab fa-facebook"></i> Facebook</a>
-            <a href="instagram.html"><i class="fab fa-instagram"></i> Instagram</a>
-            <a href="tiktok.html"><i class="fab fa-tiktok"></i> TikTok</a>
-            <a href="spotify.html"><i class="fab fa-spotify"></i> Spotify</a>
-            <a href="livescore.html"><i class="fas fa-trophy"></i> Live Scores</a>
-            <a href="flux.html"><i class="fas fa-paint-brush"></i> AI Image</a>
-            <a href="gemini.html"><i class="fas fa-comment-dots"></i> AI Chat</a>
+            <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+            <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+            <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
+            <a href="#"><i class="fab fa-spotify"></i> Spotify</a>
+            <a href="#"><i class="fas fa-trophy"></i> Live Scores</a>
+            <a href="#"><i class="fas fa-paint-brush"></i> AI Image</a>
+            <a href="#"><i class="fas fa-comment-dots"></i> AI Chat</a>
         </div>
 
         <!-- ===== BREADCRUMB ===== -->
@@ -1373,7 +1442,7 @@
             <i class="fas fa-download" style="color:var(--accent2);"></i> Downloaders
         </h2>
         <div class="platforms-grid" id="platformsGrid">
-            <a href="youtube.html" class="platform-card youtube glass" data-name="youtube">
+            <a href="#" class="platform-card youtube glass" data-name="youtube">
                 <span class="badge">Popular</span>
                 <div class="icon-wrapper"><i class="fab fa-youtube"></i></div>
                 <div class="name">YouTube</div>
@@ -1381,7 +1450,7 @@
                 <span class="active-status"><i class="fas fa-circle" style="font-size:0.3rem; margin-right:3px;"></i> Active</span>
             </a>
 
-            <a href="facebook.html" class="platform-card facebook glass" data-name="facebook">
+            <a href="#" class="platform-card facebook glass" data-name="facebook">
                 <span class="badge">Popular</span>
                 <div class="icon-wrapper"><i class="fab fa-facebook"></i></div>
                 <div class="name">Facebook</div>
@@ -1389,7 +1458,7 @@
                 <span class="active-status"><i class="fas fa-circle" style="font-size:0.3rem; margin-right:3px;"></i> Active</span>
             </a>
 
-            <a href="instagram.html" class="platform-card instagram glass" data-name="instagram">
+            <a href="#" class="platform-card instagram glass" data-name="instagram">
                 <span class="badge">New</span>
                 <div class="icon-wrapper"><i class="fab fa-instagram"></i></div>
                 <div class="name">Instagram</div>
@@ -1397,7 +1466,7 @@
                 <span class="active-status"><i class="fas fa-circle" style="font-size:0.3rem; margin-right:3px;"></i> Active</span>
             </a>
 
-            <a href="tiktok.html" class="platform-card tiktok glass" data-name="tiktok">
+            <a href="#" class="platform-card tiktok glass" data-name="tiktok">
                 <span class="badge">Popular</span>
                 <div class="icon-wrapper"><i class="fab fa-tiktok"></i></div>
                 <div class="name">TikTok</div>
@@ -1405,7 +1474,7 @@
                 <span class="active-status"><i class="fas fa-circle" style="font-size:0.3rem; margin-right:3px;"></i> Active</span>
             </a>
 
-            <a href="spotify.html" class="platform-card spotify glass" data-name="spotify">
+            <a href="#" class="platform-card spotify glass" data-name="spotify">
                 <span class="badge">New</span>
                 <div class="icon-wrapper"><i class="fab fa-spotify"></i></div>
                 <div class="name">Spotify</div>
@@ -1413,7 +1482,7 @@
                 <span class="active-status"><i class="fas fa-circle" style="font-size:0.3rem; margin-right:3px;"></i> Active</span>
             </a>
 
-            <a href="gdrive.html" class="platform-card gdrive glass" data-name="gdrive">
+            <a href="#" class="platform-card gdrive glass" data-name="gdrive">
                 <span class="badge">Beta</span>
                 <div class="icon-wrapper"><i class="fab fa-google-drive"></i></div>
                 <div class="name">Google Drive</div>
@@ -1427,35 +1496,35 @@
             <i class="fas fa-football" style="color:#ffd700;"></i> Sports
         </h2>
         <div class="sports-grid">
-            <a href="livescore.html" class="sport-card livescore glass">
+            <a href="#" class="sport-card livescore glass">
                 <div class="icon-wrapper"><i class="fas fa-trophy"></i></div>
                 <div class="name">Live Scores</div>
                 <div class="desc">Real-time scores</div>
                 <span class="sport-badge"><i class="fas fa-circle" style="font-size:0.3rem; margin-right:3px;"></i> Live</span>
             </a>
 
-            <a href="player.html" class="sport-card player glass">
+            <a href="#" class="sport-card player glass">
                 <div class="icon-wrapper"><i class="fas fa-user-athlete"></i></div>
                 <div class="name">Player Search</div>
                 <div class="desc">Find any athlete</div>
                 <span class="sport-badge"><i class="fas fa-circle" style="font-size:0.3rem; margin-right:3px;"></i> Active</span>
             </a>
 
-            <a href="team.html" class="sport-card team glass">
+            <a href="#" class="sport-card team glass">
                 <div class="icon-wrapper"><i class="fas fa-users"></i></div>
                 <div class="name">Team Search</div>
                 <div class="desc">Find any team</div>
                 <span class="sport-badge"><i class="fas fa-circle" style="font-size:0.3rem; margin-right:3px;"></i> Active</span>
             </a>
 
-            <a href="news.html" class="sport-card news glass">
+            <a href="#" class="sport-card news glass">
                 <div class="icon-wrapper"><i class="fas fa-newspaper"></i></div>
                 <div class="name">Sports News</div>
                 <div class="desc">Latest updates</div>
                 <span class="sport-badge"><i class="fas fa-circle" style="font-size:0.3rem; margin-right:3px;"></i> Active</span>
             </a>
 
-            <a href="streaming.html" class="sport-card streaming glass">
+            <a href="#" class="sport-card streaming glass">
                 <div class="icon-wrapper"><i class="fas fa-tv"></i></div>
                 <div class="name">Live Streaming</div>
                 <div class="desc">Watch live sports</div>
@@ -1468,21 +1537,21 @@
             <i class="fas fa-brain" style="color:var(--accent3);"></i> AI & Tools
         </h2>
         <div class="ai-grid">
-            <a href="flux.html" class="ai-card flux glass">
+            <a href="#" class="ai-card flux glass">
                 <div class="icon-wrapper"><i class="fas fa-paint-brush"></i></div>
                 <div class="name">Flux AI</div>
                 <div class="desc">AI Image Generator</div>
                 <span class="ai-badge"><i class="fas fa-circle" style="font-size:0.3rem; margin-right:3px;"></i> Active</span>
             </a>
 
-            <a href="gemini.html" class="ai-card gemini glass">
+            <a href="#" class="ai-card gemini glass">
                 <div class="icon-wrapper"><i class="fas fa-comment-dots"></i></div>
                 <div class="name">AI Chat</div>
                 <div class="desc">Google Gemini AI</div>
                 <span class="ai-badge"><i class="fas fa-circle" style="font-size:0.3rem; margin-right:3px;"></i> Active</span>
             </a>
 
-            <a href="uploader.html" class="ai-card uploader glass">
+            <a href="#" class="ai-card uploader glass">
                 <div class="icon-wrapper"><i class="fas fa-cloud-upload-alt"></i></div>
                 <div class="name">File Uploader</div>
                 <div class="desc">Upload to Catbox.moe</div>
@@ -1772,79 +1841,160 @@
             }, 4000);
         }
 
-        // ===== SEARCH FUNCTIONALITY =====
+        // ===== SMART SEARCH - IMPROVED =====
         const searchInput = document.getElementById('searchInput');
         const searchBtn = document.getElementById('searchBtn');
         const searchSuggestions = document.getElementById('searchSuggestions');
 
+        // Platform database with keywords for fuzzy search
         const platforms = [
-            { name: 'YouTube', url: 'youtube.html', icon: 'fab fa-youtube' },
-            { name: 'Facebook', url: 'facebook.html', icon: 'fab fa-facebook' },
-            { name: 'Instagram', url: 'instagram.html', icon: 'fab fa-instagram' },
-            { name: 'TikTok', url: 'tiktok.html', icon: 'fab fa-tiktok' },
-            { name: 'Spotify', url: 'spotify.html', icon: 'fab fa-spotify' },
-            { name: 'Google Drive', url: 'gdrive.html', icon: 'fab fa-google-drive' },
-            { name: 'Live Scores', url: 'livescore.html', icon: 'fas fa-trophy' },
-            { name: 'Player Search', url: 'player.html', icon: 'fas fa-user-athlete' },
-            { name: 'Team Search', url: 'team.html', icon: 'fas fa-users' },
-            { name: 'Sports News', url: 'news.html', icon: 'fas fa-newspaper' },
-            { name: 'Live Streaming', url: 'streaming.html', icon: 'fas fa-tv' },
-            { name: 'Flux AI', url: 'flux.html', icon: 'fas fa-paint-brush' },
-            { name: 'AI Chat', url: 'gemini.html', icon: 'fas fa-comment-dots' },
-            { name: 'File Uploader', url: 'uploader.html', icon: 'fas fa-cloud-upload-alt' }
+            { name: 'YouTube', url: '#', icon: 'fab fa-youtube', keywords: ['youtube', 'yt', 'video', 'download', 'mp4', 'mp3', 'music', 'tube', 'google video'] },
+            { name: 'Facebook', url: '#', icon: 'fab fa-facebook', keywords: ['facebook', 'fb', 'video', 'reel', 'download', 'social', 'meta'] },
+            { name: 'Instagram', url: '#', icon: 'fab fa-instagram', keywords: ['instagram', 'ig', 'reels', 'story', 'video', 'download', 'social', 'photo'] },
+            { name: 'TikTok', url: '#', icon: 'fab fa-tiktok', keywords: ['tiktok', 'tt', 'video', 'download', 'no watermark', 'social', 'shorts'] },
+            { name: 'Spotify', url: '#', icon: 'fab fa-spotify', keywords: ['spotify', 'music', 'download', 'track', 'playlist', 'audio', 'song'] },
+            { name: 'Google Drive', url: '#', icon: 'fab fa-google-drive', keywords: ['gdrive', 'drive', 'google drive', 'file', 'download', 'cloud'] },
+            { name: 'Live Scores', url: '#', icon: 'fas fa-trophy', keywords: ['sports', 'live', 'scores', 'football', 'basketball', 'match', 'game'] },
+            { name: 'Player Search', url: '#', icon: 'fas fa-user-athlete', keywords: ['player', 'athlete', 'sports', 'search', 'profile'] },
+            { name: 'Team Search', url: '#', icon: 'fas fa-users', keywords: ['team', 'club', 'sports', 'search', 'group'] },
+            { name: 'Sports News', url: '#', icon: 'fas fa-newspaper', keywords: ['news', 'sports', 'update', 'headlines', 'match'] },
+            { name: 'Live Streaming', url: '#', icon: 'fas fa-tv', keywords: ['streaming', 'live', 'sports', 'watch', 'tv', 'broadcast'] },
+            { name: 'Flux AI', url: '#', icon: 'fas fa-paint-brush', keywords: ['ai', 'image', 'generator', 'flux', 'art', 'create', 'picture'] },
+            { name: 'AI Chat', url: '#', icon: 'fas fa-comment-dots', keywords: ['ai', 'chat', 'gemini', 'google', 'assistant', 'talk'] },
+            { name: 'File Uploader', url: '#', icon: 'fas fa-cloud-upload-alt', keywords: ['upload', 'file', 'catbox', 'share', 'host'] }
         ];
 
-        function showSuggestions(query) {
-            const filtered = platforms.filter(p =>
-                p.name.toLowerCase().includes(query.toLowerCase())
-            );
+        // Search function with relevance scoring
+        function searchPlatforms(query) {
+            if (!query || query.length < 1) return [];
 
-            if (filtered.length === 0 || query.length === 0) {
-                searchSuggestions.classList.remove('active');
+            const lowerQuery = query.toLowerCase();
+
+            return platforms
+                .map(p => {
+                    let score = 0;
+
+                    // Exact name match
+                    if (p.name.toLowerCase() === lowerQuery) score += 100;
+
+                    // Name starts with query
+                    if (p.name.toLowerCase().startsWith(lowerQuery)) score += 50;
+
+                    // Name contains query
+                    if (p.name.toLowerCase().includes(lowerQuery)) score += 30;
+
+                    // Keywords match
+                    for (const kw of p.keywords) {
+                        if (kw === lowerQuery) score += 40;
+                        if (kw.includes(lowerQuery)) score += 15;
+                        if (lowerQuery.includes(kw)) score += 10;
+                    }
+
+                    // Partial word match (e.g., "you" for "YouTube")
+                    const nameWords = p.name.toLowerCase().split(' ');
+                    for (const word of nameWords) {
+                        if (word.startsWith(lowerQuery) && lowerQuery.length >= 2) score += 20;
+                        if (word.includes(lowerQuery) && lowerQuery.length >= 3) score += 10;
+                    }
+
+                    return { ...p, score };
+                })
+                .filter(p => p.score > 0)
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 8);
+        }
+
+        function highlightMatch(text, query) {
+            if (!query || query.length === 0) return text;
+            const lowerText = text.toLowerCase();
+            const lowerQuery = query.toLowerCase();
+            const index = lowerText.indexOf(lowerQuery);
+            if (index === -1) return text;
+            return text.substring(0, index) +
+                `<span class="match-highlight">${text.substring(index, index + query.length)}</span>` +
+                text.substring(index + query.length);
+        }
+
+        function showSuggestions(query) {
+            const results = searchPlatforms(query);
+
+            if (results.length === 0) {
+                searchSuggestions.innerHTML = `
+                        <div class="no-results">
+                            <i class="fas fa-search"></i>
+                            No platforms found. Try "reels", "music", or "ai"
+                        </div>
+                    `;
+                searchSuggestions.classList.add('active');
                 return;
             }
 
-            searchSuggestions.innerHTML = filtered.map(p => `
-                    <div class="suggestion-item" onclick="window.location.href='${p.url}'">
+            searchSuggestions.innerHTML = results.map(p => `
+                    <div class="suggestion-item" onclick="navigateTo('${p.url}')">
                         <i class="${p.icon}"></i>
-                        <span>${p.name}</span>
+                        <span>${highlightMatch(p.name, query)}</span>
+                        <span class="suggestion-tag">${p.keywords.slice(0, 2).join(', ')}</span>
                     </div>
                 `).join('');
             searchSuggestions.classList.add('active');
         }
 
+        function navigateTo(url) {
+            if (url && url !== '#') {
+                window.location.href = url;
+            } else {
+                showToast('🔗 This platform is coming soon!', 'info');
+            }
+        }
+
+        // Search input events
         searchInput.addEventListener('input', (e) => {
-            showSuggestions(e.target.value);
+            const query = e.target.value.trim();
+            if (query.length >= 1) {
+                showSuggestions(query);
+            } else {
+                searchSuggestions.classList.remove('active');
+            }
+        });
+
+        searchInput.addEventListener('focus', () => {
+            const query = searchInput.value.trim();
+            if (query.length >= 1) {
+                showSuggestions(query);
+            }
         });
 
         searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
+                e.preventDefault();
                 const query = searchInput.value.trim();
                 if (query) {
-                    const found = platforms.find(p =>
-                        p.name.toLowerCase().includes(query.toLowerCase())
-                    );
-                    if (found) {
-                        window.location.href = found.url;
+                    const results = searchPlatforms(query);
+                    if (results.length > 0) {
+                        navigateTo(results[0].url);
                     } else {
-                        showToast('Platform not found. Try: YouTube, Instagram, etc.', 'error');
+                        showToast('No results found. Try: YouTube, Instagram, etc.', 'error');
                     }
                 }
+                searchSuggestions.classList.remove('active');
+            }
+            if (e.key === 'Escape') {
+                searchSuggestions.classList.remove('active');
+                searchInput.blur();
             }
         });
 
         searchBtn.addEventListener('click', () => {
             const query = searchInput.value.trim();
             if (query) {
-                const found = platforms.find(p =>
-                    p.name.toLowerCase().includes(query.toLowerCase())
-                );
-                if (found) {
-                    window.location.href = found.url;
+                const results = searchPlatforms(query);
+                if (results.length > 0) {
+                    navigateTo(results[0].url);
                 } else {
-                    showToast('Platform not found. Try: YouTube, Instagram, etc.', 'error');
+                    showToast('No results found. Try: YouTube, Instagram, etc.', 'error');
                 }
             }
+            searchSuggestions.classList.remove('active');
         });
 
         // Close suggestions when clicking outside
@@ -1856,27 +2006,39 @@
 
         // ===== KEYBOARD SHORTCUTS =====
         document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.key === 'd') {
-                e.preventDefault();
-                window.location.href = 'youtube.html';
-            }
-            if (e.ctrlKey && e.key === 'h') {
-                e.preventDefault();
-                showToast('📊 Download history coming soon!', 'info');
-            }
-            if (e.ctrlKey && e.key === 'c') {
-                e.preventDefault();
-                document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-            }
-            if (e.ctrlKey && e.key === 's') {
-                e.preventDefault();
-                searchInput.focus();
-            }
+            // Press "/" to focus search
             if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
                 if (document.activeElement !== searchInput) {
                     e.preventDefault();
                     searchInput.focus();
+                    searchInput.select();
                 }
+            }
+
+            // Ctrl + D = YouTube
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                navigateTo('#');
+                showToast('📺 Opening YouTube...', 'info');
+            }
+
+            // Ctrl + S = Search focus
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                searchInput.focus();
+                searchInput.select();
+            }
+
+            // Ctrl + C = Contact
+            if (e.ctrlKey && e.key === 'c') {
+                e.preventDefault();
+                document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Ctrl + H = Help
+            if (e.ctrlKey && e.key === 'h') {
+                e.preventDefault();
+                showToast('🔍 Press "/" to search | Ctrl+D for YouTube | Ctrl+C for contact', 'info');
             }
         });
 
@@ -1885,7 +2047,8 @@
         console.log('%c💻 Built with ❤️ by Dev Gift', 'font-size:14px; color:#a0a0c0;');
         console.log('%c🚀 Download anything from anywhere!', 'font-size:14px; color:#00d4ff;');
         console.log('%c📧 Email: devvgift@gmail.com', 'font-size:12px; color:#ff6b9d;');
-        console.log('%c🔍 Press "/" to search!', 'font-size:12px; color:#ffd700;');
+        console.log('%c🔍 Press "/" to search instantly!', 'font-size:12px; color:#ffd700;');
+        console.log('%c💡 Try searching: "reels", "music", "sports", "ai"', 'font-size:12px; color:#8080a0;');
     </script>
 
 </body>
