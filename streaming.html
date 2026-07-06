@@ -483,6 +483,39 @@
             border: 1px solid var(--border-glass);
         }
 
+        /* ===== COUNTDOWN ===== */
+        .match-card .countdown {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(0, 212, 255, 0.06);
+            border-radius: 50px;
+            border: 1px solid rgba(0, 212, 255, 0.08);
+        }
+
+        .match-card .countdown .time-block {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+
+        .match-card .countdown .time-block span {
+            font-size: 0.8rem;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .match-card .countdown .time-block .label {
+            font-size: 0.45rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
         /* ===== STREAM CHANNELS ===== */
         .match-card .stream-channels {
             display: flex;
@@ -502,7 +535,7 @@
         }
 
         .match-card .stream-channels .channel-btn {
-            padding: 0.2rem 0.8rem;
+            padding: 0.25rem 0.9rem;
             border-radius: 50px;
             border: 1px solid var(--border-glass);
             background: var(--bg-card);
@@ -525,6 +558,177 @@
         .match-card .stream-channels .channel-btn i {
             margin-right: 0.2rem;
             font-size: 0.5rem;
+        }
+
+        .match-card .stream-channels .channel-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .match-card .stream-channels .channel-btn.disabled:hover {
+            transform: none;
+            box-shadow: none;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+        }
+
+        /* ===== PLAYER MODAL ===== */
+        .player-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem;
+        }
+
+        .player-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .player-modal .modal-content {
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            max-width: 1000px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+            position: relative;
+        }
+
+        .player-modal .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .player-modal .modal-close:hover {
+            background: var(--accent);
+            transform: rotate(90deg);
+        }
+
+        .player-modal .video-wrapper {
+            position: relative;
+            padding-top: 56.25%;
+            background: #000;
+        }
+
+        .player-modal .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .player-modal .video-wrapper .countdown-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .player-modal .video-wrapper .countdown-overlay h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .player-modal .video-wrapper .countdown-overlay .big-countdown {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .player-modal .video-wrapper .countdown-overlay .big-countdown .cd-block {
+            text-align: center;
+        }
+
+        .player-modal .video-wrapper .countdown-overlay .big-countdown .cd-block .cd-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #00d4ff;
+            min-width: 70px;
+            display: block;
+        }
+
+        .player-modal .video-wrapper .countdown-overlay .big-countdown .cd-block .cd-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .player-modal .video-wrapper .countdown-overlay .cd-separator {
+            font-size: 3rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .player-modal .video-wrapper .countdown-overlay .match-info {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .player-modal .modal-info {
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            background: var(--bg-card);
+        }
+
+        .player-modal .modal-info .match-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .player-modal .modal-info .match-status {
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.15rem 0.8rem;
+            border-radius: 50px;
+        }
+
+        .player-modal .modal-info .match-status.live {
+            background: rgba(255, 0, 0, 0.12);
+            color: #ff4444;
+        }
+
+        .player-modal .modal-info .match-status.final {
+            background: rgba(0, 255, 136, 0.06);
+            color: #00ff88;
+        }
+
+        .player-modal .modal-info .match-status.scheduled {
+            background: rgba(0, 212, 255, 0.06);
+            color: #00d4ff;
         }
 
         /* ===== NO MATCHES ===== */
@@ -699,6 +903,7 @@
             .match-card .match-top { flex-direction: column; align-items: stretch; }
             .match-card .match-meta { justify-content: flex-start; }
             .match-card .stream-channels { justify-content: center; }
+            .match-card .countdown .time-block { font-size: 0.6rem; }
             .page-header h1 { font-size: 1.5rem; }
             .date-tab { padding: 0.3rem 0.8rem; font-size: 0.6rem; }
             .whatsapp-float { width: 50px; height: 50px; font-size: 1.5rem; bottom: 20px; right: 20px; }
@@ -706,12 +911,16 @@
             .navbar { padding: 0.5rem 1rem; }
             .logo { font-size: 1.1rem; }
             .back-btn span { display: none; }
+            .player-modal .video-wrapper .countdown-overlay .big-countdown .cd-block .cd-number { font-size: 2.5rem; min-width: 50px; }
+            .player-modal .video-wrapper .countdown-overlay .big-countdown .cd-separator { font-size: 2rem; }
         }
 
         @media (max-width: 480px) {
             .match-card .team .team-logo { width: 28px; height: 28px; }
             .match-card .team .team-name { font-size: 0.65rem; }
             .match-card .stream-channels .channel-btn { padding: 0.15rem 0.6rem; font-size: 0.5rem; }
+            .player-modal .video-wrapper .countdown-overlay .big-countdown .cd-block .cd-number { font-size: 1.8rem; min-width: 35px; }
+            .player-modal .video-wrapper .countdown-overlay .big-countdown .cd-separator { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -768,6 +977,40 @@
                     <i class="fas fa-spinner"></i>
                 </div>
                 <p style="margin-top:1.5rem;font-weight:600;">Loading matches...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PLAYER MODAL ===== -->
+    <div class="player-modal" id="playerModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePlayer()"><i class="fas fa-times"></i></button>
+            <div class="video-wrapper" id="videoWrapper">
+                <iframe id="playerIframe" src="" allowfullscreen></iframe>
+                <div class="countdown-overlay" id="countdownOverlay" style="display:none;">
+                    <h2 id="countdownTitle">Kick-off in</h2>
+                    <div class="big-countdown" id="bigCountdown">
+                        <div class="cd-block">
+                            <span class="cd-number" id="cdHours">00</span>
+                            <span class="cd-label">Hours</span>
+                        </div>
+                        <span class="cd-separator">:</span>
+                        <div class="cd-block">
+                            <span class="cd-number" id="cdMinutes">00</span>
+                            <span class="cd-label">Minutes</span>
+                        </div>
+                        <span class="cd-separator">:</span>
+                        <div class="cd-block">
+                            <span class="cd-number" id="cdSeconds">00</span>
+                            <span class="cd-label">Seconds</span>
+                        </div>
+                    </div>
+                    <div class="match-info" id="countdownMatchInfo"></div>
+                </div>
+            </div>
+            <div class="modal-info">
+                <span class="match-title" id="modalMatchTitle">Match Title</span>
+                <span class="match-status" id="modalMatchStatus">🔴 LIVE</span>
             </div>
         </div>
     </div>
@@ -829,13 +1072,14 @@
 
         let allMatches = [];
         let currentDateFilter = 'today';
+        let countdownInterval = null;
 
         // ===== FETCH MATCHES =====
         async function fetchMatches() {
             const container = document.getElementById('matchesContainer');
 
             try {
-                // Try football streaming endpoint first (has actual stream URLs)
+                // Try football streaming endpoint first
                 let response = await fetch(`${API_BASE}/football/streaming?apikey=${API_KEY}`);
                 let data;
 
@@ -931,6 +1175,13 @@
             return liveStatuses.some(s => status.includes(s));
         }
 
+        // ===== IS FINISHED =====
+        function isFinished(match) {
+            const status = match.status || '';
+            const finishedStatuses = ['Full Time', 'FT', 'Finished', 'Game Finished'];
+            return finishedStatuses.some(s => status.includes(s));
+        }
+
         // ===== FORMAT DATE =====
         function formatDate(dateString) {
             if (!dateString) return 'TBD';
@@ -947,38 +1198,7 @@
             }
         }
 
-        // ===== GET STREAM URL =====
-        function getStreamUrl(match) {
-            // Check if match has streams with actual URLs
-            if (match.streams && match.streams.length > 0) {
-                // Return the first stream URL
-                return match.streams[0].url || match.streams[0].originalUrl || '';
-            }
-
-            // Check for sources with id
-            if (match.sources && match.sources.length > 0) {
-                // Try to construct URL from source
-                const source = match.sources[0];
-                // If source has a URL directly
-                if (source.url) return source.url;
-                // If source has id, try to construct
-                if (source.id) {
-                    // Try different URL patterns
-                    const patterns = [
-                        `https://streamed.pk/embed/${source.id}`,
-                        `https://streamed.pk/watch/${source.id}`,
-                        `https://play.sportsteam368.com/play/${source.id}`,
-                        `https://www.fqzb162.com/broadcast/${source.id}`
-                    ];
-                    return patterns[0]; // Return first pattern
-                }
-            }
-
-            // Fallback: Google search
-            return `https://www.google.com/search?q=watch+${encodeURIComponent(match.homeTeam || match.home || '')}+vs+${encodeURIComponent(match.awayTeam || match.away || '')}+live+stream`;
-        }
-
-        // ===== GET ALL STREAMS =====
+        // ===== GET STREAMS =====
         function getAllStreams(match) {
             let streams = [];
 
@@ -987,7 +1207,8 @@
                 match.streams.forEach((s, i) => {
                     streams.push({
                         title: s.title || `CH ${i + 1}`,
-                        url: s.url || s.originalUrl || ''
+                        url: s.url || s.originalUrl || '',
+                        type: s.type || 'hls'
                     });
                 });
             }
@@ -995,11 +1216,22 @@
             // From sources array
             if (match.sources && match.sources.length > 0) {
                 match.sources.forEach((s, i) => {
-                    const url = s.url || (s.id ? `https://streamed.pk/embed/${s.id}` : '');
+                    let url = s.url || '';
+                    if (!url && s.id) {
+                        // Try to construct URL from source + id
+                        const sourceMap = {
+                            'admin': `https://streamed.pk/embed/${s.id}`,
+                            'echo': `https://streamed.pk/embed/${s.id}`,
+                            'golf': `https://streamed.pk/embed/${s.id}`,
+                            'default': `https://streamed.pk/embed/${s.id}`
+                        };
+                        url = sourceMap[s.source] || sourceMap['default'];
+                    }
                     if (url) {
                         streams.push({
                             title: s.source ? `${s.source.toUpperCase()}` : `CH ${streams.length + 1}`,
-                            url: url
+                            url: url,
+                            type: 'embed'
                         });
                     }
                 });
@@ -1007,13 +1239,109 @@
 
             // If no streams found, add a default one
             if (streams.length === 0) {
+                const defaultUrl = `https://www.google.com/search?q=watch+${encodeURIComponent(match.homeTeam || match.home || '')}+vs+${encodeURIComponent(match.awayTeam || match.away || '')}+live+stream`;
                 streams.push({
                     title: 'CH 1',
-                    url: getStreamUrl(match)
+                    url: defaultUrl,
+                    type: 'embed'
                 });
             }
 
             return streams;
+        }
+
+        // ===== OPEN PLAYER =====
+        function openPlayer(match) {
+            const modal = document.getElementById('playerModal');
+            const iframe = document.getElementById('playerIframe');
+            const overlay = document.getElementById('countdownOverlay');
+            const title = document.getElementById('modalMatchTitle');
+            const status = document.getElementById('modalMatchStatus');
+
+            const homeTeam = match.homeTeam || match.home || match.teams?.home?.name || 'Home';
+            const awayTeam = match.awayTeam || match.away || match.teams?.away?.name || 'Away';
+            const streams = getAllStreams(match);
+            const isLive = isLiveMatch(match);
+            const isFinal = isFinished(match);
+            const matchDate = match.date || match.startTime || '';
+
+            title.textContent = `${homeTeam} vs ${awayTeam}`;
+
+            if (isLive) {
+                status.textContent = '🔴 LIVE';
+                status.className = 'match-status live';
+                overlay.style.display = 'none';
+                iframe.style.display = 'block';
+                // Use first stream URL
+                iframe.src = streams[0]?.url || '';
+            } else if (isFinal) {
+                status.textContent = '✅ Full Time - Replay Available';
+                status.className = 'match-status final';
+                overlay.style.display = 'none';
+                iframe.style.display = 'block';
+                iframe.src = streams[0]?.url || '';
+            } else {
+                status.textContent = '⏰ Upcoming';
+                status.className = 'match-status scheduled';
+                iframe.style.display = 'none';
+                overlay.style.display = 'flex';
+                document.getElementById('countdownTitle').textContent = 'Kicks off in';
+                document.getElementById('countdownMatchInfo').textContent = `${homeTeam} vs ${awayTeam} · ${formatDate(matchDate)}`;
+                startCountdown(matchDate);
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // ===== CLOSE PLAYER =====
+        function closePlayer() {
+            const modal = document.getElementById('playerModal');
+            const iframe = document.getElementById('playerIframe');
+            modal.classList.remove('active');
+            iframe.src = '';
+            document.body.style.overflow = '';
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+            }
+        }
+
+        // ===== START COUNTDOWN =====
+        function startCountdown(targetDate) {
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+
+            const target = new Date(targetDate).getTime();
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const diff = target - now;
+
+                if (diff <= 0) {
+                    document.getElementById('cdHours').textContent = '00';
+                    document.getElementById('cdMinutes').textContent = '00';
+                    document.getElementById('cdSeconds').textContent = '00';
+                    document.getElementById('countdownTitle').textContent = 'Match Started!';
+                    if (countdownInterval) {
+                        clearInterval(countdownInterval);
+                        countdownInterval = null;
+                    }
+                    return;
+                }
+
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('cdHours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('cdMinutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('cdSeconds').textContent = String(seconds).padStart(2, '0');
+            }
+
+            updateCountdown();
+            countdownInterval = setInterval(updateCountdown, 1000);
         }
 
         // ===== RENDER MATCHES =====
@@ -1084,7 +1412,7 @@
                 const date = match.date || match.startTime || match.startTime || '';
 
                 const isLive = isLiveMatch(match);
-                const isFinal = status === 'Full Time' || status === 'FT' || status === 'Finished';
+                const isFinal = isFinished(match);
 
                 let statusClass = 'scheduled';
                 let statusText = status || 'Scheduled';
@@ -1103,13 +1431,35 @@
                 const card = document.createElement('div');
                 card.className = 'match-card';
 
+                // Countdown for upcoming matches
+                let countdownHTML = '';
+                if (!isLive && !isFinal && date) {
+                    countdownHTML = `
+                        <div class="countdown" id="countdown-${match.id || Math.random()}">
+                            <i class="far fa-clock" style="color:#00d4ff;"></i>
+                            <span style="font-size:0.6rem;color:var(--text-muted);">Kick-off in:</span>
+                            <span class="time-block">
+                                <span id="cd-h-${match.id || Math.random()}">--</span><span class="label">h</span>
+                            </span>
+                            <span class="time-block">
+                                <span id="cd-m-${match.id || Math.random()}">--</span><span class="label">m</span>
+                            </span>
+                            <span class="time-block">
+                                <span id="cd-s-${match.id || Math.random()}">--</span><span class="label">s</span>
+                            </span>
+                        </div>
+                    `;
+                }
+
                 let channelsHTML = '';
                 if (hasStreams) {
+                    const isDisabled = !isLive && !isFinal;
                     channelsHTML = `
                         <div class="stream-channels">
                             <span class="channel-label"><i class="fas fa-signal"></i> Streams:</span>
                             ${streams.slice(0, 12).map((s, i) => `
-                                <button class="channel-btn" onclick="openStream('${s.url}', '${homeTeam} vs ${awayTeam} - ${s.title}')">
+                                <button class="channel-btn ${isDisabled ? 'disabled' : ''}" 
+                                    onclick="${isDisabled ? 'showToast(\'Match not started yet\', \'info\')' : `openPlayer(matches.find(m => m.id === '${match.id || match._id || ''}') || ${JSON.stringify(match)})`}">
                                     <i class="fas fa-play"></i> ${s.title}
                                 </button>
                             `).join('')}
@@ -1138,23 +1488,46 @@
                             </span>
                         </div>
                     </div>
+                    ${countdownHTML}
                     ${channelsHTML}
                 `;
 
                 container.appendChild(card);
+
+                // Start individual countdown for upcoming matches
+                if (!isLive && !isFinal && date) {
+                    const id = match.id || Math.random();
+                    startIndividualCountdown(date, `cd-h-${id}`, `cd-m-${id}`, `cd-s-${id}`);
+                }
             });
         }
 
-        // ===== OPEN STREAM =====
-        function openStream(url, title) {
-            if (!url) {
-                showToast('No stream URL available', 'error');
-                return;
+        // ===== INDIVIDUAL COUNTDOWN =====
+        function startIndividualCountdown(targetDate, hEl, mEl, sEl) {
+            const target = new Date(targetDate).getTime();
+
+            function update() {
+                const now = new Date().getTime();
+                const diff = target - now;
+
+                if (diff <= 0) {
+                    document.getElementById(hEl).textContent = '00';
+                    document.getElementById(mEl).textContent = '00';
+                    document.getElementById(sEl).textContent = '00';
+                    return;
+                }
+
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById(hEl).textContent = String(hours).padStart(2, '0');
+                document.getElementById(mEl).textContent = String(minutes).padStart(2, '0');
+                document.getElementById(sEl).textContent = String(seconds).padStart(2, '0');
             }
 
-            // Open in new tab/window
-            window.open(url, '_blank');
-            showToast(`Opening ${title}...`, 'info');
+            update();
+            setInterval(update, 1000);
         }
 
         // ===== SHOW TOAST =====
@@ -1191,6 +1564,20 @@
                 currentDateFilter = tab.dataset.date;
                 renderMatches(allMatches, currentDateFilter);
             });
+        });
+
+        // ===== CLOSE MODAL ON ESC =====
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closePlayer();
+            }
+        });
+
+        // ===== CLOSE MODAL ON CLICK OUTSIDE =====
+        document.getElementById('playerModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closePlayer();
+            }
         });
 
         // ===== INIT =====
