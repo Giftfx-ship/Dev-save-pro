@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DevSave Pro - Live Football Streaming</title>
+    <title>DevSave Pro - Live Football</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
@@ -25,11 +25,9 @@
             --accent: #00ff88;
             --accent2: #6c5ce7;
             --accent3: #00d4ff;
-            --accent4: #ff6b9d;
             --shadow: 0 8px 48px rgba(0, 0, 0, 0.8);
             --radius: 12px;
-            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            --glow: 0 0 60px rgba(0, 255, 136, 0.04);
+            --transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         [data-theme="light"] {
@@ -41,11 +39,6 @@
             --text-secondary: #4a4a6a;
             --text-muted: #8888aa;
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
-            --glow: 0 0 40px rgba(0, 255, 136, 0.02);
-        }
-
-        html {
-            scroll-behavior: smooth;
         }
 
         body {
@@ -55,13 +48,7 @@
             min-height: 100vh;
             overflow-x: hidden;
             transition: var(--transition);
-            opacity: 0;
-            animation: bodyFadeIn 0.8s ease forwards;
-        }
-
-        @keyframes bodyFadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            padding-bottom: 80px;
         }
 
         /* ===== LOADING ===== */
@@ -84,15 +71,14 @@
         }
 
         .loader-ring {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             border: 3px solid var(--bg-card);
             border-top-color: var(--accent);
             border-right-color: var(--accent2);
             border-bottom-color: var(--accent3);
             animation: spinLoader 1.4s cubic-bezier(0.6, 0, 0.4, 1) infinite;
-            box-shadow: 0 0 60px rgba(0, 255, 136, 0.1);
         }
 
         @keyframes spinLoader {
@@ -101,12 +87,11 @@
         }
 
         .loader-text {
-            margin-top: 2.5rem;
+            margin-top: 2rem;
             font-size: 1.2rem;
             font-weight: 600;
             color: var(--text-secondary);
             animation: pulseText 1.5s ease-in-out infinite;
-            letter-spacing: 2px;
         }
 
         .loader-text span {
@@ -141,142 +126,79 @@
             100% { width: 100%; }
         }
 
-        /* ===== BACKGROUND ===== */
-        .gradient-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: radial-gradient(ellipse at 20% 50%, rgba(0, 255, 136, 0.03) 0%, transparent 60%),
-                        radial-gradient(ellipse at 80% 50%, rgba(108, 92, 231, 0.02) 0%, transparent 60%),
-                        var(--bg-primary);
-        }
-
-        #particles-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* ===== GLASS ===== */
-        .glass {
-            background: var(--bg-card);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow), var(--glow);
-            transition: var(--transition);
-        }
-
-        .glass:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 60px rgba(0, 255, 136, 0.06), var(--glow);
-            border-color: rgba(0, 255, 136, 0.08);
-        }
-
         /* ===== NAVBAR ===== */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            padding: 0.8rem 2.5rem;
-            background: rgba(10, 10, 18, 0.85);
-            backdrop-filter: blur(30px);
+            padding: 0.7rem 1.5rem;
+            background: rgba(10, 10, 18, 0.92);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-glass);
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            animation: slideDown 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
 
         .logo {
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             font-weight: 900;
             background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
-            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shimmer 4s ease infinite;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             text-decoration: none;
         }
 
-        @keyframes shimmer {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
         .logo i {
             -webkit-text-fill-color: initial;
             color: var(--accent);
-            animation: rotate 12s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
         }
 
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .back-btn {
             background: var(--bg-card);
             border: 1px solid var(--border-glass);
             color: var(--text-primary);
-            padding: 0.4rem 1.2rem;
+            padding: 0.3rem 1rem;
             border-radius: 50px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             transition: var(--transition);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .back-btn:hover {
             background: linear-gradient(135deg, var(--accent), var(--accent2));
             color: white;
-            transform: translateX(-5px);
             border-color: transparent;
-            box-shadow: 0 4px 30px rgba(0, 255, 136, 0.2);
         }
 
         .theme-toggle {
             background: var(--bg-card);
             border: 1px solid var(--border-glass);
             color: var(--text-primary);
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
             transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
         }
 
         .theme-toggle:hover {
@@ -287,60 +209,30 @@
         .version-badge {
             background: linear-gradient(135deg, var(--accent), var(--accent2));
             color: white;
-            padding: 0.2rem 0.7rem;
+            padding: 0.15rem 0.6rem;
             border-radius: 50px;
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             font-weight: 700;
-            letter-spacing: 1.5px;
-            animation: pulseBadge 2s infinite;
+            letter-spacing: 1px;
             text-transform: uppercase;
-        }
-
-        @keyframes pulseBadge {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
         }
 
         /* ===== CONTAINER ===== */
         .container {
-            position: relative;
-            z-index: 1;
-            padding: 100px 2.5rem 4rem;
-            max-width: 1300px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 80px 1rem 2rem;
         }
 
         /* ===== HEADER ===== */
         .page-header {
             text-align: center;
-            margin-bottom: 3rem;
-            animation: fadeUp 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(40px) scale(0.96); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .page-header .icon {
-            font-size: 3.5rem;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-            display: block;
-            animation: float 4s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-12px); }
+            margin-bottom: 2rem;
         }
 
         .page-header h1 {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 0.3rem;
-            color: var(--text-primary);
-            letter-spacing: -1px;
+            font-size: 2rem;
+            font-weight: 800;
             background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -348,18 +240,19 @@
 
         .page-header p {
             color: var(--text-secondary);
-            font-size: 1.05rem;
+            font-size: 0.95rem;
+            margin-top: 0.2rem;
         }
 
         .page-header .live-badge {
             display: inline-block;
             margin-top: 0.5rem;
-            padding: 0.3rem 1.5rem;
+            padding: 0.2rem 1.2rem;
             border-radius: 50px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             background: rgba(255, 0, 0, 0.12);
             color: #ff4444;
             border: 1px solid rgba(255, 0, 0, 0.15);
@@ -377,7 +270,7 @@
             height: 8px;
             background: #ff4444;
             border-radius: 50%;
-            margin-right: 8px;
+            margin-right: 6px;
             animation: dotPulse 1.2s infinite;
         }
 
@@ -386,19 +279,64 @@
             50% { opacity: 0.2; transform: scale(0.6); }
         }
 
-        /* ===== MATCH CARDS ===== */
-        .matches-grid {
+        /* ===== DATE TABS ===== */
+        .date-tabs {
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            gap: 0.4rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            padding: 0.5rem 0;
+            scrollbar-width: none;
         }
 
+        .date-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .date-tab {
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            border: 1px solid var(--border-glass);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .date-tab:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .date-tab.active {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.15);
+        }
+
+        .date-tab .count {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.02rem 0.4rem;
+            border-radius: 50px;
+            font-size: 0.45rem;
+            margin-left: 0.3rem;
+        }
+
+        /* ===== MATCH CARD ===== */
         .match-card {
             background: var(--bg-card);
-            backdrop-filter: blur(30px);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--border-glass);
             border-radius: var(--radius);
-            padding: 1.5rem 2rem;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 0.8rem;
             transition: var(--transition);
             box-shadow: var(--shadow);
             cursor: pointer;
@@ -412,7 +350,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
+            height: 2px;
             background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
             opacity: 0;
             transition: var(--transition);
@@ -423,9 +361,9 @@
         }
 
         .match-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-3px);
             border-color: rgba(0, 255, 136, 0.08);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), var(--glow);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
 
         .match-card .match-top {
@@ -433,13 +371,13 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .match-card .match-teams {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 1.5rem;
             flex-wrap: wrap;
             flex: 1;
         }
@@ -447,63 +385,56 @@
         .match-card .team {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .match-card .team .team-logo {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             object-fit: contain;
             background: var(--bg-card);
-            padding: 6px;
-            border: 2px solid var(--border-glass);
+            padding: 4px;
+            border: 1px solid var(--border-glass);
             transition: var(--transition);
         }
 
         .match-card .team .team-logo:hover {
-            transform: scale(1.15) rotate(-8deg);
+            transform: scale(1.1);
             border-color: var(--accent2);
-        }
-
-        .match-card .team .team-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.1rem;
         }
 
         .match-card .team .team-name {
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             color: var(--text-primary);
-            letter-spacing: -0.3px;
         }
 
         .match-card .vs-badge {
             color: var(--text-muted);
             font-weight: 800;
-            font-size: 0.7rem;
-            padding: 0.3rem 0.8rem;
+            font-size: 0.6rem;
+            padding: 0.15rem 0.5rem;
             background: var(--bg-card);
             border-radius: 50px;
             border: 1px solid var(--border-glass);
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
         }
 
         .match-card .match-meta {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.5rem;
             flex-wrap: wrap;
         }
 
         .match-card .status-badge {
-            padding: 0.25rem 1rem;
+            padding: 0.15rem 0.8rem;
             border-radius: 50px;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         .match-card .status-badge.live {
@@ -514,8 +445,8 @@
         }
 
         @keyframes livePulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.98); }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .match-card .status-badge.final {
@@ -531,130 +462,82 @@
         }
 
         .match-card .league-name {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             color: var(--text-muted);
             background: var(--bg-card);
-            padding: 0.15rem 0.7rem;
+            padding: 0.1rem 0.6rem;
             border-radius: 50px;
             border: 1px solid var(--border-glass);
             font-weight: 600;
         }
 
         .match-card .match-time {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             color: var(--text-muted);
             display: flex;
             align-items: center;
             gap: 0.3rem;
             background: var(--bg-card);
-            padding: 0.15rem 0.7rem;
+            padding: 0.1rem 0.6rem;
             border-radius: 50px;
             border: 1px solid var(--border-glass);
         }
 
-        .match-card .match-time i {
-            font-size: 0.5rem;
-            color: var(--accent2);
-        }
-
-        .match-card .match-bottom {
+        /* ===== STREAM CHANNELS ===== */
+        .match-card .stream-channels {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            gap: 0.4rem;
             flex-wrap: wrap;
-            gap: 1rem;
-            padding-top: 1rem;
+            margin-top: 0.8rem;
+            padding-top: 0.8rem;
             border-top: 1px solid var(--border-glass);
-            margin-top: 1rem;
         }
 
-        .watch-btn {
-            padding: 0.6rem 2rem;
+        .match-card .stream-channels .channel-label {
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            margin-right: 0.3rem;
+        }
+
+        .match-card .stream-channels .channel-btn {
+            padding: 0.2rem 0.8rem;
             border-radius: 50px;
-            border: none;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            color: white;
-            font-size: 0.85rem;
-            font-weight: 700;
+            border: 1px solid var(--border-glass);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.6rem;
+            font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Inter', sans-serif;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            box-shadow: 0 4px 30px rgba(0, 255, 136, 0.15);
-            position: relative;
-            overflow: hidden;
         }
 
-        .watch-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, var(--accent2), var(--accent3));
-            opacity: 0;
-            transition: var(--transition);
+        .match-card .stream-channels .channel-btn:hover {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: white;
+            border-color: transparent;
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.15);
         }
 
-        .watch-btn:hover::before {
-            opacity: 1;
+        .match-card .stream-channels .channel-btn i {
+            margin-right: 0.2rem;
+            font-size: 0.5rem;
         }
 
-        .watch-btn i,
-        .watch-btn span {
-            position: relative;
-            z-index: 1;
-        }
-
-        .watch-btn:hover {
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 8px 40px rgba(0, 255, 136, 0.3);
-        }
-
-        .watch-btn.live-btn {
-            background: linear-gradient(135deg, #ff4444, #ff00ff);
-            animation: btnPulse 2s infinite;
-        }
-
-        @keyframes btnPulse {
-            0%, 100% { box-shadow: 0 4px 30px rgba(255, 0, 255, 0.15); }
-            50% { box-shadow: 0 8px 50px rgba(255, 0, 255, 0.35); }
-        }
-
-        .match-card .stream-count {
-            font-size: 0.55rem;
-            color: var(--text-muted);
-            opacity: 0.5;
-        }
-
+        /* ===== NO MATCHES ===== */
         .no-matches {
             text-align: center;
-            padding: 4rem;
+            padding: 3rem;
             color: var(--text-muted);
         }
 
         .no-matches i {
-            font-size: 3.5rem;
+            font-size: 3rem;
             margin-bottom: 1rem;
             display: block;
-            color: var(--text-muted);
-        }
-
-        .matches-loading {
-            text-align: center;
-            padding: 4rem;
-            color: var(--text-secondary);
-        }
-
-        .matches-loading .spinner {
-            animation: spin 1s linear infinite;
-            font-size: 2.5rem;
-            color: var(--accent2);
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
 
         /* ===== WHATSAPP FLOATING ===== */
@@ -663,15 +546,15 @@
             bottom: 30px;
             right: 30px;
             z-index: 999;
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             background: #25d366;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 2rem;
+            font-size: 1.8rem;
             box-shadow: 0 8px 40px rgba(37, 211, 102, 0.3);
             cursor: pointer;
             transition: var(--transition);
@@ -680,7 +563,7 @@
         }
 
         .whatsapp-float:hover {
-            transform: scale(1.15) rotate(10deg);
+            transform: scale(1.1) rotate(10deg);
             box-shadow: 0 12px 50px rgba(37, 211, 102, 0.4);
         }
 
@@ -691,12 +574,12 @@
 
         .whatsapp-float .tooltip {
             position: absolute;
-            right: 75px;
+            right: 70px;
             background: var(--bg-card);
             backdrop-filter: blur(20px);
-            padding: 0.4rem 1rem;
+            padding: 0.3rem 0.8rem;
             border-radius: 8px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             white-space: nowrap;
             opacity: 0;
             transform: translateX(15px) scale(0.95);
@@ -713,77 +596,52 @@
 
         /* ===== FOOTER ===== */
         .footer {
-            position: relative;
-            z-index: 1;
-            padding: 2.5rem 2rem 1.5rem;
             text-align: center;
+            padding: 2rem 1rem 1rem;
             border-top: 1px solid var(--border-glass);
-            margin-top: 4rem;
+            margin-top: 3rem;
             background: var(--bg-card);
-            backdrop-filter: blur(20px);
         }
 
         .footer-socials {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            gap: 1rem;
+            margin-bottom: 1rem;
             flex-wrap: wrap;
         }
 
         .footer-socials a {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: var(--text-secondary);
             background: var(--bg-card);
             border: 1px solid var(--border-glass);
             transition: var(--transition);
             text-decoration: none;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .footer-socials a::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle, var(--accent), transparent 70%);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .footer-socials a:hover::before {
-            opacity: 0.12;
         }
 
         .footer-socials a:hover {
-            transform: translateY(-5px) scale(1.1);
+            transform: translateY(-4px) scale(1.1);
             border-color: var(--accent);
             color: var(--accent);
         }
 
         .footer-socials a.facebook:hover { color: #1877f2; border-color: #1877f2; }
-        .footer-socials a.instagram:hover { color: #e4405f; border-color: #e4405f; }
-        .footer-socials a.twitter:hover { color: #1da1f2; border-color: #1da1f2; }
         .footer-socials a.whatsapp:hover { color: #25d366; border-color: #25d366; }
-        .footer-socials a.telegram:hover { color: #0088cc; border-color: #0088cc; }
-        .footer-socials a.github:hover { color: #6e5494; border-color: #6e5494; }
         .footer-socials a.email:hover { color: #ea4335; border-color: #ea4335; }
-
-        .footer-socials a i {
-            position: relative;
-            z-index: 1;
-        }
+        .footer-socials a.twitter:hover { color: #1da1f2; border-color: #1da1f2; }
+        .footer-socials a.instagram:hover { color: #e4405f; border-color: #e4405f; }
 
         .footer p {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
-            opacity: 0.7;
+            opacity: 0.6;
         }
 
         .footer p a {
@@ -804,10 +662,10 @@
             backdrop-filter: blur(30px);
             border: 1px solid var(--border-glass);
             border-radius: 12px;
-            padding: 0.8rem 1.8rem;
+            padding: 0.6rem 1.5rem;
             color: var(--text-primary);
             font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             z-index: 99999;
             opacity: 0;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
@@ -830,38 +688,30 @@
         .toast.info i { color: var(--accent2); }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 992px) {
-            .container { padding: 90px 1.5rem 3rem; }
-            .match-card .match-teams { gap: 1rem; }
-            .match-card .team { gap: 0.6rem; }
-            .match-card .team .team-logo { width: 40px; height: 40px; }
-        }
-
         @media (max-width: 768px) {
-            .container { padding: 80px 1rem 2rem; }
-            .page-header h1 { font-size: 2rem; }
-            .match-card { padding: 1.2rem 1.2rem; }
-            .match-card .match-teams { flex-direction: column; align-items: stretch; gap: 0.5rem; }
-            .match-card .team { justify-content: space-between; }
-            .match-card .team .team-logo { width: 35px; height: 35px; }
-            .match-card .team .team-name { font-size: 0.85rem; }
+            .container { padding: 70px 0.8rem 2rem; }
+            .match-card { padding: 1rem 1.2rem; }
+            .match-card .match-teams { gap: 0.8rem; }
+            .match-card .team { gap: 0.5rem; }
+            .match-card .team .team-logo { width: 32px; height: 32px; padding: 3px; }
+            .match-card .team .team-name { font-size: 0.75rem; }
+            .match-card .vs-badge { font-size: 0.5rem; padding: 0.1rem 0.4rem; }
             .match-card .match-top { flex-direction: column; align-items: stretch; }
             .match-card .match-meta { justify-content: flex-start; }
-            .match-card .match-bottom { flex-direction: column; align-items: stretch; }
-            .watch-btn { justify-content: center; }
-            .navbar { padding: 0.6rem 1rem; }
-            .logo { font-size: 1.3rem; }
-            .back-btn span { display: none; }
-            .whatsapp-float { width: 50px; height: 50px; font-size: 1.6rem; bottom: 20px; right: 20px; }
+            .match-card .stream-channels { justify-content: center; }
+            .page-header h1 { font-size: 1.5rem; }
+            .date-tab { padding: 0.3rem 0.8rem; font-size: 0.6rem; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 1.5rem; bottom: 20px; right: 20px; }
             .whatsapp-float .tooltip { display: none; }
+            .navbar { padding: 0.5rem 1rem; }
+            .logo { font-size: 1.1rem; }
+            .back-btn span { display: none; }
         }
 
         @media (max-width: 480px) {
-            .page-header h1 { font-size: 1.5rem; }
-            .match-card .team .team-logo { width: 28px; height: 28px; padding: 3px; }
-            .match-card .team .team-name { font-size: 0.7rem; }
-            .match-card .match-meta { gap: 0.4rem; }
-            .watch-btn { padding: 0.4rem 1.2rem; font-size: 0.7rem; }
+            .match-card .team .team-logo { width: 28px; height: 28px; }
+            .match-card .team .team-name { font-size: 0.65rem; }
+            .match-card .stream-channels .channel-btn { padding: 0.15rem 0.6rem; font-size: 0.5rem; }
         }
     </style>
 </head>
@@ -875,10 +725,6 @@
             <div class="loader-progress-bar"></div>
         </div>
     </div>
-
-    <!-- ===== BACKGROUND ===== -->
-    <div class="gradient-bg"></div>
-    <canvas id="particles-canvas"></canvas>
 
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar">
@@ -901,21 +747,28 @@
     <!-- ===== MAIN ===== -->
     <div class="container">
         <div class="page-header">
-            <i class="fas fa-futbol icon"></i>
-            <h1>Live Football Streaming</h1>
+            <h1>⚽ Live Football Streaming</h1>
             <p>Watch live matches from leagues around the world</p>
             <div class="live-badge">
                 <span class="dot"></span> Live Now
             </div>
         </div>
 
+        <!-- ===== DATE TABS ===== -->
+        <div class="date-tabs" id="dateTabs">
+            <button class="date-tab active" data-date="today">📅 Today <span class="count" id="todayCount">0</span></button>
+            <button class="date-tab" data-date="tomorrow">📅 Tomorrow <span class="count" id="tomorrowCount">0</span></button>
+            <button class="date-tab" data-date="upcoming">📅 Upcoming <span class="count" id="upcomingCount">0</span></button>
+        </div>
+
         <!-- ===== MATCHES ===== -->
         <div id="matchesContainer">
-            <div class="matches-loading" id="matchesLoading">
-                <div class="spinner"><i class="fas fa-spinner"></i></div>
-                <p style="margin-top:1.5rem; font-weight:600;">Loading matches...</p>
+            <div style="text-align:center;padding:3rem;color:var(--text-secondary);">
+                <div style="animation:spin 1s linear infinite;font-size:2.5rem;color:var(--accent2);display:inline-block;">
+                    <i class="fas fa-spinner"></i>
+                </div>
+                <p style="margin-top:1.5rem;font-weight:600;">Loading matches...</p>
             </div>
-            <div class="matches-grid" id="matchesGrid"></div>
         </div>
     </div>
 
@@ -949,91 +802,6 @@
             }, 1500);
         });
 
-        // ===== PARTICLES =====
-        (function particles() {
-            const canvas = document.getElementById('particles-canvas');
-            const ctx = canvas.getContext('2d');
-            let width, height, particles = [];
-            const particleCount = 50;
-
-            function resize() {
-                width = canvas.width = window.innerWidth;
-                height = canvas.height = window.innerHeight;
-            }
-
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * 0.2;
-                    this.vy = (Math.random() - 0.5) * 0.2;
-                    this.radius = Math.random() * 2 + 1;
-                    this.opacity = Math.random() * 0.2 + 0.05;
-                }
-
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    if (this.x < 0 || this.x > width) this.vx *= -1;
-                    if (this.y < 0 || this.y > height) this.vy *= -1;
-                }
-
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    const accent = getComputedStyle(document.documentElement)
-                        .getPropertyValue('--accent').trim() || '#00ff88';
-                    ctx.fillStyle = accent.replace(')', `, ${this.opacity})`).replace('rgb', 'rgba');
-                    ctx.fill();
-                }
-            }
-
-            function initParticles() {
-                particles = [];
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push(new Particle());
-                }
-            }
-
-            function drawLines() {
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 150) {
-                            const opacity = (1 - dist / 150) * 0.03;
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            const accent = getComputedStyle(document.documentElement)
-                                .getPropertyValue('--accent').trim() || '#00ff88';
-                            ctx.strokeStyle = accent.replace(')', `, ${opacity})`).replace('rgb', 'rgba');
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
-                        }
-                    }
-                }
-            }
-
-            function animateParticles() {
-                ctx.clearRect(0, 0, width, height);
-                particles.forEach(p => { p.update();
-                    p.draw(); });
-                drawLines();
-                requestAnimationFrame(animateParticles);
-            }
-
-            resize();
-            initParticles();
-            animateParticles();
-
-            window.addEventListener('resize', () => {
-                resize();
-                initParticles();
-            });
-        })();
-
         // ===== THEME =====
         const themeToggle = document.getElementById('themeToggle');
         const icon = themeToggle.querySelector('i');
@@ -1060,27 +828,27 @@
         const API_BASE = 'https://api.runflix.name.ng/api';
 
         let allMatches = [];
+        let currentDateFilter = 'today';
 
         // ===== FETCH MATCHES =====
         async function fetchMatches() {
-            const grid = document.getElementById('matchesGrid');
-            const loading = document.getElementById('matchesLoading');
+            const container = document.getElementById('matchesContainer');
 
             try {
-                // Try football streaming endpoint
+                // Try football streaming endpoint first (has actual stream URLs)
                 let response = await fetch(`${API_BASE}/football/streaming?apikey=${API_KEY}`);
-                
-                if (!response.ok) {
-                    // Try sports all endpoint
+                let data;
+
+                if (response.ok) {
+                    data = await response.json();
+                    console.log('Football Streaming API Response:', data);
+                } else {
+                    // Fallback to sports/all endpoint
                     response = await fetch(`${API_BASE}/sports/all?category=football&apikey=${API_KEY}`);
+                    if (!response.ok) throw new Error('Failed to fetch matches');
+                    data = await response.json();
+                    console.log('Sports All API Response:', data);
                 }
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch matches');
-                }
-
-                const data = await response.json();
-                console.log('API Response:', data);
 
                 let matches = [];
 
@@ -1096,125 +864,67 @@
                 }
 
                 if (matches.length === 0) {
-                    grid.innerHTML = `
+                    container.innerHTML = `
                         <div class="no-matches">
                             <i class="fas fa-futbol"></i>
                             <p>No matches available right now</p>
                             <p style="font-size:0.8rem;margin-top:0.5rem;opacity:0.5;">Check back later for live games</p>
                         </div>
                     `;
-                    loading.style.display = 'none';
                     return;
                 }
 
                 allMatches = matches;
-                renderMatches(matches);
+                updateCounts(matches);
+                renderMatches(matches, currentDateFilter);
 
             } catch (error) {
                 console.error('Error fetching matches:', error);
-                grid.innerHTML = `
+                container.innerHTML = `
                     <div class="no-matches">
                         <i class="fas fa-exclamation-triangle"></i>
                         <p>Error loading matches. Please try again.</p>
-                        <button onclick="fetchMatches()" style="margin-top:1rem;padding:0.5rem 2rem;border-radius:50px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;font-weight:700;cursor:pointer;font-family:inherit;">
+                        <button onclick="fetchMatches()" style="margin-top:1rem;padding:0.4rem 1.5rem;border-radius:50px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;font-weight:700;cursor:pointer;font-family:inherit;">
                             <i class="fas fa-sync"></i> Retry
                         </button>
                     </div>
                 `;
             }
-
-            loading.style.display = 'none';
         }
 
-        // ===== RENDER MATCHES =====
-        function renderMatches(matches) {
-            const grid = document.getElementById('matchesGrid');
-            grid.innerHTML = '';
+        // ===== UPDATE COUNTS =====
+        function updateCounts(matches) {
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
 
-            // Sort: Live matches first
-            matches.sort((a, b) => {
-                const aLive = isLiveMatch(a);
-                const bLive = isLiveMatch(b);
-                if (aLive && !bLive) return -1;
-                if (!aLive && bLive) return 1;
-                return 0;
-            });
+            let todayCount = 0;
+            let tomorrowCount = 0;
+            let upcomingCount = 0;
 
-            matches.forEach(match => {
-                const card = document.createElement('div');
-                card.className = 'match-card';
-
-                const homeTeam = match.homeTeam || match.home || match.teams?.home?.name || 'Home';
-                const awayTeam = match.awayTeam || match.away || match.teams?.away?.name || 'Away';
-                const homeLogo = match.homeLogo || match.homeBadge || match.teams?.home?.logo || '';
-                const awayLogo = match.awayLogo || match.awayBadge || match.teams?.away?.logo || '';
-                const league = match.league || match.leagueName || 'Football';
-                const status = match.status || 'Scheduled';
-                const date = match.date || match.startTime || match.startTime || '';
-                const sources = match.sources || match.streams || [];
-
-                const isLive = isLiveMatch(match);
-                const isFinal = status === 'Full Time' || status === 'FT' || status === 'Finished';
-
-                let statusClass = 'scheduled';
-                let statusText = status || 'Scheduled';
-                let btnClass = '';
-                let btnText = 'Watch Now';
-
-                if (isLive) {
-                    statusClass = 'live';
-                    statusText = '🔴 LIVE';
-                    btnClass = 'live-btn';
-                    btnText = '▶ Watch Live';
-                } else if (isFinal) {
-                    statusClass = 'final';
-                    statusText = '✅ Full Time';
-                    btnText = '📹 Watch Replay';
+            matches.forEach(m => {
+                const matchDate = m.date || m.startTime || '';
+                if (!matchDate) {
+                    upcomingCount++;
+                    return;
                 }
-
-                const streamCount = sources.length || 0;
-
-                card.innerHTML = `
-                    <div class="match-top">
-                        <div class="match-teams">
-                            <div class="team">
-                                <img class="team-logo" src="${homeLogo || 'https://via.placeholder.com/50/00ff88/ffffff?text=?'}" alt="${homeTeam}" onerror="this.src='https://via.placeholder.com/50/00ff88/ffffff?text=?'" />
-                                <div class="team-info">
-                                    <span class="team-name">${homeTeam}</span>
-                                </div>
-                            </div>
-                            <span class="vs-badge">VS</span>
-                            <div class="team">
-                                <img class="team-logo" src="${awayLogo || 'https://via.placeholder.com/50/00ff88/ffffff?text=?'}" alt="${awayTeam}" onerror="this.src='https://via.placeholder.com/50/00ff88/ffffff?text=?'" />
-                                <div class="team-info">
-                                    <span class="team-name">${awayTeam}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="match-meta">
-                            <span class="status-badge ${statusClass}">${statusText}</span>
-                            <span class="league-name">${league}</span>
-                            <span class="match-time">
-                                <i class="far fa-clock"></i> ${formatDate(date)}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="match-bottom">
-                        <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;width:100%;">
-                            <button class="watch-btn ${btnClass}" onclick="watchMatch('${match.id || match._id || ''}', '${homeTeam}', '${awayTeam}')">
-                                <i class="fas fa-play"></i>
-                                <span>${btnText}</span>
-                            </button>
-                            <span class="stream-count">${streamCount} streams available</span>
-                        </div>
-                    </div>
-                `;
-
-                grid.appendChild(card);
+                const d = new Date(matchDate);
+                if (d >= today && d < tomorrow) {
+                    todayCount++;
+                } else if (d >= tomorrow && d < new Date(tomorrow.getTime() + 86400000)) {
+                    tomorrowCount++;
+                } else if (d >= tomorrow) {
+                    upcomingCount++;
+                }
             });
+
+            document.getElementById('todayCount').textContent = todayCount;
+            document.getElementById('tomorrowCount').textContent = tomorrowCount;
+            document.getElementById('upcomingCount').textContent = upcomingCount;
         }
 
-        // ===== CHECK IF LIVE =====
+        // ===== IS LIVE MATCH =====
         function isLiveMatch(match) {
             const status = match.status || '';
             const liveStatuses = ['Live', '1H', '2H', 'HT', 'ET', 'P', 'In Progress', 'Half Time', 'Second Half', 'First Half'];
@@ -1237,26 +947,214 @@
             }
         }
 
-        // ===== WATCH MATCH =====
-        function watchMatch(matchId, homeTeam, awayTeam) {
-            // Search for streams
-            const match = allMatches.find(m => (m.id || m._id) === matchId);
-            let streamUrl = '';
+        // ===== GET STREAM URL =====
+        function getStreamUrl(match) {
+            // Check if match has streams with actual URLs
+            if (match.streams && match.streams.length > 0) {
+                // Return the first stream URL
+                return match.streams[0].url || match.streams[0].originalUrl || '';
+            }
 
-            if (match && match.sources && match.sources.length > 0) {
+            // Check for sources with id
+            if (match.sources && match.sources.length > 0) {
+                // Try to construct URL from source
                 const source = match.sources[0];
-                streamUrl = source.url || source.originalUrl || '';
+                // If source has a URL directly
+                if (source.url) return source.url;
+                // If source has id, try to construct
+                if (source.id) {
+                    // Try different URL patterns
+                    const patterns = [
+                        `https://streamed.pk/embed/${source.id}`,
+                        `https://streamed.pk/watch/${source.id}`,
+                        `https://play.sportsteam368.com/play/${source.id}`,
+                        `https://www.fqzb162.com/broadcast/${source.id}`
+                    ];
+                    return patterns[0]; // Return first pattern
+                }
             }
 
-            if (!streamUrl) {
-                // Fallback: Search Google
-                streamUrl = `https://www.google.com/search?q=${encodeURIComponent(homeTeam + ' vs ' + awayTeam + ' live stream')}`;
+            // Fallback: Google search
+            return `https://www.google.com/search?q=watch+${encodeURIComponent(match.homeTeam || match.home || '')}+vs+${encodeURIComponent(match.awayTeam || match.away || '')}+live+stream`;
+        }
+
+        // ===== GET ALL STREAMS =====
+        function getAllStreams(match) {
+            let streams = [];
+
+            // From streams array
+            if (match.streams && match.streams.length > 0) {
+                match.streams.forEach((s, i) => {
+                    streams.push({
+                        title: s.title || `CH ${i + 1}`,
+                        url: s.url || s.originalUrl || ''
+                    });
+                });
             }
 
-            // Open in new tab
-            window.open(streamUrl, '_blank');
-            
-            showToast(`Opening ${homeTeam} vs ${awayTeam}...`, 'info');
+            // From sources array
+            if (match.sources && match.sources.length > 0) {
+                match.sources.forEach((s, i) => {
+                    const url = s.url || (s.id ? `https://streamed.pk/embed/${s.id}` : '');
+                    if (url) {
+                        streams.push({
+                            title: s.source ? `${s.source.toUpperCase()}` : `CH ${streams.length + 1}`,
+                            url: url
+                        });
+                    }
+                });
+            }
+
+            // If no streams found, add a default one
+            if (streams.length === 0) {
+                streams.push({
+                    title: 'CH 1',
+                    url: getStreamUrl(match)
+                });
+            }
+
+            return streams;
+        }
+
+        // ===== RENDER MATCHES =====
+        function renderMatches(matches, dateFilter) {
+            const container = document.getElementById('matchesContainer');
+
+            let filtered = [...matches];
+
+            // Apply date filter
+            if (dateFilter === 'today') {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const tomorrow = new Date(today);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                filtered = filtered.filter(m => {
+                    const d = new Date(m.date || m.startTime || '');
+                    return d >= today && d < tomorrow;
+                });
+            } else if (dateFilter === 'tomorrow') {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const tomorrow = new Date(today);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                const dayAfter = new Date(tomorrow);
+                dayAfter.setDate(dayAfter.getDate() + 1);
+                filtered = filtered.filter(m => {
+                    const d = new Date(m.date || m.startTime || '');
+                    return d >= tomorrow && d < dayAfter;
+                });
+            } else if (dateFilter === 'upcoming') {
+                const tomorrow = new Date();
+                tomorrow.setHours(0, 0, 0, 0);
+                tomorrow.setDate(tomorrow.getDate() + 2);
+                filtered = filtered.filter(m => {
+                    const d = new Date(m.date || m.startTime || '');
+                    return d >= tomorrow;
+                });
+            }
+
+            // Sort: Live matches first
+            filtered.sort((a, b) => {
+                const aLive = isLiveMatch(a);
+                const bLive = isLiveMatch(b);
+                if (aLive && !bLive) return -1;
+                if (!aLive && bLive) return 1;
+                return 0;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="no-matches">
+                        <i class="fas fa-futbol"></i>
+                        <p>No matches for ${dateFilter}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+
+            filtered.forEach(match => {
+                const homeTeam = match.homeTeam || match.home || match.teams?.home?.name || 'Home';
+                const awayTeam = match.awayTeam || match.away || match.teams?.away?.name || 'Away';
+                const homeLogo = match.homeLogo || match.homeBadge || match.teams?.home?.logo || '';
+                const awayLogo = match.awayLogo || match.awayBadge || match.teams?.away?.logo || '';
+                const league = match.league || match.leagueName || 'Football';
+                const status = match.status || 'Scheduled';
+                const date = match.date || match.startTime || match.startTime || '';
+
+                const isLive = isLiveMatch(match);
+                const isFinal = status === 'Full Time' || status === 'FT' || status === 'Finished';
+
+                let statusClass = 'scheduled';
+                let statusText = status || 'Scheduled';
+
+                if (isLive) {
+                    statusClass = 'live';
+                    statusText = '🔴 LIVE';
+                } else if (isFinal) {
+                    statusClass = 'final';
+                    statusText = '✅ Full Time';
+                }
+
+                const streams = getAllStreams(match);
+                const hasStreams = streams.length > 0;
+
+                const card = document.createElement('div');
+                card.className = 'match-card';
+
+                let channelsHTML = '';
+                if (hasStreams) {
+                    channelsHTML = `
+                        <div class="stream-channels">
+                            <span class="channel-label"><i class="fas fa-signal"></i> Streams:</span>
+                            ${streams.slice(0, 12).map((s, i) => `
+                                <button class="channel-btn" onclick="openStream('${s.url}', '${homeTeam} vs ${awayTeam} - ${s.title}')">
+                                    <i class="fas fa-play"></i> ${s.title}
+                                </button>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="match-top">
+                        <div class="match-teams">
+                            <div class="team">
+                                <img class="team-logo" src="${homeLogo || 'https://via.placeholder.com/40/00ff88/ffffff?text=?'}" alt="${homeTeam}" onerror="this.src='https://via.placeholder.com/40/00ff88/ffffff?text=?'" />
+                                <span class="team-name">${homeTeam}</span>
+                            </div>
+                            <span class="vs-badge">VS</span>
+                            <div class="team">
+                                <img class="team-logo" src="${awayLogo || 'https://via.placeholder.com/40/00ff88/ffffff?text=?'}" alt="${awayTeam}" onerror="this.src='https://via.placeholder.com/40/00ff88/ffffff?text=?'" />
+                                <span class="team-name">${awayTeam}</span>
+                            </div>
+                        </div>
+                        <div class="match-meta">
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                            <span class="league-name">${league}</span>
+                            <span class="match-time">
+                                <i class="far fa-clock"></i> ${formatDate(date)}
+                            </span>
+                        </div>
+                    </div>
+                    ${channelsHTML}
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // ===== OPEN STREAM =====
+        function openStream(url, title) {
+            if (!url) {
+                showToast('No stream URL available', 'error');
+                return;
+            }
+
+            // Open in new tab/window
+            window.open(url, '_blank');
+            showToast(`Opening ${title}...`, 'info');
         }
 
         // ===== SHOW TOAST =====
@@ -1283,6 +1181,17 @@
                 setTimeout(() => toast.remove(), 500);
             }, 4000);
         }
+
+        // ===== DATE TABS =====
+        document.querySelectorAll('.date-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.date-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                currentDateFilter = tab.dataset.date;
+                renderMatches(allMatches, currentDateFilter);
+            });
+        });
 
         // ===== INIT =====
         fetchMatches();
