@@ -1,1595 +1,390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DevSave Pro - Live Football</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg-primary: #0a0a12;
-            --bg-secondary: #111122;
-            --bg-card: rgba(255, 255, 255, 0.04);
-            --border-glass: rgba(255, 255, 255, 0.06);
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0d0;
-            --text-muted: #606080;
-            --accent: #00ff88;
-            --accent2: #6c5ce7;
-            --accent3: #00d4ff;
-            --shadow: 0 8px 48px rgba(0, 0, 0, 0.8);
-            --radius: 12px;
-            --transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        [data-theme="light"] {
-            --bg-primary: #f0f2f8;
-            --bg-secondary: #ffffff;
-            --bg-card: rgba(255, 255, 255, 0.8);
-            --border-glass: rgba(0, 0, 0, 0.04);
-            --text-primary: #0a0a1a;
-            --text-secondary: #4a4a6a;
-            --text-muted: #8888aa;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: var(--transition);
-            padding-bottom: 80px;
-        }
-
-        /* ===== LOADING ===== */
-        #loadingOverlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: var(--bg-primary);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-        }
-
-        #loadingOverlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loader-ring {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid var(--bg-card);
-            border-top-color: var(--accent);
-            border-right-color: var(--accent2);
-            border-bottom-color: var(--accent3);
-            animation: spinLoader 1.4s cubic-bezier(0.6, 0, 0.4, 1) infinite;
-        }
-
-        @keyframes spinLoader {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loader-text {
-            margin-top: 2rem;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            animation: pulseText 1.5s ease-in-out infinite;
-        }
-
-        .loader-text span {
-            color: var(--accent);
-        }
-
-        @keyframes pulseText {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        .loader-progress {
-            margin-top: 1.5rem;
-            width: 200px;
-            height: 2px;
-            background: var(--bg-card);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .loader-progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
-            border-radius: 10px;
-            animation: progressLoad 2s ease-in-out forwards;
-        }
-
-        @keyframes progressLoad {
-            0% { width: 0%; }
-            50% { width: 70%; }
-            100% { width: 100%; }
-        }
-
-        /* ===== NAVBAR ===== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 0.7rem 1.5rem;
-            background: rgba(10, 10, 18, 0.92);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-glass);
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-        }
-
-        .logo i {
-            -webkit-text-fill-color: initial;
-            color: var(--accent);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .back-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            color: var(--text-primary);
-            padding: 0.3rem 1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            transition: var(--transition);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .back-btn:hover {
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            color: white;
-            border-color: transparent;
-        }
-
-        .theme-toggle {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            color: var(--text-primary);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .theme-toggle:hover {
-            transform: rotate(90deg) scale(1.1);
-            border-color: var(--accent);
-        }
-
-        .version-badge {
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            color: white;
-            padding: 0.15rem 0.6rem;
-            border-radius: 50px;
-            font-size: 0.5rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* ===== CONTAINER ===== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 1rem 2rem;
-        }
-
-        /* ===== HEADER ===== */
-        .page-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .page-header h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .page-header p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-top: 0.2rem;
-        }
-
-        .page-header .live-badge {
-            display: inline-block;
-            margin-top: 0.5rem;
-            padding: 0.2rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            background: rgba(255, 0, 0, 0.12);
-            color: #ff4444;
-            border: 1px solid rgba(255, 0, 0, 0.15);
-            animation: liveBadgePulse 2s infinite;
-        }
-
-        @keyframes liveBadgePulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(0.98); }
-        }
-
-        .page-header .live-badge .dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #ff4444;
-            border-radius: 50%;
-            margin-right: 6px;
-            animation: dotPulse 1.2s infinite;
-        }
-
-        @keyframes dotPulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.2; transform: scale(0.6); }
-        }
-
-        /* ===== DATE TABS ===== */
-        .date-tabs {
-            display: flex;
-            gap: 0.4rem;
-            margin-bottom: 1.5rem;
-            overflow-x: auto;
-            padding: 0.5rem 0;
-            scrollbar-width: none;
-        }
-
-        .date-tabs::-webkit-scrollbar {
-            display: none;
-        }
-
-        .date-tab {
-            padding: 0.4rem 1.2rem;
-            border-radius: 50px;
-            border: 1px solid var(--border-glass);
-            background: var(--bg-card);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 0.7rem;
-            white-space: nowrap;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .date-tab:hover {
-            border-color: var(--accent);
-            color: var(--text-primary);
-        }
-
-        .date-tab.active {
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.15);
-        }
-
-        .date-tab .count {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 0.02rem 0.4rem;
-            border-radius: 50px;
-            font-size: 0.45rem;
-            margin-left: 0.3rem;
-        }
-
-        /* ===== MATCH CARD ===== */
-        .match-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius);
-            padding: 1.2rem 1.5rem;
-            margin-bottom: 0.8rem;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .match-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .match-card:hover::before {
-            opacity: 1;
-        }
-
-        .match-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(0, 255, 136, 0.08);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .match-card .match-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-        }
-
-        .match-card .match-teams {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            flex: 1;
-        }
-
-        .match-card .team {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .match-card .team .team-logo {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: contain;
-            background: var(--bg-card);
-            padding: 4px;
-            border: 1px solid var(--border-glass);
-            transition: var(--transition);
-        }
-
-        .match-card .team .team-logo:hover {
-            transform: scale(1.1);
-            border-color: var(--accent2);
-        }
-
-        .match-card .team .team-name {
-            font-weight: 700;
-            font-size: 0.85rem;
-            color: var(--text-primary);
-        }
-
-        .match-card .vs-badge {
-            color: var(--text-muted);
-            font-weight: 800;
-            font-size: 0.6rem;
-            padding: 0.15rem 0.5rem;
-            background: var(--bg-card);
-            border-radius: 50px;
-            border: 1px solid var(--border-glass);
-            letter-spacing: 1.5px;
-        }
-
-        .match-card .match-meta {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .match-card .status-badge {
-            padding: 0.15rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .match-card .status-badge.live {
-            background: rgba(255, 0, 0, 0.12);
-            color: #ff4444;
-            border: 1px solid rgba(255, 0, 0, 0.15);
-            animation: livePulse 1.5s infinite;
-        }
-
-        @keyframes livePulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .match-card .status-badge.final {
-            background: rgba(0, 255, 136, 0.06);
-            color: #00ff88;
-            border: 1px solid rgba(0, 255, 136, 0.08);
-        }
-
-        .match-card .status-badge.scheduled {
-            background: rgba(0, 212, 255, 0.06);
-            color: #00d4ff;
-            border: 1px solid rgba(0, 212, 255, 0.08);
-        }
-
-        .match-card .league-name {
-            font-size: 0.55rem;
-            color: var(--text-muted);
-            background: var(--bg-card);
-            padding: 0.1rem 0.6rem;
-            border-radius: 50px;
-            border: 1px solid var(--border-glass);
-            font-weight: 600;
-        }
-
-        .match-card .match-time {
-            font-size: 0.55rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            background: var(--bg-card);
-            padding: 0.1rem 0.6rem;
-            border-radius: 50px;
-            border: 1px solid var(--border-glass);
-        }
-
-        /* ===== COUNTDOWN ===== */
-        .match-card .countdown {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.3rem 0.8rem;
-            background: rgba(0, 212, 255, 0.06);
-            border-radius: 50px;
-            border: 1px solid rgba(0, 212, 255, 0.08);
-        }
-
-        .match-card .countdown .time-block {
-            display: flex;
-            align-items: center;
-            gap: 0.2rem;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: #00d4ff;
-        }
-
-        .match-card .countdown .time-block span {
-            font-size: 0.8rem;
-            min-width: 20px;
-            text-align: center;
-        }
-
-        .match-card .countdown .time-block .label {
-            font-size: 0.45rem;
-            font-weight: 400;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        /* ===== STREAM CHANNELS ===== */
-        .match-card .stream-channels {
-            display: flex;
-            gap: 0.4rem;
-            flex-wrap: wrap;
-            margin-top: 0.8rem;
-            padding-top: 0.8rem;
-            border-top: 1px solid var(--border-glass);
-        }
-
-        .match-card .stream-channels .channel-label {
-            font-size: 0.55rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            margin-right: 0.3rem;
-        }
-
-        .match-card .stream-channels .channel-btn {
-            padding: 0.25rem 0.9rem;
-            border-radius: 50px;
-            border: 1px solid var(--border-glass);
-            background: var(--bg-card);
-            color: var(--text-secondary);
-            font-size: 0.6rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Inter', sans-serif;
-        }
-
-        .match-card .stream-channels .channel-btn:hover {
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            color: white;
-            border-color: transparent;
-            transform: scale(1.05);
-            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.15);
-        }
-
-        .match-card .stream-channels .channel-btn i {
-            margin-right: 0.2rem;
-            font-size: 0.5rem;
-        }
-
-        .match-card .stream-channels .channel-btn.disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .match-card .stream-channels .channel-btn.disabled:hover {
-            transform: none;
-            box-shadow: none;
-            background: var(--bg-card);
-            color: var(--text-secondary);
-        }
-
-        /* ===== PLAYER MODAL ===== */
-        .player-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem;
-        }
-
-        .player-modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .player-modal .modal-content {
-            background: var(--bg-secondary);
-            border-radius: var(--radius);
-            max-width: 1000px;
-            width: 100%;
-            max-height: 90vh;
-            overflow: hidden;
-            border: 1px solid var(--border-glass);
-            position: relative;
-        }
-
-        .player-modal .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.7);
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            z-index: 10;
-        }
-
-        .player-modal .modal-close:hover {
-            background: var(--accent);
-            transform: rotate(90deg);
-        }
-
-        .player-modal .video-wrapper {
-            position: relative;
-            padding-top: 56.25%;
-            background: #000;
-        }
-
-        .player-modal .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .player-modal .video-wrapper .countdown-overlay {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.8);
-        }
-
-        .player-modal .video-wrapper .countdown-overlay h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .player-modal .video-wrapper .countdown-overlay .big-countdown {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .player-modal .video-wrapper .countdown-overlay .big-countdown .cd-block {
-            text-align: center;
-        }
-
-        .player-modal .video-wrapper .countdown-overlay .big-countdown .cd-block .cd-number {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: #00d4ff;
-            min-width: 70px;
-            display: block;
-        }
-
-        .player-modal .video-wrapper .countdown-overlay .big-countdown .cd-block .cd-label {
-            font-size: 0.6rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .player-modal .video-wrapper .countdown-overlay .cd-separator {
-            font-size: 3rem;
-            color: var(--text-muted);
-            font-weight: 300;
-        }
-
-        .player-modal .video-wrapper .countdown-overlay .match-info {
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .player-modal .modal-info {
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            background: var(--bg-card);
-        }
-
-        .player-modal .modal-info .match-title {
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--text-primary);
-        }
-
-        .player-modal .modal-info .match-status {
-            font-size: 0.65rem;
-            font-weight: 600;
-            padding: 0.15rem 0.8rem;
-            border-radius: 50px;
-        }
-
-        .player-modal .modal-info .match-status.live {
-            background: rgba(255, 0, 0, 0.12);
-            color: #ff4444;
-        }
-
-        .player-modal .modal-info .match-status.final {
-            background: rgba(0, 255, 136, 0.06);
-            color: #00ff88;
-        }
-
-        .player-modal .modal-info .match-status.scheduled {
-            background: rgba(0, 212, 255, 0.06);
-            color: #00d4ff;
-        }
-
-        /* ===== NO MATCHES ===== */
-        .no-matches {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-muted);
-        }
-
-        .no-matches i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        /* ===== WHATSAPP FLOATING ===== */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
-            width: 55px;
-            height: 55px;
-            background: #25d366;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.8rem;
-            box-shadow: 0 8px 40px rgba(37, 211, 102, 0.3);
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            animation: whatsappPulse 2s ease-in-out infinite;
-        }
-
-        .whatsapp-float:hover {
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 12px 50px rgba(37, 211, 102, 0.4);
-        }
-
-        @keyframes whatsappPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 8px 40px rgba(37, 211, 102, 0.3); }
-            50% { transform: scale(1.05); box-shadow: 0 12px 50px rgba(37, 211, 102, 0.4); }
-        }
-
-        .whatsapp-float .tooltip {
-            position: absolute;
-            right: 70px;
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            padding: 0.3rem 0.8rem;
-            border-radius: 8px;
-            font-size: 0.65rem;
-            white-space: nowrap;
-            opacity: 0;
-            transform: translateX(15px) scale(0.95);
-            transition: var(--transition);
-            border: 1px solid var(--border-glass);
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .whatsapp-float:hover .tooltip {
-            opacity: 1;
-            transform: translateX(0) scale(1);
-        }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            text-align: center;
-            padding: 2rem 1rem 1rem;
-            border-top: 1px solid var(--border-glass);
-            margin-top: 3rem;
-            background: var(--bg-card);
-        }
-
-        .footer-socials {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-socials a {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            color: var(--text-secondary);
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            transition: var(--transition);
-            text-decoration: none;
-        }
-
-        .footer-socials a:hover {
-            transform: translateY(-4px) scale(1.1);
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .footer-socials a.facebook:hover { color: #1877f2; border-color: #1877f2; }
-        .footer-socials a.whatsapp:hover { color: #25d366; border-color: #25d366; }
-        .footer-socials a.email:hover { color: #ea4335; border-color: #ea4335; }
-        .footer-socials a.twitter:hover { color: #1da1f2; border-color: #1da1f2; }
-        .footer-socials a.instagram:hover { color: #e4405f; border-color: #e4405f; }
-
-        .footer p {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            opacity: 0.6;
-        }
-
-        .footer p a {
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        /* ===== TOAST ===== */
-        .toast {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: var(--bg-card);
-            backdrop-filter: blur(30px);
-            border: 1px solid var(--border-glass);
-            border-radius: 12px;
-            padding: 0.6rem 1.5rem;
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
-            z-index: 99999;
-            opacity: 0;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
-            max-width: 90%;
-            text-align: center;
-            pointer-events: none;
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .toast.success { border-color: #00ff88; }
-        .toast.success i { color: #00ff88; }
-        .toast.error { border-color: #ff4444; }
-        .toast.error i { color: #ff4444; }
-        .toast.info { border-color: var(--accent2); }
-        .toast.info i { color: var(--accent2); }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .container { padding: 70px 0.8rem 2rem; }
-            .match-card { padding: 1rem 1.2rem; }
-            .match-card .match-teams { gap: 0.8rem; }
-            .match-card .team { gap: 0.5rem; }
-            .match-card .team .team-logo { width: 32px; height: 32px; padding: 3px; }
-            .match-card .team .team-name { font-size: 0.75rem; }
-            .match-card .vs-badge { font-size: 0.5rem; padding: 0.1rem 0.4rem; }
-            .match-card .match-top { flex-direction: column; align-items: stretch; }
-            .match-card .match-meta { justify-content: flex-start; }
-            .match-card .stream-channels { justify-content: center; }
-            .match-card .countdown .time-block { font-size: 0.6rem; }
-            .page-header h1 { font-size: 1.5rem; }
-            .date-tab { padding: 0.3rem 0.8rem; font-size: 0.6rem; }
-            .whatsapp-float { width: 50px; height: 50px; font-size: 1.5rem; bottom: 20px; right: 20px; }
-            .whatsapp-float .tooltip { display: none; }
-            .navbar { padding: 0.5rem 1rem; }
-            .logo { font-size: 1.1rem; }
-            .back-btn span { display: none; }
-            .player-modal .video-wrapper .countdown-overlay .big-countdown .cd-block .cd-number { font-size: 2.5rem; min-width: 50px; }
-            .player-modal .video-wrapper .countdown-overlay .big-countdown .cd-separator { font-size: 2rem; }
-        }
-
-        @media (max-width: 480px) {
-            .match-card .team .team-logo { width: 28px; height: 28px; }
-            .match-card .team .team-name { font-size: 0.65rem; }
-            .match-card .stream-channels .channel-btn { padding: 0.15rem 0.6rem; font-size: 0.5rem; }
-            .player-modal .video-wrapper .countdown-overlay .big-countdown .cd-block .cd-number { font-size: 1.8rem; min-width: 35px; }
-            .player-modal .video-wrapper .countdown-overlay .big-countdown .cd-separator { font-size: 1.5rem; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevSave Pro — Coming Soon</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0a0a12;
+      --bg-secondary: #111122;
+      --bg-card: rgba(255, 255, 255, 0.04);
+      --border-glass: rgba(255, 255, 255, 0.06);
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0d0;
+      --text-muted: #606080;
+      --accent: #00ff88;
+      --accent2: #6c5ce7;
+      --accent3: #00d4ff;
+      --shadow: 0 8px 48px rgba(0, 0, 0, 0.8);
+      --radius: 16px;
+      --transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f0f2f8;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.8);
+      --border-glass: rgba(0, 0, 0, 0.04);
+      --text-primary: #0a0a1a;
+      --text-secondary: #4a4a6a;
+      --text-muted: #8888aa;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    /* ===== ANIMATED BACKGROUND ORBS ===== */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatOrb 20s infinite alternate ease-in-out;
+    }
+
+    .orb-1 {
+      width: 500px;
+      height: 500px;
+      background: var(--accent);
+      top: -150px;
+      left: -100px;
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 400px;
+      height: 400px;
+      background: var(--accent2);
+      bottom: -100px;
+      right: -50px;
+      animation-delay: -5s;
+    }
+
+    .orb-3 {
+      width: 300px;
+      height: 300px;
+      background: var(--accent3);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation-delay: -10s;
+      opacity: 0.06;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, -40px) scale(1.2); }
+    }
+
+    /* ===== THEME TOGGLE ===== */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      color: var(--text-primary);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .theme-toggle:hover {
+      transform: rotate(90deg) scale(1.1);
+      border-color: var(--accent);
+    }
+
+    /* ===== MAIN CONTAINER ===== */
+    .soon-container {
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+      width: 100%;
+      background: var(--bg-card);
+      backdrop-filter: blur(30px);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius);
+      padding: 4rem 2.5rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    /* ===== LOGO ===== */
+    .logo-icon {
+      font-size: 4.5rem;
+      display: block;
+      margin-bottom: 0.8rem;
+      animation: bounceBall 2s infinite ease-in-out;
+      filter: drop-shadow(0 0 40px rgba(0, 255, 136, 0.25));
+    }
+
+    @keyframes bounceBall {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    .brand-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1.5px;
+      margin-bottom: 0.2rem;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-glass), transparent);
+    }
+
+    /* ===== HEADLINE ===== */
+    .headline {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 1.2rem;
+      line-height: 1.3;
+    }
+
+    .headline .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ===== SOCIALS ===== */
+    .social-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .social-row a {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-glass);
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .social-row a:hover {
+      transform: translateY(-6px) scale(1.1);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 10px 35px rgba(0, 255, 136, 0.12);
+    }
+
+    .social-row a.facebook:hover { color: #1877f2; border-color: #1877f2; box-shadow: 0 10px 35px rgba(24, 119, 242, 0.15); }
+    .social-row a.whatsapp:hover { color: #25d366; border-color: #25d366; box-shadow: 0 10px 35px rgba(37, 211, 102, 0.15); }
+    .social-row a.email:hover { color: #ea4335; border-color: #ea4335; box-shadow: 0 10px 35px rgba(234, 67, 53, 0.15); }
+    .social-row a.twitter:hover { color: #1da1f2; border-color: #1da1f2; box-shadow: 0 10px 35px rgba(29, 161, 242, 0.15); }
+    .social-row a.instagram:hover { color: #e4405f; border-color: #e4405f; box-shadow: 0 10px 35px rgba(228, 64, 95, 0.15); }
+
+    /* ===== FOOTER ===== */
+    .footer-note {
+      margin-top: 2.5rem;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      opacity: 0.45;
+      line-height: 1.8;
+    }
+
+    .footer-note a {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .soon-container {
+        padding: 3rem 1.5rem;
+      }
+      .brand-title {
+        font-size: 2rem;
+      }
+      .headline {
+        font-size: 1.3rem;
+      }
+      .logo-icon {
+        font-size: 3.5rem;
+      }
+      .theme-toggle {
+        top: 15px;
+        right: 15px;
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .soon-container {
+        padding: 2.5rem 1.2rem;
+        border-radius: 12px;
+      }
+      .brand-title {
+        font-size: 1.6rem;
+      }
+      .brand-sub {
+        font-size: 0.6rem;
+        letter-spacing: 3px;
+      }
+      .headline {
+        font-size: 1.1rem;
+      }
+      .logo-icon {
+        font-size: 3rem;
+      }
+      .social-row a {
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
+      }
+      .divider {
+        font-size: 0.55rem;
+        letter-spacing: 3px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- ===== LOADING ===== -->
-    <div id="loadingOverlay">
-        <div class="loader-ring"></div>
-        <div class="loader-text">Loading <span>DevSave Pro</span></div>
-        <div class="loader-progress">
-            <div class="loader-progress-bar"></div>
-        </div>
+  <!-- ===== BACKGROUND ORBS ===== -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- ===== THEME TOGGLE ===== -->
+  <button class="theme-toggle" id="themeToggle">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <!-- ===== COMING SOON CARD ===== -->
+  <div class="soon-container">
+
+    <span class="logo-icon">⚽</span>
+    <h1 class="brand-title">DevSave Pro</h1>
+    <p class="brand-sub">Live Football Streaming</p>
+
+    <div class="divider">Coming Soon</div>
+
+    <h2 class="headline">
+      Something <span class="highlight">big</span> is kicking off
+    </h2>
+
+    <!-- ===== SOCIALS ===== -->
+    <div class="social-row">
+      <a href="https://www.facebook.com/profile.php?id=100083300451857" target="_blank" class="facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://wa.me/2349164624021" target="_blank" class="whatsapp" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <a href="mailto:devvgift@gmail.com" class="email" title="Email"><i class="fas fa-envelope"></i></a>
+      <a href="#" class="twitter" title="Twitter / X"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
     </div>
 
-    <!-- ===== NAVBAR ===== -->
-    <nav class="navbar">
-        <a href="#" class="logo">
-            <i class="fas fa-bolt"></i>
-            DevSave Pro
-        </a>
-        <div class="nav-actions">
-            <a href="#" class="back-btn" onclick="location.reload()">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </a>
-            <span class="version-badge">v3.0</span>
-            <button class="theme-toggle" id="themeToggle">
-                <i class="fas fa-moon"></i>
-            </button>
-        </div>
-    </nav>
-
-    <!-- ===== MAIN ===== -->
-    <div class="container">
-        <div class="page-header">
-            <h1>⚽ Live Football Streaming</h1>
-            <p>Watch live matches from leagues around the world</p>
-            <div class="live-badge">
-                <span class="dot"></span> Live Now
-            </div>
-        </div>
-
-        <!-- ===== DATE TABS ===== -->
-        <div class="date-tabs" id="dateTabs">
-            <button class="date-tab active" data-date="today">📅 Today <span class="count" id="todayCount">0</span></button>
-            <button class="date-tab" data-date="tomorrow">📅 Tomorrow <span class="count" id="tomorrowCount">0</span></button>
-            <button class="date-tab" data-date="upcoming">📅 Upcoming <span class="count" id="upcomingCount">0</span></button>
-        </div>
-
-        <!-- ===== MATCHES ===== -->
-        <div id="matchesContainer">
-            <div style="text-align:center;padding:3rem;color:var(--text-secondary);">
-                <div style="animation:spin 1s linear infinite;font-size:2.5rem;color:var(--accent2);display:inline-block;">
-                    <i class="fas fa-spinner"></i>
-                </div>
-                <p style="margin-top:1.5rem;font-weight:600;">Loading matches...</p>
-            </div>
-        </div>
+    <div class="footer-note">
+      © 2025 <a href="#">DevSave Pro</a> — Developed with ❤️ by <a href="https://www.facebook.com/profile.php?id=100083300451857" target="_blank">Dev Gift</a>
     </div>
-
-    <!-- ===== PLAYER MODAL ===== -->
-    <div class="player-modal" id="playerModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closePlayer()"><i class="fas fa-times"></i></button>
-            <div class="video-wrapper" id="videoWrapper">
-                <iframe id="playerIframe" src="" allowfullscreen></iframe>
-                <div class="countdown-overlay" id="countdownOverlay" style="display:none;">
-                    <h2 id="countdownTitle">Kick-off in</h2>
-                    <div class="big-countdown" id="bigCountdown">
-                        <div class="cd-block">
-                            <span class="cd-number" id="cdHours">00</span>
-                            <span class="cd-label">Hours</span>
-                        </div>
-                        <span class="cd-separator">:</span>
-                        <div class="cd-block">
-                            <span class="cd-number" id="cdMinutes">00</span>
-                            <span class="cd-label">Minutes</span>
-                        </div>
-                        <span class="cd-separator">:</span>
-                        <div class="cd-block">
-                            <span class="cd-number" id="cdSeconds">00</span>
-                            <span class="cd-label">Seconds</span>
-                        </div>
-                    </div>
-                    <div class="match-info" id="countdownMatchInfo"></div>
-                </div>
-            </div>
-            <div class="modal-info">
-                <span class="match-title" id="modalMatchTitle">Match Title</span>
-                <span class="match-status" id="modalMatchStatus">🔴 LIVE</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer">
-        <div class="footer-socials">
-            <a href="https://www.facebook.com/profile.php?id=100083300451857" target="_blank" class="facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://wa.me/2349164624021" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
-            <a href="mailto:devvgift@gmail.com" class="email"><i class="fas fa-envelope"></i></a>
-            <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
-        </div>
-        <p>
-            © 2025 <a href="#">DevSave Pro</a> — Developed with ❤️ by
-            <a href="https://www.facebook.com/profile.php?id=100083300451857" target="_blank">Dev Gift</a>
-        </p>
-    </footer>
-
-    <!-- ===== WHATSAPP ===== -->
-    <a href="https://wa.me/2349164624021" target="_blank" class="whatsapp-float">
-        <i class="fab fa-whatsapp"></i>
-        <span class="tooltip">Chat with us 💬</span>
-    </a>
-
-    <!-- ===== JAVASCRIPT ===== -->
-    <script>
-        // ===== LOADING =====
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('loadingOverlay').classList.add('hidden');
-            }, 1500);
-        });
-
-        // ===== THEME =====
-        const themeToggle = document.getElementById('themeToggle');
-        const icon = themeToggle.querySelector('i');
-
-        function getTheme() {
-            return localStorage.getItem('theme') || 'dark';
-        }
-
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-        }
-
-        themeToggle.addEventListener('click', () => {
-            const current = getTheme();
-            setTheme(current === 'dark' ? 'light' : 'dark');
-        });
-
-        setTheme(getTheme());
-
-        // ===== API CONFIG =====
-        const API_KEY = 'RF-KEY-FC7852539D3F';
-        const API_BASE = 'https://api.runflix.name.ng/api';
-
-        let allMatches = [];
-        let currentDateFilter = 'today';
-        let countdownInterval = null;
-
-        // ===== FETCH MATCHES =====
-        async function fetchMatches() {
-            const container = document.getElementById('matchesContainer');
-
-            try {
-                // Try football streaming endpoint first
-                let response = await fetch(`${API_BASE}/football/streaming?apikey=${API_KEY}`);
-                let data;
-
-                if (response.ok) {
-                    data = await response.json();
-                    console.log('Football Streaming API Response:', data);
-                } else {
-                    // Fallback to sports/all endpoint
-                    response = await fetch(`${API_BASE}/sports/all?category=football&apikey=${API_KEY}`);
-                    if (!response.ok) throw new Error('Failed to fetch matches');
-                    data = await response.json();
-                    console.log('Sports All API Response:', data);
-                }
-
-                let matches = [];
-
-                // Parse different response formats
-                if (data.result && data.result.matches) {
-                    matches = data.result.matches;
-                } else if (data.result && Array.isArray(data.result)) {
-                    matches = data.result;
-                } else if (data.matches) {
-                    matches = data.matches;
-                } else if (Array.isArray(data)) {
-                    matches = data;
-                }
-
-                if (matches.length === 0) {
-                    container.innerHTML = `
-                        <div class="no-matches">
-                            <i class="fas fa-futbol"></i>
-                            <p>No matches available right now</p>
-                            <p style="font-size:0.8rem;margin-top:0.5rem;opacity:0.5;">Check back later for live games</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                allMatches = matches;
-                updateCounts(matches);
-                renderMatches(matches, currentDateFilter);
-
-            } catch (error) {
-                console.error('Error fetching matches:', error);
-                container.innerHTML = `
-                    <div class="no-matches">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <p>Error loading matches. Please try again.</p>
-                        <button onclick="fetchMatches()" style="margin-top:1rem;padding:0.4rem 1.5rem;border-radius:50px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;font-weight:700;cursor:pointer;font-family:inherit;">
-                            <i class="fas fa-sync"></i> Retry
-                        </button>
-                    </div>
-                `;
-            }
-        }
-
-        // ===== UPDATE COUNTS =====
-        function updateCounts(matches) {
-            const now = new Date();
-            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            const tomorrow = new Date(today);
-            tomorrow.setDate(tomorrow.getDate() + 1);
-
-            let todayCount = 0;
-            let tomorrowCount = 0;
-            let upcomingCount = 0;
-
-            matches.forEach(m => {
-                const matchDate = m.date || m.startTime || '';
-                if (!matchDate) {
-                    upcomingCount++;
-                    return;
-                }
-                const d = new Date(matchDate);
-                if (d >= today && d < tomorrow) {
-                    todayCount++;
-                } else if (d >= tomorrow && d < new Date(tomorrow.getTime() + 86400000)) {
-                    tomorrowCount++;
-                } else if (d >= tomorrow) {
-                    upcomingCount++;
-                }
-            });
-
-            document.getElementById('todayCount').textContent = todayCount;
-            document.getElementById('tomorrowCount').textContent = tomorrowCount;
-            document.getElementById('upcomingCount').textContent = upcomingCount;
-        }
-
-        // ===== IS LIVE MATCH =====
-        function isLiveMatch(match) {
-            const status = match.status || '';
-            const liveStatuses = ['Live', '1H', '2H', 'HT', 'ET', 'P', 'In Progress', 'Half Time', 'Second Half', 'First Half'];
-            return liveStatuses.some(s => status.includes(s));
-        }
-
-        // ===== IS FINISHED =====
-        function isFinished(match) {
-            const status = match.status || '';
-            const finishedStatuses = ['Full Time', 'FT', 'Finished', 'Game Finished'];
-            return finishedStatuses.some(s => status.includes(s));
-        }
-
-        // ===== FORMAT DATE =====
-        function formatDate(dateString) {
-            if (!dateString) return 'TBD';
-            try {
-                const date = new Date(dateString);
-                return date.toLocaleString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-            } catch {
-                return dateString;
-            }
-        }
-
-        // ===== GET STREAMS =====
-        function getAllStreams(match) {
-            let streams = [];
-
-            // From streams array
-            if (match.streams && match.streams.length > 0) {
-                match.streams.forEach((s, i) => {
-                    streams.push({
-                        title: s.title || `CH ${i + 1}`,
-                        url: s.url || s.originalUrl || '',
-                        type: s.type || 'hls'
-                    });
-                });
-            }
-
-            // From sources array
-            if (match.sources && match.sources.length > 0) {
-                match.sources.forEach((s, i) => {
-                    let url = s.url || '';
-                    if (!url && s.id) {
-                        // Try to construct URL from source + id
-                        const sourceMap = {
-                            'admin': `https://streamed.pk/embed/${s.id}`,
-                            'echo': `https://streamed.pk/embed/${s.id}`,
-                            'golf': `https://streamed.pk/embed/${s.id}`,
-                            'default': `https://streamed.pk/embed/${s.id}`
-                        };
-                        url = sourceMap[s.source] || sourceMap['default'];
-                    }
-                    if (url) {
-                        streams.push({
-                            title: s.source ? `${s.source.toUpperCase()}` : `CH ${streams.length + 1}`,
-                            url: url,
-                            type: 'embed'
-                        });
-                    }
-                });
-            }
-
-            // If no streams found, add a default one
-            if (streams.length === 0) {
-                const defaultUrl = `https://www.google.com/search?q=watch+${encodeURIComponent(match.homeTeam || match.home || '')}+vs+${encodeURIComponent(match.awayTeam || match.away || '')}+live+stream`;
-                streams.push({
-                    title: 'CH 1',
-                    url: defaultUrl,
-                    type: 'embed'
-                });
-            }
-
-            return streams;
-        }
-
-        // ===== OPEN PLAYER =====
-        function openPlayer(match) {
-            const modal = document.getElementById('playerModal');
-            const iframe = document.getElementById('playerIframe');
-            const overlay = document.getElementById('countdownOverlay');
-            const title = document.getElementById('modalMatchTitle');
-            const status = document.getElementById('modalMatchStatus');
-
-            const homeTeam = match.homeTeam || match.home || match.teams?.home?.name || 'Home';
-            const awayTeam = match.awayTeam || match.away || match.teams?.away?.name || 'Away';
-            const streams = getAllStreams(match);
-            const isLive = isLiveMatch(match);
-            const isFinal = isFinished(match);
-            const matchDate = match.date || match.startTime || '';
-
-            title.textContent = `${homeTeam} vs ${awayTeam}`;
-
-            if (isLive) {
-                status.textContent = '🔴 LIVE';
-                status.className = 'match-status live';
-                overlay.style.display = 'none';
-                iframe.style.display = 'block';
-                // Use first stream URL
-                iframe.src = streams[0]?.url || '';
-            } else if (isFinal) {
-                status.textContent = '✅ Full Time - Replay Available';
-                status.className = 'match-status final';
-                overlay.style.display = 'none';
-                iframe.style.display = 'block';
-                iframe.src = streams[0]?.url || '';
-            } else {
-                status.textContent = '⏰ Upcoming';
-                status.className = 'match-status scheduled';
-                iframe.style.display = 'none';
-                overlay.style.display = 'flex';
-                document.getElementById('countdownTitle').textContent = 'Kicks off in';
-                document.getElementById('countdownMatchInfo').textContent = `${homeTeam} vs ${awayTeam} · ${formatDate(matchDate)}`;
-                startCountdown(matchDate);
-            }
-
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        // ===== CLOSE PLAYER =====
-        function closePlayer() {
-            const modal = document.getElementById('playerModal');
-            const iframe = document.getElementById('playerIframe');
-            modal.classList.remove('active');
-            iframe.src = '';
-            document.body.style.overflow = '';
-            if (countdownInterval) {
-                clearInterval(countdownInterval);
-                countdownInterval = null;
-            }
-        }
-
-        // ===== START COUNTDOWN =====
-        function startCountdown(targetDate) {
-            if (countdownInterval) {
-                clearInterval(countdownInterval);
-            }
-
-            const target = new Date(targetDate).getTime();
-
-            function updateCountdown() {
-                const now = new Date().getTime();
-                const diff = target - now;
-
-                if (diff <= 0) {
-                    document.getElementById('cdHours').textContent = '00';
-                    document.getElementById('cdMinutes').textContent = '00';
-                    document.getElementById('cdSeconds').textContent = '00';
-                    document.getElementById('countdownTitle').textContent = 'Match Started!';
-                    if (countdownInterval) {
-                        clearInterval(countdownInterval);
-                        countdownInterval = null;
-                    }
-                    return;
-                }
-
-                const hours = Math.floor(diff / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-                document.getElementById('cdHours').textContent = String(hours).padStart(2, '0');
-                document.getElementById('cdMinutes').textContent = String(minutes).padStart(2, '0');
-                document.getElementById('cdSeconds').textContent = String(seconds).padStart(2, '0');
-            }
-
-            updateCountdown();
-            countdownInterval = setInterval(updateCountdown, 1000);
-        }
-
-        // ===== RENDER MATCHES =====
-        function renderMatches(matches, dateFilter) {
-            const container = document.getElementById('matchesContainer');
-
-            let filtered = [...matches];
-
-            // Apply date filter
-            if (dateFilter === 'today') {
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                const tomorrow = new Date(today);
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                filtered = filtered.filter(m => {
-                    const d = new Date(m.date || m.startTime || '');
-                    return d >= today && d < tomorrow;
-                });
-            } else if (dateFilter === 'tomorrow') {
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                const tomorrow = new Date(today);
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                const dayAfter = new Date(tomorrow);
-                dayAfter.setDate(dayAfter.getDate() + 1);
-                filtered = filtered.filter(m => {
-                    const d = new Date(m.date || m.startTime || '');
-                    return d >= tomorrow && d < dayAfter;
-                });
-            } else if (dateFilter === 'upcoming') {
-                const tomorrow = new Date();
-                tomorrow.setHours(0, 0, 0, 0);
-                tomorrow.setDate(tomorrow.getDate() + 2);
-                filtered = filtered.filter(m => {
-                    const d = new Date(m.date || m.startTime || '');
-                    return d >= tomorrow;
-                });
-            }
-
-            // Sort: Live matches first
-            filtered.sort((a, b) => {
-                const aLive = isLiveMatch(a);
-                const bLive = isLiveMatch(b);
-                if (aLive && !bLive) return -1;
-                if (!aLive && bLive) return 1;
-                return 0;
-            });
-
-            if (filtered.length === 0) {
-                container.innerHTML = `
-                    <div class="no-matches">
-                        <i class="fas fa-futbol"></i>
-                        <p>No matches for ${dateFilter}</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = '';
-
-            filtered.forEach(match => {
-                const homeTeam = match.homeTeam || match.home || match.teams?.home?.name || 'Home';
-                const awayTeam = match.awayTeam || match.away || match.teams?.away?.name || 'Away';
-                const homeLogo = match.homeLogo || match.homeBadge || match.teams?.home?.logo || '';
-                const awayLogo = match.awayLogo || match.awayBadge || match.teams?.away?.logo || '';
-                const league = match.league || match.leagueName || 'Football';
-                const status = match.status || 'Scheduled';
-                const date = match.date || match.startTime || match.startTime || '';
-
-                const isLive = isLiveMatch(match);
-                const isFinal = isFinished(match);
-
-                let statusClass = 'scheduled';
-                let statusText = status || 'Scheduled';
-
-                if (isLive) {
-                    statusClass = 'live';
-                    statusText = '🔴 LIVE';
-                } else if (isFinal) {
-                    statusClass = 'final';
-                    statusText = '✅ Full Time';
-                }
-
-                const streams = getAllStreams(match);
-                const hasStreams = streams.length > 0;
-
-                const card = document.createElement('div');
-                card.className = 'match-card';
-
-                // Countdown for upcoming matches
-                let countdownHTML = '';
-                if (!isLive && !isFinal && date) {
-                    countdownHTML = `
-                        <div class="countdown" id="countdown-${match.id || Math.random()}">
-                            <i class="far fa-clock" style="color:#00d4ff;"></i>
-                            <span style="font-size:0.6rem;color:var(--text-muted);">Kick-off in:</span>
-                            <span class="time-block">
-                                <span id="cd-h-${match.id || Math.random()}">--</span><span class="label">h</span>
-                            </span>
-                            <span class="time-block">
-                                <span id="cd-m-${match.id || Math.random()}">--</span><span class="label">m</span>
-                            </span>
-                            <span class="time-block">
-                                <span id="cd-s-${match.id || Math.random()}">--</span><span class="label">s</span>
-                            </span>
-                        </div>
-                    `;
-                }
-
-                let channelsHTML = '';
-                if (hasStreams) {
-                    const isDisabled = !isLive && !isFinal;
-                    channelsHTML = `
-                        <div class="stream-channels">
-                            <span class="channel-label"><i class="fas fa-signal"></i> Streams:</span>
-                            ${streams.slice(0, 12).map((s, i) => `
-                                <button class="channel-btn ${isDisabled ? 'disabled' : ''}" 
-                                    onclick="${isDisabled ? 'showToast(\'Match not started yet\', \'info\')' : `openPlayer(matches.find(m => m.id === '${match.id || match._id || ''}') || ${JSON.stringify(match)})`}">
-                                    <i class="fas fa-play"></i> ${s.title}
-                                </button>
-                            `).join('')}
-                        </div>
-                    `;
-                }
-
-                card.innerHTML = `
-                    <div class="match-top">
-                        <div class="match-teams">
-                            <div class="team">
-                                <img class="team-logo" src="${homeLogo || 'https://via.placeholder.com/40/00ff88/ffffff?text=?'}" alt="${homeTeam}" onerror="this.src='https://via.placeholder.com/40/00ff88/ffffff?text=?'" />
-                                <span class="team-name">${homeTeam}</span>
-                            </div>
-                            <span class="vs-badge">VS</span>
-                            <div class="team">
-                                <img class="team-logo" src="${awayLogo || 'https://via.placeholder.com/40/00ff88/ffffff?text=?'}" alt="${awayTeam}" onerror="this.src='https://via.placeholder.com/40/00ff88/ffffff?text=?'" />
-                                <span class="team-name">${awayTeam}</span>
-                            </div>
-                        </div>
-                        <div class="match-meta">
-                            <span class="status-badge ${statusClass}">${statusText}</span>
-                            <span class="league-name">${league}</span>
-                            <span class="match-time">
-                                <i class="far fa-clock"></i> ${formatDate(date)}
-                            </span>
-                        </div>
-                    </div>
-                    ${countdownHTML}
-                    ${channelsHTML}
-                `;
-
-                container.appendChild(card);
-
-                // Start individual countdown for upcoming matches
-                if (!isLive && !isFinal && date) {
-                    const id = match.id || Math.random();
-                    startIndividualCountdown(date, `cd-h-${id}`, `cd-m-${id}`, `cd-s-${id}`);
-                }
-            });
-        }
-
-        // ===== INDIVIDUAL COUNTDOWN =====
-        function startIndividualCountdown(targetDate, hEl, mEl, sEl) {
-            const target = new Date(targetDate).getTime();
-
-            function update() {
-                const now = new Date().getTime();
-                const diff = target - now;
-
-                if (diff <= 0) {
-                    document.getElementById(hEl).textContent = '00';
-                    document.getElementById(mEl).textContent = '00';
-                    document.getElementById(sEl).textContent = '00';
-                    return;
-                }
-
-                const hours = Math.floor(diff / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-                document.getElementById(hEl).textContent = String(hours).padStart(2, '0');
-                document.getElementById(mEl).textContent = String(minutes).padStart(2, '0');
-                document.getElementById(sEl).textContent = String(seconds).padStart(2, '0');
-            }
-
-            update();
-            setInterval(update, 1000);
-        }
-
-        // ===== SHOW TOAST =====
-        function showToast(message, type = 'info') {
-            const existing = document.querySelector('.toast');
-            if (existing) existing.remove();
-
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            const iconMap = {
-                success: 'fa-check-circle',
-                error: 'fa-exclamation-circle',
-                info: 'fa-info-circle'
-            };
-            toast.innerHTML = `<i class="fas ${iconMap[type] || iconMap.info}"></i> ${message}`;
-            document.body.appendChild(toast);
-
-            requestAnimationFrame(() => {
-                toast.classList.add('show');
-            });
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 500);
-            }, 4000);
-        }
-
-        // ===== DATE TABS =====
-        document.querySelectorAll('.date-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.date-tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-
-                currentDateFilter = tab.dataset.date;
-                renderMatches(allMatches, currentDateFilter);
-            });
-        });
-
-        // ===== CLOSE MODAL ON ESC =====
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closePlayer();
-            }
-        });
-
-        // ===== CLOSE MODAL ON CLICK OUTSIDE =====
-        document.getElementById('playerModal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) {
-                closePlayer();
-            }
-        });
-
-        // ===== INIT =====
-        fetchMatches();
-
-        // Refresh every 60 seconds
-        setInterval(fetchMatches, 60000);
-
-        console.log('%c⚽ DevSave Pro - World-Class Football Streaming', 'font-size:24px; font-weight:bold; color:#00ff88;');
-        console.log('%c💻 Built with ❤️ by Dev Gift', 'font-size:14px; color:#a0a0c0;');
-        console.log('%c🏆 Live Football from RunFlix API', 'font-size:12px; color:#00d4ff;');
-    </script>
+  </div>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // ===== THEME =====
+    const themeToggle = document.getElementById('themeToggle');
+    const icon = themeToggle.querySelector('i');
+
+    function getTheme() {
+      return localStorage.getItem('theme') || 'dark';
+    }
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const current = getTheme();
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    setTheme(getTheme());
+
+    console.log('%c⚽ DevSave Pro — Coming Soon', 'font-size:24px; font-weight:bold; color:#00ff88;');
+    console.log('%c💻 Built with ❤️ by Dev Gift', 'font-size:14px; color:#a0a0c0;');
+  </script>
 
 </body>
 </html>
