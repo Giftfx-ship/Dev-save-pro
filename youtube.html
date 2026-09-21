@@ -478,6 +478,7 @@
             transform: scale(1.05);
         }
 
+        /* Keep format toggle just for visual consistency, but we only have Video */
         .format-toggle {
             display: flex;
             gap: 1rem;
@@ -486,6 +487,7 @@
             border-radius: 12px;
             padding: 0.5rem;
             border: 1px solid var(--border-glass);
+            justify-content: center;
         }
 
         .format-btn {
@@ -504,11 +506,6 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-        }
-
-        .format-btn:hover {
-            color: var(--text-primary);
-            background: var(--bg-card);
         }
 
         .format-btn.active {
@@ -968,34 +965,13 @@
             color: var(--accent2);
         }
 
-        .footer-socials a.facebook:hover {
-            color: #1877f2;
-            border-color: #1877f2;
-        }
-        .footer-socials a.instagram:hover {
-            color: #e4405f;
-            border-color: #e4405f;
-        }
-        .footer-socials a.twitter:hover {
-            color: #1da1f2;
-            border-color: #1da1f2;
-        }
-        .footer-socials a.whatsapp:hover {
-            color: #25d366;
-            border-color: #25d366;
-        }
-        .footer-socials a.telegram:hover {
-            color: #0088cc;
-            border-color: #0088cc;
-        }
-        .footer-socials a.github:hover {
-            color: #6e5494;
-            border-color: #6e5494;
-        }
-        .footer-socials a.email:hover {
-            color: #ea4335;
-            border-color: #ea4335;
-        }
+        .footer-socials a.facebook:hover { color: #1877f2; border-color: #1877f2; }
+        .footer-socials a.instagram:hover { color: #e4405f; border-color: #e4405f; }
+        .footer-socials a.twitter:hover { color: #1da1f2; border-color: #1da1f2; }
+        .footer-socials a.whatsapp:hover { color: #25d366; border-color: #25d366; }
+        .footer-socials a.telegram:hover { color: #0088cc; border-color: #0088cc; }
+        .footer-socials a.github:hover { color: #6e5494; border-color: #6e5494; }
+        .footer-socials a.email:hover { color: #ea4335; border-color: #ea4335; }
 
         .footer-socials a i {
             position: relative;
@@ -1045,91 +1021,35 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        .toast.success {
-            border-color: #00ff88;
-        }
-        .toast.success i {
-            color: #00ff88;
-        }
-        .toast.error {
-            border-color: #ff4444;
-        }
-        .toast.error i {
-            color: #ff4444;
-        }
-        .toast.info {
-            border-color: var(--accent2);
-        }
-        .toast.info i {
-            color: var(--accent2);
-        }
+        .toast.success { border-color: #00ff88; }
+        .toast.success i { color: #00ff88; }
+        .toast.error { border-color: #ff4444; }
+        .toast.error i { color: #ff4444; }
+        .toast.info { border-color: var(--accent2); }
+        .toast.info i { color: var(--accent2); }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 100px 1rem 2rem;
-            }
-            .page-header h1 {
-                font-size: 2rem;
-            }
-            .download-card {
-                padding: 1.5rem;
-            }
-            .input-group {
-                flex-direction: column;
-            }
-            .input-group .paste-btn {
-                justify-content: center;
-            }
-            .quality-grid {
-                gap: 0.4rem;
-            }
-            .quality-btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.75rem;
-            }
-            .format-toggle {
-                flex-direction: column;
-            }
-            .result-card .video-info {
-                flex-direction: column;
-                align-items: center;
-            }
-            .result-card .thumbnail {
-                width: 100%;
-                height: auto;
-                aspect-ratio: 16/9;
-            }
-            .navbar {
-                padding: 0.8rem 1rem;
-            }
-            .logo {
-                font-size: 1.4rem;
-            }
-            .back-btn span {
-                display: none;
-            }
-            .whatsapp-float {
-                width: 55px;
-                height: 55px;
-                font-size: 1.8rem;
-                bottom: 20px;
-                right: 20px;
-            }
-            .whatsapp-float .tooltip {
-                display: none;
-            }
+            .container { padding: 100px 1rem 2rem; }
+            .page-header h1 { font-size: 2rem; }
+            .download-card { padding: 1.5rem; }
+            .input-group { flex-direction: column; }
+            .input-group .paste-btn { justify-content: center; }
+            .quality-grid { gap: 0.4rem; }
+            .quality-btn { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
+            .format-toggle { flex-direction: column; }
+            .result-card .video-info { flex-direction: column; align-items: center; }
+            .result-card .thumbnail { width: 100%; height: auto; aspect-ratio: 16/9; }
+            .navbar { padding: 0.8rem 1rem; }
+            .logo { font-size: 1.4rem; }
+            .back-btn span { display: none; }
+            .whatsapp-float { width: 55px; height: 55px; font-size: 1.8rem; bottom: 20px; right: 20px; }
+            .whatsapp-float .tooltip { display: none; }
         }
 
         @media (max-width: 480px) {
-            .page-header h1 {
-                font-size: 1.5rem;
-            }
-            .quality-grid {
-                justify-content: center;
-            }
-            .result-card .action-btns {
-                flex-direction: column;
-            }
+            .page-header h1 { font-size: 1.5rem; }
+            .quality-grid { justify-content: center; }
+            .result-card .action-btns { flex-direction: column; }
         }
     </style>
 </head>
@@ -1171,7 +1091,7 @@
         <div class="page-header">
             <i class="fab fa-youtube icon"></i>
             <h1>YouTube Downloader</h1>
-            <p>Download videos & audio in high quality</p>
+            <p>Download videos in high quality</p>
             <div class="active-status">
                 <i class="fas fa-circle" style="font-size:0.5rem; margin-right:6px;"></i> Active
             </div>
@@ -1185,17 +1105,14 @@
                 </button>
             </div>
 
-            <!-- ===== FORMAT TOGGLE ===== -->
+            <!-- ===== FORMAT TOGGLE (Only Video since API only provides Video) ===== -->
             <div class="format-toggle">
                 <button class="format-btn active" data-format="mp4">
                     <i class="fas fa-video"></i> Video (MP4)
                 </button>
-                <button class="format-btn" data-format="mp3">
-                    <i class="fas fa-music"></i> Audio (MP3)
-                </button>
             </div>
 
-            <!-- ===== VIDEO QUALITY (shows when Video is selected) ===== -->
+            <!-- ===== VIDEO QUALITY ===== -->
             <div class="quality-section" id="videoQualitySection">
                 <span class="label">📊 Select Video Quality</span>
                 <div class="quality-grid">
@@ -1205,17 +1122,6 @@
                     <button class="quality-btn" data-quality="480">480p</button>
                     <button class="quality-btn" data-quality="720">720p</button>
                     <button class="quality-btn" data-quality="1080">1080p</button>
-                </div>
-            </div>
-
-            <!-- ===== AUDIO QUALITY (shows when Audio is selected) ===== -->
-            <div class="quality-section" id="audioQualitySection" style="display:none;">
-                <span class="label">🎵 Select Audio Bitrate</span>
-                <div class="quality-grid">
-                    <button class="quality-btn" data-quality="64">64kbps</button>
-                    
-                    <button class="quality-btn" data-quality="192">192kbps</button>
-                    <button class="quality-btn" data-quality="320">320kbps</button>
                 </div>
             </div>
 
@@ -1403,47 +1309,12 @@
 
         setTheme(getTheme());
 
-        // ===== FORMAT TOGGLE =====
-        const formatBtns = document.querySelectorAll('.format-btn');
-        const videoQualitySection = document.getElementById('videoQualitySection');
-        const audioQualitySection = document.getElementById('audioQualitySection');
-
-        let selectedFormat = 'mp4';
-        let selectedQuality = '360';
-
-        formatBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                formatBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                selectedFormat = btn.dataset.format;
-
-                if (selectedFormat === 'mp4') {
-                    videoQualitySection.style.display = 'block';
-                    audioQualitySection.style.display = 'none';
-                    // Reset to video quality default
-                    document.querySelectorAll('#videoQualitySection .quality-btn').forEach(b => {
-                        b.classList.remove('active');
-                        if (b.dataset.quality === '360') b.classList.add('active');
-                    });
-                    selectedQuality = '360';
-                } else {
-                    videoQualitySection.style.display = 'none';
-                    audioQualitySection.style.display = 'block';
-                    // Reset to audio quality default
-                    document.querySelectorAll('#audioQualitySection .quality-btn').forEach(b => {
-                        b.classList.remove('active');
-                        if (b.dataset.quality === '128') b.classList.add('active');
-                    });
-                    selectedQuality = '128';
-                }
-            });
-        });
-
         // ===== QUALITY SELECTION =====
+        let selectedQuality = '360'; // Default
+
         document.querySelectorAll('.quality-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                const parent = btn.closest('.quality-section');
-                parent.querySelectorAll('.quality-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.quality-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 selectedQuality = btn.dataset.quality;
             });
@@ -1470,7 +1341,8 @@
         const resultCard = document.getElementById('resultCard');
         const statusMsg = document.getElementById('statusMsg');
 
-        const YT_API = 'https://apis.davidcyril.name.ng/download/savetube';
+        // UPDATED: Using the Omegatech API endpoint
+        const YT_API = 'https://api.omegatech.app/api/download/yt-dl';
 
         let currentDownloadUrl = '';
 
@@ -1512,15 +1384,8 @@
                 statusMsg.className = 'status-msg show info';
                 statusMsg.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Fetching from YouTube...`;
 
-                // ===== FIXED: Send mp3 for audio, quality number for video =====
-                let formatParam = selectedFormat;
-                if (selectedFormat === 'mp4') {
-                    formatParam = selectedQuality; // e.g., 360, 720, 1080
-                } else {
-                    formatParam = 'mp3'; // Always mp3 for audio
-                }
-
-                const apiUrl = `${YT_API}?url=${encodeURIComponent(url)}&format=${formatParam}`;
+                // Omegatech API expects `action=download`, `url`, and `quality`
+                const apiUrl = `${YT_API}?action=download&url=${encodeURIComponent(url)}&quality=${selectedQuality}`;
                 const response = await fetch(apiUrl);
 
                 clearInterval(progressInterval);
@@ -1528,30 +1393,55 @@
                 if (response.ok) {
                     const data = await response.json();
 
-                    if (data.success && data.data && data.data.download_url) {
-                        currentDownloadUrl = data.data.download_url;
-                        progressFill.style.width = '100%';
-                        progressPercent.textContent = '100%';
-                        progressText.textContent = '✅ Done!';
+                    // Parse the Omegatech structure
+                    if (data.success && data.data) {
+                        const info = data.data;
+                        
+                        // Find the media that matches the selected quality (e.g., "mp4 (1080p)")
+                        // The API sends "1080P" in availableQualities but "mp4 (1080p)" in allMedias
+                        let selectedMedia = null;
+                        const searchQuality = selectedQuality.toLowerCase();
 
-                        statusMsg.className = 'status-msg show success';
-                        statusMsg.innerHTML = `<i class="fas fa-check-circle"></i> Download ready!`;
+                        if (info.allMedias && Array.isArray(info.allMedias)) {
+                            // Find the media object that includes the selected quality string
+                            selectedMedia = info.allMedias.find(media => 
+                                media.quality.toLowerCase().includes(searchQuality)
+                            );
+                        }
 
-                        setTimeout(() => {
-                            document.getElementById('thumbnail').src = data.data.cover || 'https://via.placeholder.com/200x120/ff0000/ffffff?text=YouTube';
-                            document.getElementById('videoTitle').textContent = data.data.title || 'YouTube Video';
-                            document.getElementById('videoInfo').textContent = `Duration: ${data.data.duration || 'Unknown'}`;
-                            document.getElementById('videoQuality').textContent = selectedFormat === 'mp4' ? `${data.data.quality || selectedQuality}p` : `${selectedQuality}kbps`;
-                            document.getElementById('videoSize').textContent = 'Processing...';
-                            document.getElementById('videoFormat').textContent = selectedFormat.toUpperCase();
+                        // Fallback to the primary downloadUrl if no exact match is found
+                        const finalUrl = selectedMedia ? selectedMedia.url : info.downloadUrl;
+                        const finalQuality = selectedMedia ? selectedMedia.quality : (info.selectedQuality || selectedQuality + 'p');
 
-                            resultCard.classList.add('show');
-                            showToast('✅ Download ready! Click Download Now', 'success');
+                        if (finalUrl) {
+                            currentDownloadUrl = finalUrl;
+                            progressFill.style.width = '100%';
+                            progressPercent.textContent = '100%';
+                            progressText.textContent = '✅ Done!';
+
+                            statusMsg.className = 'status-msg show success';
+                            statusMsg.innerHTML = `<i class="fas fa-check-circle"></i> Download ready!`;
 
                             setTimeout(() => {
-                                window.open(currentDownloadUrl, '_blank');
+                                document.getElementById('thumbnail').src = info.thumbnail || 'https://via.placeholder.com/200x120/ff0000/ffffff?text=YouTube';
+                                document.getElementById('videoTitle').textContent = info.title || 'YouTube Video';
+                                document.getElementById('videoInfo').textContent = `Duration: ${info.duration || 'Unknown'} • Channel: ${info.author || 'Unknown'}`;
+                                document.getElementById('videoQuality').textContent = finalQuality;
+                                document.getElementById('videoSize').textContent = 'Size N/A'; // API doesn't return size in the test
+                                document.getElementById('videoFormat').textContent = 'MP4';
+
+                                resultCard.classList.add('show');
+                                showToast('✅ Download ready! Click Download Now', 'success');
+
+                                setTimeout(() => {
+                                    window.open(currentDownloadUrl, '_blank');
+                                }, 500);
                             }, 500);
-                        }, 500);
+                        } else {
+                            statusMsg.className = 'status-msg show error';
+                            statusMsg.innerHTML = `<i class="fas fa-exclamation-circle"></i> Could not find a valid download URL.`;
+                            showToast('❌ Failed to extract download link', 'error');
+                        }
                     } else {
                         statusMsg.className = 'status-msg show error';
                         statusMsg.innerHTML = `<i class="fas fa-exclamation-circle"></i> Failed to get download link.`;
@@ -1627,7 +1517,7 @@
 
         console.log('%c▶️ DevSave Pro - YouTube Downloader', 'font-size:20px; font-weight:bold; color:#ff0000;');
         console.log('%c💻 Built with ❤️ by Dev Gift', 'font-size:14px; color:#a0a0c0;');
-        console.log('%c📡 Video: quality numbers | Audio: mp3', 'font-size:12px; color:#00d4ff;');
+        console.log('%c📡 Video only (Omegatech API)', 'font-size:12px; color:#00d4ff;');
     </script>
 
 </body>
